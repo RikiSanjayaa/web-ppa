@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply px-4 py-2.5 font-semibold;
+    }
+
+    .btn.btn-sm {
+        @apply px-3.5 py-2;
+    }
+
+    .btn.btn-xs {
+        @apply px-3 py-1.5;
+    }
+
+    .nav-pill {
+        @apply rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-navy-700;
+    }
+
+    .nav-pill-active {
+        @apply bg-navy-700 text-white hover:bg-navy-700 hover:text-white;
+    }
+
+    .admin-link {
+        @apply block rounded-lg px-3 py-2 text-slate-200 transition hover:bg-navy-600 hover:text-white;
+    }
+
+    .admin-link-active {
+        @apply bg-white/15 text-white;
+    }
+}
