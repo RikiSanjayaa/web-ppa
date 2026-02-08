@@ -10,11 +10,11 @@ class WhatsAppComplaintMessage
     {
         $parts = [
             '*Aduan Baru PPA/PPO*',
-            'Nama Pelapor: '.$complaint->nama_lengkap,
-            'No HP: '.$complaint->no_hp,
-            'Tempat Kejadian: '.$complaint->tempat_kejadian,
-            'Waktu Kejadian: '.$complaint->waktu_kejadian?->format('d-m-Y H:i'),
-            'Kronologis: '.$complaint->kronologis_singkat,
+            'Nama Pelapor: ' . $complaint->nama_lengkap,
+            'No HP: ' . $complaint->no_hp,
+            'Tempat Kejadian: ' . $complaint->tempat_kejadian,
+            'Waktu Kejadian: ' . $complaint->waktu_kejadian?->format('d-m-Y H:i'),
+            'Kronologis: ' . $complaint->kronologis_singkat,
         ];
 
         $optional = [
@@ -28,7 +28,7 @@ class WhatsAppComplaintMessage
 
         foreach ($optional as $label => $value) {
             if ($value) {
-                $parts[] = $label.': '.$value;
+                $parts[] = $label . ': ' . $value;
             }
         }
 
@@ -42,6 +42,6 @@ class WhatsAppComplaintMessage
     {
         $phone = preg_replace('/\D+/', '', $phoneNumber) ?: '';
 
-        return 'https://wa.me/'.$phone.'?text='.rawurlencode($message);
+        return 'https://wa.me/' . $phone . '?text=' . rawurlencode($message);
     }
 }

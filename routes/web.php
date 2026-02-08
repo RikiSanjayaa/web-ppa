@@ -3,12 +3,15 @@
 use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GalleryItemController;
+use App\Http\Controllers\Admin\HotlineAccessController as AdminHotlineAccessController;
 use App\Http\Controllers\Admin\LeaderController;
 use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\HotlineAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +22,9 @@ Route::get('/layanan-masyarakat', [PublicPageController::class, 'layananMasyarak
 Route::post('/aduan', [ComplaintController::class, 'store'])
     ->middleware('throttle:complaints')
     ->name('complaints.store');
+Route::post('/api/hotline-access', [HotlineAccessController::class, 'store'])
+    ->middleware('throttle:60,1')
+    ->name('hotline-access.store');
 Route::get('/informasi', [PublicPageController::class, 'informasiIndex'])->name('informasi.index');
 Route::get('/informasi/dokumen/{document}/download', [PublicPageController::class, 'downloadDocument'])->name('informasi.documents.download');
 Route::get('/informasi/{slug}', [PublicPageController::class, 'informasiShow'])->name('informasi.show');
@@ -35,11 +41,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
     Route::patch('/aduan/{complaint}/status', [AdminComplaintController::class, 'updateStatus'])->name('complaints.update-status');
 
+    Route::get('/hotline-accesses', [AdminHotlineAccessController::class, 'index'])->name('hotline-accesses.index');
+    Route::get('/hotline-accesses/{hotlineAccess}', [AdminHotlineAccessController::class, 'show'])->name('hotline-accesses.show');
+
     Route::resource('news-posts', NewsPostController::class)->except('show');
     Route::resource('leaders', LeaderController::class)->except('show');
     Route::resource('documents', DocumentController::class)->except('show');
     Route::resource('gallery-items', GalleryItemController::class)->except('show');
     Route::resource('testimonials', TestimonialController::class)->except('show');
+    Route::resource('faqs', FaqController::class)->except('show');
 
     Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
@@ -51,4 +61,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

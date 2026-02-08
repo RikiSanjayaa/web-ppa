@@ -13,6 +13,7 @@ class SiteDefaults
             'site_name' => 'PPA / PPO',
             'hero_title' => 'Perlindungan Perempuan dan Anak',
             'hero_subtitle' => 'Layanan aduan cepat, aman, dan responsif untuk masyarakat.',
+            'hero_cta_text' => 'Laporkan via WhatsApp',
             'hotline_wa_number' => '6281234567890',
             'contact_phone' => '(021) 0000000',
             'contact_email' => 'ppa@example.go.id',
@@ -21,9 +22,11 @@ class SiteDefaults
             'organization_vision' => 'Mewujudkan pelayanan perlindungan yang cepat, empatik, dan profesional.',
             'organization_mission' => "1. Memberikan layanan aduan terintegrasi.\n2. Menangani laporan secara tepat waktu.\n3. Menguatkan kolaborasi lintas instansi.",
             'organization_structure' => 'Struktur organisasi dapat diperbarui oleh admin.',
+            'about_confidentiality' => 'Identitas pelapor dijamin kerahasiaannya. Data hanya digunakan untuk keperluan penanganan kasus.',
             'instagram_url' => '',
             'facebook_url' => '',
             'youtube_url' => '',
         ];
     }
 }
+

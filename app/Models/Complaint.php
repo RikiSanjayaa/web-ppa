@@ -64,17 +64,17 @@ class Complaint extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
-            ->when($filters['status'] ?? null, fn (Builder $q, string $status) => $q->where('status', $status))
-            ->when($filters['date_from'] ?? null, fn (Builder $q, string $dateFrom) => $q->whereDate('created_at', '>=', $dateFrom))
-            ->when($filters['date_to'] ?? null, fn (Builder $q, string $dateTo) => $q->whereDate('created_at', '<=', $dateTo))
+            ->when($filters['status'] ?? null, fn(Builder $q, string $status) => $q->where('status', $status))
+            ->when($filters['date_from'] ?? null, fn(Builder $q, string $dateFrom) => $q->whereDate('created_at', '>=', $dateFrom))
+            ->when($filters['date_to'] ?? null, fn(Builder $q, string $dateTo) => $q->whereDate('created_at', '<=', $dateTo))
             ->when($filters['q'] ?? null, function (Builder $q, string $term) {
                 $q->where(function (Builder $inner) use ($term) {
                     $inner
-                        ->where('nama_lengkap', 'like', '%'.$term.'%')
-                        ->orWhere('tempat_kejadian', 'like', '%'.$term.'%')
-                        ->orWhere('kronologis_singkat', 'like', '%'.$term.'%')
-                        ->orWhere('korban', 'like', '%'.$term.'%')
-                        ->orWhere('terlapor', 'like', '%'.$term.'%');
+                        ->where('nama_lengkap', 'like', '%' . $term . '%')
+                        ->orWhere('tempat_kejadian', 'like', '%' . $term . '%')
+                        ->orWhere('kronologis_singkat', 'like', '%' . $term . '%')
+                        ->orWhere('korban', 'like', '%' . $term . '%')
+                        ->orWhere('terlapor', 'like', '%' . $term . '%');
                 });
             });
     }
@@ -91,7 +91,7 @@ class Complaint extends Model
 
     private function maskSensitive(?string $value): ?string
     {
-        if (! $value) {
+        if (!$value) {
             return null;
         }
 
@@ -101,6 +101,6 @@ class Complaint extends Model
             return str_repeat('*', $length);
         }
 
-        return substr($value, 0, 2).str_repeat('*', $length - 4).substr($value, -2);
+        return substr($value, 0, 2) . str_repeat('*', $length - 4) . substr($value, -2);
     }
 }

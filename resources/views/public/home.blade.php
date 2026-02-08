@@ -4,103 +4,142 @@
 @section('meta_description', 'Layanan resmi perlindungan perempuan dan anak: hotline WA, aduan online, informasi hukum, dan galeri kegiatan.')
 
 @section('content')
-    <section class="rounded-3xl bg-gradient-to-r from-navy-700 via-navy-600 to-teal-600 px-6 py-12 text-white lg:px-12">
-        <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <div data-aos="fade-up">
-                <p class="mb-2 inline-block rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide">Layanan Resmi PPA/PPO</p>
-                <h1 class="font-heading text-3xl font-bold leading-tight lg:text-5xl">{{ $settings['hero_title'] }}</h1>
-                <p class="mt-4 text-base text-slate-100 lg:text-lg">{{ $settings['hero_subtitle'] }}</p>
-                <div class="mt-6 flex flex-wrap gap-3">
-                    <a href="{{ route('layanan-masyarakat') }}#form-aduan" class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Buat Aduan</a>
-                    <a href="https://wa.me/{{ preg_replace('/\D+/', '', $settings['hotline_wa_number']) }}" target="_blank" rel="noopener" class="btn border-white/40 bg-white/10 text-white hover:bg-white/20">Hotline WhatsApp</a>
+    @php
+        $waNumber = preg_replace('/\D+/', '', $settings['hotline_wa_number']);
+        $waUrl = "https://wa.me/{$waNumber}";
+    @endphp
+
+    {{-- Hero Section --}}
+    <x-hero
+        :title="$settings['hero_title']"
+        :subtitle="$settings['hero_subtitle']"
+        :cta-text="$settings['hero_cta_text'] ?? 'Laporkan via WhatsApp'"
+        :cta-url="$waUrl"
+        :hotline-number="$settings['contact_phone']"
+        :stats="[
+            'Total Aduan' => $stats['total_aduan'],
+            'Aduan Selesai' => $stats['aduan_selesai'],
+            'Dokumen Hukum' => $stats['total_dokumen'],
+            'Layanan' => 'Cepat & Responsif',
+        ]"
+    />
+
+    {{-- What Can Be Reported --}}
+    <section class="mt-12" data-aos="fade-up">
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Apa yang Bisa Dilaporkan?</h2>
+        <p class="mt-2 text-slate-600">Laporkan segala bentuk kekerasan atau kejahatan terhadap perempuan dan anak.</p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <x-report-card
+                icon="home"
+                title="Kekerasan Dalam Rumah Tangga"
+                description="Kekerasan fisik, psikis, seksual, atau penelantaran dalam lingkup rumah tangga."
+            />
+            <x-report-card
+                icon="heart"
+                title="Pelecehan Seksual"
+                description="Tindakan seksual tanpa persetujuan, pelecehan verbal, atau eksploitasi seksual."
+            />
+            <x-report-card
+                icon="users"
+                title="Perdagangan Orang"
+                description="Trafficking, eksploitasi tenaga kerja, atau penjeratan utang."
+            />
+            <x-report-card
+                icon="hand"
+                title="Kekerasan terhadap Anak"
+                description="Penganiayaan, penelantaran, atau eksploitasi anak di bawah umur."
+            />
+            <x-report-card
+                icon="briefcase"
+                title="Penelantaran"
+                description="Tidak dipenuhinya kebutuhan dasar secara sengaja oleh pihak yang bertanggung jawab."
+            />
+            <x-report-card
+                icon="exclamation"
+                title="Bentuk Kekerasan Lain"
+                description="Ancaman, intimidasi, penguntitan, atau bentuk kekerasan lainnya."
+            />
+        </div>
+    </section>
+
+    {{-- How Reporting Works --}}
+    <section class="mt-12" data-aos="fade-up">
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Bagaimana Cara Melapor?</h2>
+        <p class="mt-2 text-slate-600">Proses pelaporan yang mudah, cepat, dan kerahasiaan terjamin.</p>
+
+        <div class="mt-6">
+            <x-step-timeline :steps="[
+                ['title' => 'Hubungi via WhatsApp', 'description' => 'Klik tombol WhatsApp di halaman ini. Anda akan terhubung langsung dengan petugas kami.'],
+                ['title' => 'Ceritakan Kronologi', 'description' => 'Sampaikan apa yang terjadi, kapan, dan di mana. Tidak perlu bukti lengkap, kami akan membantu.'],
+                ['title' => 'Asesmen & Tindak Lanjut', 'description' => 'Tim kami akan melakukan asesmen dan menentukan langkah perlindungan yang diperlukan.'],
+                ['title' => 'Pendampingan', 'description' => 'Anda akan didampingi hingga kasus selesai. Identitas Anda dijamin kerahasiaannya.'],
+            ]" />
+        </div>
+    </section>
+
+    {{-- About the Unit --}}
+    <section class="mt-12 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200 p-6 lg:p-8" data-aos="fade-up">
+        <div class="flex items-start gap-4">
+            <div class="hidden shrink-0 lg:block">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-600 to-teal-600">
+                    <svg class="h-7 w-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-3" data-aos="fade-left">
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur">
-                    <p class="text-xs uppercase tracking-wide text-slate-200">Total Aduan</p>
-                    <p class="mt-2 text-3xl font-bold">{{ number_format($stats['total_aduan']) }}</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur">
-                    <p class="text-xs uppercase tracking-wide text-slate-200">Aduan Selesai</p>
-                    <p class="mt-2 text-3xl font-bold">{{ number_format($stats['aduan_selesai']) }}</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur">
-                    <p class="text-xs uppercase tracking-wide text-slate-200">Dokumen Hukum</p>
-                    <p class="mt-2 text-3xl font-bold">{{ number_format($stats['total_dokumen']) }}</p>
-                </div>
-                <div class="rounded-2xl bg-white/15 p-4 backdrop-blur">
-                    <p class="text-xs uppercase tracking-wide text-slate-200">Layanan</p>
-                    <p class="mt-2 text-lg font-semibold">Cepat & Responsif</p>
+            <div>
+                <h2 class="font-heading text-2xl font-semibold text-navy-700">Tentang Unit PPA/PPO</h2>
+                <p class="mt-3 leading-relaxed text-slate-600">{{ $settings['organization_profile'] }}</p>
+
+                <div class="mt-4 rounded-xl bg-teal-50 border border-teal-100 p-4">
+                    <div class="flex items-start gap-3">
+                        <svg class="mt-0.5 h-5 w-5 shrink-0 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <div>
+                            <p class="font-semibold text-teal-800">Kerahasiaan Terjamin</p>
+                            <p class="mt-1 text-sm text-teal-700">{{ $settings['about_confidentiality'] ?? 'Identitas pelapor dijamin kerahasiaannya. Data hanya digunakan untuk keperluan penanganan kasus.' }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="mt-10 grid gap-6 lg:grid-cols-3">
-        <article class="rounded-2xl border border-slate-200 bg-white p-6" data-aos="fade-up">
-            <h2 class="font-heading text-lg font-semibold text-navy-700">Aduan Masyarakat</h2>
-            <p class="mt-2 text-sm text-slate-600">Sampaikan aduan dengan aman. Data Anda masuk sistem dan diarahkan ke hotline WhatsApp.</p>
-        </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-6" data-aos="fade-up" data-aos-delay="80">
-            <h2 class="font-heading text-lg font-semibold text-navy-700">Pendampingan Kasus</h2>
-            <p class="mt-2 text-sm text-slate-600">Layanan koordinasi, asesmen, dan tindak lanjut perlindungan perempuan dan anak.</p>
-        </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-6" data-aos="fade-up" data-aos-delay="160">
-            <h2 class="font-heading text-lg font-semibold text-navy-700">Edukasi Hukum</h2>
-            <p class="mt-2 text-sm text-slate-600">Akses dokumen UU/peraturan yang dapat diunduh untuk edukasi masyarakat.</p>
-        </article>
-    </section>
-
+    {{-- Recent Events --}}
     <section class="mt-12" data-aos="fade-up">
         <div class="mb-4 flex items-center justify-between">
             <h2 class="font-heading text-2xl font-semibold text-navy-700">Berita & Event Terbaru</h2>
             <a href="{{ route('informasi.index') }}" class="text-sm font-semibold text-coral-600 hover:text-coral-700">Lihat semua</a>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-3">
-            @forelse ($newsPosts as $post)
-                <article class="rounded-2xl border border-slate-200 bg-white p-4">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-coral-600">{{ $post->type }}</p>
-                    <h3 class="mt-2 font-heading text-lg font-semibold text-slate-800">{{ $post->title }}</h3>
-                    <p class="mt-2 line-clamp-3 text-sm text-slate-600">{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 120) }}</p>
-                    <div class="mt-3 flex items-center justify-between text-xs text-slate-500">
-                        <span>{{ optional($post->published_at)->translatedFormat('d M Y') }}</span>
-                        <a href="{{ route('informasi.show', $post->slug) }}" class="font-semibold text-navy-700">Detail</a>
-                    </div>
-                </article>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            @forelse ($newsPosts->take(6) as $post)
+                <x-event-card :post="$post" />
             @empty
-                <div class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500 md:col-span-3">
+                <div class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500 md:col-span-2 lg:col-span-3">
                     Belum ada berita atau event yang dipublikasikan.
                 </div>
             @endforelse
         </div>
     </section>
 
+    {{-- FAQ Section --}}
+    @if($faqs->count() > 0)
     <section class="mt-12" data-aos="fade-up">
-        <div class="mb-4 flex items-center justify-between">
-            <h2 class="font-heading text-2xl font-semibold text-navy-700">Atasan Terkait</h2>
-            <a href="{{ route('organisasi') }}" class="text-sm font-semibold text-coral-600 hover:text-coral-700">Lihat organisasi</a>
-        </div>
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Pertanyaan Umum (FAQ)</h2>
+        <p class="mt-2 text-slate-600">Jawaban untuk pertanyaan yang sering diajukan.</p>
 
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            @forelse ($leaders as $leader)
-                <article class="rounded-2xl border border-slate-200 bg-white p-4">
-                    @if ($leader->photo_path)
-                        <img src="{{ Storage::url($leader->photo_path) }}" alt="{{ $leader->name }}" class="h-44 w-full rounded-xl object-cover">
-                    @else
-                        <div class="flex h-44 items-center justify-center rounded-xl bg-slate-100 text-sm text-slate-400">Foto belum tersedia</div>
-                    @endif
-                    <h3 class="mt-3 font-heading text-lg font-semibold text-slate-800">{{ $leader->name }}</h3>
-                    <p class="text-sm text-coral-600">{{ $leader->position }}</p>
-                    @if ($leader->bio)
-                        <p class="mt-2 line-clamp-3 text-sm text-slate-600">{{ $leader->bio }}</p>
-                    @endif
-                </article>
-            @empty
-                <div class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500 sm:col-span-2 lg:col-span-3">
-                    Data atasan belum tersedia.
-                </div>
-            @endforelse
+        <div class="mt-6 grid gap-3">
+            @foreach($faqs as $index => $faq)
+                <x-faq-item
+                    :question="$faq->question"
+                    :answer="$faq->answer"
+                    :open="$index === 0"
+                />
+            @endforeach
         </div>
     </section>
+    @endif
 @endsection

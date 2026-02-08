@@ -1,6 +1,8 @@
 import './bootstrap';
+import './hotline-tracker';
 
 import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import GLightbox from 'glightbox';
@@ -11,6 +13,7 @@ import 'swiper/css';
 
 window.Alpine = Alpine;
 
+Alpine.plugin(collapse);
 Alpine.start();
 
 document.addEventListener('DOMContentLoaded', () => {

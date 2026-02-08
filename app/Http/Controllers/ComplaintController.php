@@ -21,7 +21,7 @@ class ComplaintController extends Controller
     ): RedirectResponse {
         $token = $request->input('cf-turnstile-response');
 
-        if (! $turnstileVerifier->passes($token, $request->ip())) {
+        if (!$turnstileVerifier->passes($token, $request->ip())) {
             throw ValidationException::withMessages([
                 'cf-turnstile-response' => 'Verifikasi keamanan gagal. Silakan coba kembali.',
             ]);
@@ -45,7 +45,7 @@ class ComplaintController extends Controller
 
         $hotline = SiteSetting::getValue('hotline_wa_number', env('HOTLINE_WA_NUMBER'));
 
-        if (! $hotline) {
+        if (!$hotline) {
             throw ValidationException::withMessages([
                 'no_hp' => 'Nomor hotline belum dikonfigurasi oleh admin.',
             ]);
@@ -61,9 +61,17 @@ class ComplaintController extends Controller
         ActivityLogger::log('complaint.created', $complaint, 'Aduan baru dikirim dari form publik.');
 
         if ($request->expectsJson()) {
-            return redirect()->away($waUrl);
+            return response()->json([
+                'success' => true,
+                'redirect_url' => $waUrl,
+                'message' => 'Aduan berhasil dibuat.',
+            ]);
         }
 
-        return redirect()->away($waUrl);
+        return view('public.complaint-success', [
+            'waUrl' => $waUrl,
+            'complaint' => $complaint,
+            'settings' => SiteSetting::getMap(['site_name', 'hotline_wa_number'])->all() + SiteDefaults::values(),
+        ]);
     }
 }

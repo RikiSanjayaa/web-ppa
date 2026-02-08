@@ -43,6 +43,10 @@ export default {
                     800: '#9e2920',
                     900: '#83281f',
                 },
+                whatsapp: {
+                    DEFAULT: '#25D366',
+                    dark: '#1fba59',
+                },
             },
         },
     },

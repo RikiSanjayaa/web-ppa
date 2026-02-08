@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Complaint;
 use App\Models\Document;
+use App\Models\Faq;
 use App\Models\GalleryItem;
 use App\Models\Leader;
 use App\Models\NewsPost;
@@ -25,9 +26,10 @@ class PublicPageController extends Controller
 
         return view('public.home', [
             'settings' => $settings,
-            'newsPosts' => NewsPost::query()->latestPublished()->take(3)->get(),
+            'newsPosts' => NewsPost::query()->latestPublished()->take(6)->get(),
             'leaders' => Leader::query()->active()->ordered()->take(6)->get(),
             'testimonials' => Testimonial::query()->published()->ordered()->take(8)->get(),
+            'faqs' => Faq::query()->active()->ordered()->get(),
             'stats' => [
                 'total_aduan' => Complaint::query()->count(),
                 'aduan_selesai' => Complaint::query()->where('status', Complaint::STATUS_SELESAI)->count(),
@@ -118,7 +120,7 @@ class PublicPageController extends Controller
             'years' => GalleryItem::query()
                 ->published()
                 ->whereNotNull('event_date')
-                ->selectRaw($yearExpression.' as year')
+                ->selectRaw($yearExpression . ' as year')
                 ->distinct()
                 ->orderByDesc('year')
                 ->pluck('year'),
@@ -129,10 +131,10 @@ class PublicPageController extends Controller
 
     public function downloadDocument(Document $document): StreamedResponse
     {
-        abort_if(! $document->is_published, 404);
+        abort_if(!$document->is_published, 404);
 
         $extension = pathinfo($document->file_path, PATHINFO_EXTENSION) ?: 'pdf';
-        $filename = Str::slug($document->title).'.'.$extension;
+        $filename = Str::slug($document->title) . '.' . $extension;
 
         return Storage::disk('public')->download($document->file_path, $filename);
     }
@@ -145,6 +147,6 @@ class PublicPageController extends Controller
         $defaults = SiteDefaults::values();
         $stored = SiteSetting::getMap(array_keys($defaults))->all();
 
-        return array_replace($defaults, array_filter($stored, fn (?string $value) => $value !== null));
+        return array_replace($defaults, array_filter($stored, fn(?string $value) => $value !== null));
     }
 }
