@@ -89,52 +89,67 @@
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Nama Lengkap Pelapor *</label>
                 <input type="text" name="nama_lengkap" value="{{ old('nama_lengkap') }}" required
-                    class="input input-bordered w-full">
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Masukkan nama lengkap Anda">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">No HP / WA *</label>
-                <input type="text" name="no_hp" value="{{ old('no_hp') }}" required class="input input-bordered w-full">
+                <input type="text" name="no_hp" value="{{ old('no_hp') }}" required
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Contoh: 081234567890">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">NIK *</label>
-                <input type="text" name="nik" value="{{ old('nik') }}" class="input input-bordered w-full" required>
+                <input type="text" name="nik" value="{{ old('nik') }}"
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    required placeholder="Masukkan 16 digit NIK">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Email (Opsional)</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="input input-bordered w-full">
+                <input type="email" name="email" value="{{ old('email') }}"
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="alamat@email.com">
             </div>
             <div class="md:col-span-2">
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Alamat *</label>
-                <textarea name="alamat" rows="2" class="textarea textarea-bordered w-full"
-                    required>{{ old('alamat') }}</textarea>
+                <textarea name="alamat" rows="2"
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    required placeholder="Alamat lengkap domisili saat ini">{{ old('alamat') }}</textarea>
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Tempat Kejadian *</label>
                 <input type="text" name="tempat_kejadian" value="{{ old('tempat_kejadian') }}" required
-                    class="input input-bordered w-full">
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Lokasi kejadian perkara">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Waktu Kejadian *</label>
                 <input type="date" name="waktu_kejadian" value="{{ old('waktu_kejadian') }}" required
-                    class="input input-bordered w-full">
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Korban *</label>
-                <input type="text" name="korban" value="{{ old('korban') }}" class="input input-bordered w-full" required>
+                <input type="text" name="korban" value="{{ old('korban') }}"
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    required placeholder="Nama lengkap korban">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Terlapor (Opsional)</label>
-                <input type="text" name="terlapor" value="{{ old('terlapor') }}" class="input input-bordered w-full">
+                <input type="text" name="terlapor" value="{{ old('terlapor') }}"
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Nama terlapor (jika ada)">
             </div>
             <div class="md:col-span-2">
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Saksi-saksi (Opsional)</label>
                 <textarea name="saksi_saksi" rows="2"
-                    class="textarea textarea-bordered w-full">{{ old('saksi_saksi') }}</textarea>
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Nama-nama saksi (pisahkan dengan koma)">{{ old('saksi_saksi') }}</textarea>
             </div>
             <div class="md:col-span-2">
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Kronologis Singkat *</label>
                 <textarea name="kronologis_singkat" rows="5" required
-                    class="textarea textarea-bordered w-full">{{ old('kronologis_singkat') }}</textarea>
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Ceritakan kronologis kejadian secara singkat dan jelas...">{{ old('kronologis_singkat') }}</textarea>
             </div>
 
             @if (config('services.turnstile.enabled'))

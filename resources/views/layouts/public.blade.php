@@ -29,7 +29,7 @@
 </head>
 
 <body class="min-h-screen bg-slate-50 font-body text-slate-800">
-    <header class="sticky top-0 z-50 border-b border-white/70 bg-white/90 backdrop-blur">
+    <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
             <a href="{{ route('home') }}"
                 class="inline-flex items-center gap-2 text-lg font-heading font-bold text-navy-700">
@@ -102,31 +102,35 @@
                 <p class="font-semibold text-navy-700 mb-2">Ikuti Kami</p>
                 <div class="flex gap-4">
                     @if(!empty($settings['instagram_url']))
-                    <a href="{{ $settings['instagram_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-pink-600 transition-colors">
-                        <span class="sr-only">Instagram</span>
-                        <x-social-icon name="instagram" />
-                    </a>
+                        <a href="{{ $settings['instagram_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-pink-600 transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <x-social-icon name="instagram" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['tiktok_url']))
-                    <a href="{{ $settings['tiktok_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-black transition-colors">
-                        <span class="sr-only">TikTok</span>
-                        <x-social-icon name="tiktok" />
-                    </a>
+                        <a href="{{ $settings['tiktok_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-black transition-colors">
+                            <span class="sr-only">TikTok</span>
+                            <x-social-icon name="tiktok" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['facebook_url']))
-                    <a href="{{ $settings['facebook_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-blue-600 transition-colors">
-                        <span class="sr-only">Facebook</span>
-                        <x-social-icon name="facebook" />
-                    </a>
+                        <a href="{{ $settings['facebook_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-blue-600 transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <x-social-icon name="facebook" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['youtube_url']))
-                    <a href="{{ $settings['youtube_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-red-600 transition-colors">
-                        <span class="sr-only">YouTube</span>
-                        <x-social-icon name="youtube" />
-                    </a>
+                        <a href="{{ $settings['youtube_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-red-600 transition-colors">
+                            <span class="sr-only">YouTube</span>
+                            <x-social-icon name="youtube" />
+                        </a>
                     @endif
                 </div>
             </div>
