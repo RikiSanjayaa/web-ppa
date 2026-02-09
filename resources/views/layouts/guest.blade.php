@@ -6,6 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'PPA PPO') }} - Login Admin</title>
+        <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +21,11 @@
         <div class="min-h-screen flex flex-col items-center justify-center bg-slate-100 px-4">
             <div>
                 <a href="/">
-                    <span class="font-heading text-2xl font-bold text-navy-700">{{ config('app.name', 'PPA PPO') }}</span>
+                    <span class="inline-flex items-center gap-3">
+                        <img src="{{ asset('logo.png') }}" alt="Logo {{ config('app.name', 'PPA PPO') }}"
+                            class="h-11 w-11 rounded-full object-cover">
+                        <span class="font-heading text-2xl font-bold text-navy-700">{{ config('app.name', 'PPA PPO') }}</span>
+                    </span>
                 </a>
             </div>
 

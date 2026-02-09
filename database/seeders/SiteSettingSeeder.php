@@ -14,7 +14,7 @@ class SiteSettingSeeder extends Seeder
     public function run(): void
     {
         $settings = array_replace(SiteDefaults::values(), [
-            'site_name' => 'PPA / PPO Reskrimsus',
+            'site_name' => 'DITRES PPA PPO POLDA NTB',
             'hero_title' => 'Perlindungan Perempuan dan Anak',
             'hero_subtitle' => 'Kanal aduan resmi, responsif, dan berorientasi pelayanan publik untuk perempuan dan anak.',
             'hotline_wa_number' => (string) env('HOTLINE_WA_NUMBER', '6281234567890'),
