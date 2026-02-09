@@ -119,21 +119,5 @@
         </div>
     </section>
 
-    {{-- FAQ Section --}}
-    @if($faqs->count() > 0)
-    <section class="mt-12" data-aos="fade-up">
-        <h2 class="font-heading text-2xl font-semibold text-navy-700">Pertanyaan Umum (FAQ)</h2>
-        <p class="mt-2 text-slate-600">Jawaban untuk pertanyaan yang sering diajukan.</p>
 
-        <div class="mt-6 grid gap-3">
-            @foreach($faqs as $index => $faq)
-                <x-faq-item
-                    :question="$faq->question"
-                    :answer="$faq->answer"
-                    :open="$index === 0"
-                />
-            @endforeach
-        </div>
-    </section>
-    @endif
 @endsection

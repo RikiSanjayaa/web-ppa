@@ -51,7 +51,7 @@
             </nav>
             <a href="https://wa.me/{{ preg_replace('/\D+/', '', $settings['hotline_wa_number']) }}" target="_blank"
                 rel="noopener" data-hotline-track
-                class="btn btn-sm border-0 bg-coral-500 text-white hover:bg-coral-600">
+                class="hidden lg:inline-flex btn btn-sm border-0 bg-coral-500 text-white hover:bg-coral-600">
                 Hotline WA
             </a>
         </div>

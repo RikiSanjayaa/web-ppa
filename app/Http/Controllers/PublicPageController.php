@@ -29,7 +29,7 @@ class PublicPageController extends Controller
             'newsPosts' => NewsPost::query()->latestPublished()->take(6)->get(),
             'leaders' => Leader::query()->active()->ordered()->take(6)->get(),
             'testimonials' => Testimonial::query()->published()->ordered()->take(8)->get(),
-            'faqs' => Faq::query()->active()->ordered()->get(),
+
             'stats' => [
                 'total_aduan' => Complaint::query()->count(),
                 'aduan_selesai' => Complaint::query()->where('status', Complaint::STATUS_SELESAI)->count(),
