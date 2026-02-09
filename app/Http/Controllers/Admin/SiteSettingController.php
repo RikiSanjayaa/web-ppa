@@ -38,6 +38,7 @@ class SiteSettingController extends Controller
             'instagram_url' => ['nullable', 'url'],
             'facebook_url' => ['nullable', 'url'],
             'youtube_url' => ['nullable', 'url'],
+            'tiktok_url' => ['nullable', 'url'],
         ]);
 
         foreach ($validated as $key => $value) {

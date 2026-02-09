@@ -26,6 +26,7 @@ class SiteDefaults
             'instagram_url' => '',
             'facebook_url' => '',
             'youtube_url' => '',
+            'tiktok_url' => '',
         ];
     }
 }
