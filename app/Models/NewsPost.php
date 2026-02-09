@@ -17,6 +17,7 @@ class NewsPost extends Model
         'excerpt',
         'content',
         'featured_image_path',
+        'image_paths',
         'is_published',
         'published_at',
         'meta_title',
@@ -28,6 +29,7 @@ class NewsPost extends Model
         return [
             'is_published' => 'boolean',
             'published_at' => 'datetime',
+            'image_paths' => 'array',
         ];
     }
 

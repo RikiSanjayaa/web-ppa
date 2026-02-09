@@ -67,7 +67,7 @@ class PublicPageController extends Controller
             'settings' => $this->settings(),
             'documents' => $documentsQuery->paginate(10)->withQueryString(),
             'categories' => Document::query()->published()->whereNotNull('category')->distinct()->orderBy('category')->pluck('category'),
-            'newsPosts' => NewsPost::query()->latestPublished()->take(6)->get(),
+            'faqs' => Faq::query()->active()->ordered()->get(),
             'selectedCategory' => $category,
         ]);
     }
@@ -95,36 +95,39 @@ class PublicPageController extends Controller
 
     public function galeri(Request $request): View
     {
-        $query = GalleryItem::query()->published()->ordered();
+        $query = NewsPost::query()->published()->orderByDesc('published_at');
 
-        $category = $request->query('category');
+        $type = $request->query('type');
         $year = $request->query('year');
 
-        if ($category) {
-            $query->where('category', $category);
+        if ($type) {
+            $query->where('type', $type);
         }
 
         if ($year) {
-            $query->whereYear('event_date', $year);
+            $query->whereYear('published_at', $year);
         }
 
         $driver = DB::connection()->getDriverName();
         $yearExpression = $driver === 'sqlite'
-            ? "CAST(strftime('%Y', event_date) AS INTEGER)"
-            : 'YEAR(event_date)';
+            ? "CAST(strftime('%Y', published_at) AS INTEGER)"
+            : 'YEAR(published_at)';
+
+        // Get years from NewsPost
+        $years = NewsPost::query()
+                ->published()
+                ->whereNotNull('published_at')
+                ->selectRaw("$yearExpression as year")
+                ->distinct()
+                ->orderByDesc('year')
+                ->pluck('year');
 
         return view('public.galeri', [
             'settings' => $this->settings(),
-            'galleryItems' => $query->paginate(12)->withQueryString(),
-            'categories' => GalleryItem::query()->published()->whereNotNull('category')->distinct()->orderBy('category')->pluck('category'),
-            'years' => GalleryItem::query()
-                ->published()
-                ->whereNotNull('event_date')
-                ->selectRaw($yearExpression . ' as year')
-                ->distinct()
-                ->orderByDesc('year')
-                ->pluck('year'),
-            'selectedCategory' => $category,
+            'newsPosts' => $query->paginate(12)->withQueryString(),
+            'types' => ['berita' => 'Berita', 'event' => 'Event'],
+            'years' => $years,
+            'selectedType' => $type,
             'selectedYear' => $year,
         ]);
     }

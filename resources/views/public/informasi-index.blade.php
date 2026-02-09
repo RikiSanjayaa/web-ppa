@@ -52,22 +52,21 @@
         <div class="mt-5">{{ $documents->links() }}</div>
     </section>
 
-    <section class="mt-10" data-aos="fade-up">
-        <h2 class="font-heading text-2xl font-semibold text-navy-700">Berita & Event</h2>
+    {{-- FAQ Section --}}
+    @if($faqs->count() > 0)
+    <section class="mt-12" data-aos="fade-up">
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Pertanyaan Umum (FAQ)</h2>
+        <p class="mt-2 text-slate-600">Jawaban untuk pertanyaan yang sering diajukan.</p>
 
-        <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            @forelse ($newsPosts as $post)
-                <article class="rounded-2xl border border-slate-200 bg-white p-4">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-coral-600">{{ $post->type }}</p>
-                    <h3 class="mt-1 font-heading text-lg font-semibold text-slate-800">{{ $post->title }}</h3>
-                    <p class="mt-2 line-clamp-3 text-sm text-slate-600">{{ $post->excerpt ?: Str::limit(strip_tags($post->content), 110) }}</p>
-                    <a href="{{ route('informasi.show', $post->slug) }}" class="mt-3 inline-block text-sm font-semibold text-navy-700">Lihat detail</a>
-                </article>
-            @empty
-                <div class="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500 md:col-span-2 lg:col-span-3">
-                    Belum ada berita/event terbaru.
-                </div>
-            @endforelse
+        <div class="mt-6 grid gap-3">
+            @foreach($faqs as $index => $faq)
+                <x-faq-item
+                    :question="$faq->question"
+                    :answer="$faq->answer"
+                    :open="$index === 0"
+                />
+            @endforeach
         </div>
     </section>
+    @endif
 @endsection

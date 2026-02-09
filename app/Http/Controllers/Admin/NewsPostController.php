@@ -37,8 +37,13 @@ class NewsPostController extends Controller
     {
         $validated = $this->validatedData($request);
 
-        if ($request->hasFile('featured_image')) {
-            $validated['featured_image_path'] = $request->file('featured_image')->store('news', 'public');
+        if ($request->hasFile('images')) {
+            $paths = [];
+            foreach ($request->file('images') as $image) {
+                $paths[] = $image->store('news', 'public');
+            }
+            $validated['image_paths'] = $paths;
+            $validated['featured_image_path'] = $paths[0] ?? null;
         }
 
         $validated['slug'] = $this->uniqueSlug($validated['slug'] ?? null, $validated['title']);
@@ -79,12 +84,34 @@ class NewsPostController extends Controller
     {
         $validated = $this->validatedData($request, $newsPost);
 
-        if ($request->hasFile('featured_image')) {
-            if ($newsPost->featured_image_path) {
-                Storage::disk('public')->delete($newsPost->featured_image_path);
-            }
-            $validated['featured_image_path'] = $request->file('featured_image')->store('news', 'public');
+        // Handle Image Deletion
+        $currentImages = $newsPost->image_paths ?? [];
+        if (!$currentImages && $newsPost->featured_image_path) {
+            $currentImages = [$newsPost->featured_image_path];
         }
+
+        if ($request->has('delete_images')) {
+            $deletedImages = $request->input('delete_images');
+            foreach ($deletedImages as $delPath) {
+                if (in_array($delPath, $currentImages)) {
+                    Storage::disk('public')->delete($delPath);
+                    $currentImages = array_diff($currentImages, [$delPath]);
+                }
+            }
+        }
+        
+        // Handle New Uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Limit total to 5
+                if (count($currentImages) >= 5) break;
+                $currentImages[] = $image->store('news', 'public');
+            }
+        }
+
+        // Update Paths
+        $validated['image_paths'] = array_values($currentImages);
+        $validated['featured_image_path'] = $validated['image_paths'][0] ?? null;
 
         $validated['slug'] = $this->uniqueSlug($validated['slug'] ?? null, $validated['title'], $newsPost);
         $validated['is_published'] = (bool) ($validated['is_published'] ?? false);
@@ -128,7 +155,8 @@ class NewsPostController extends Controller
             'type' => ['required', 'in:berita,event'],
             'excerpt' => ['nullable', 'string'],
             'content' => ['required', 'string'],
-            'featured_image' => ['nullable', 'image', 'max:5120'],
+            'images' => ['nullable', 'array', 'max:5'],
+            'images.*' => ['image', 'max:5120'],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
             'meta_title' => ['nullable', 'string', 'max:255'],

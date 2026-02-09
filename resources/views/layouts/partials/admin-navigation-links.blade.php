@@ -69,11 +69,7 @@
             <x-admin-icon name="documents" class="h-4 w-4" />
             <span>Dokumen UU</span>
         </a>
-        <a href="{{ route('admin.gallery-items.index') }}"
-            class="admin-nav-child-link {{ request()->routeIs('admin.gallery-items.*') ? 'admin-nav-child-link-active' : '' }}">
-            <x-admin-icon name="gallery" class="h-4 w-4" />
-            <span>Galeri</span>
-        </a>
+
         <a href="{{ route('admin.faqs.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.faqs.*') ? 'admin-nav-child-link-active' : '' }}">
             <x-admin-icon name="faq" class="h-4 w-4" />

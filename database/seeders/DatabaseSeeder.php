@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             LeaderSeeder::class,
             NewsPostSeeder::class,
             DocumentSeeder::class,
-            GalleryItemSeeder::class,
+
             TestimonialSeeder::class,
             FaqSeeder::class,
             ComplaintSeeder::class,

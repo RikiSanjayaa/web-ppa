@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\FaqController;
-use App\Http\Controllers\Admin\GalleryItemController;
+
 use App\Http\Controllers\Admin\HotlineAccessController as AdminHotlineAccessController;
 use App\Http\Controllers\Admin\LeaderController;
 use App\Http\Controllers\Admin\NewsPostController;
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::resource('news-posts', NewsPostController::class)->except('show');
     Route::resource('leaders', LeaderController::class)->except('show');
     Route::resource('documents', DocumentController::class)->except('show');
-    Route::resource('gallery-items', GalleryItemController::class)->except('show');
+
     Route::resource('testimonials', TestimonialController::class)->except('show');
     Route::resource('faqs', FaqController::class)->except('show');
 
