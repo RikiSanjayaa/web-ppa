@@ -4,18 +4,12 @@
 @section('meta_description', 'Layanan resmi perlindungan perempuan dan anak: hotline WA, aduan online, informasi hukum, dan galeri kegiatan.')
 
 @section('content')
-    @php
-        $waNumber = preg_replace('/\D+/', '', $settings['hotline_wa_number']);
-        $waUrl = "https://wa.me/{$waNumber}";
-    @endphp
-
     {{-- Hero Section --}}
     <x-hero
         :title="$settings['hero_title']"
         :subtitle="$settings['hero_subtitle']"
-        :cta-text="$settings['hero_cta_text'] ?? 'Laporkan via WhatsApp'"
-        :cta-url="$waUrl"
-        :hotline-number="$settings['contact_phone']"
+        cta-text="Buat Laporan Pengaduan"
+        :cta-url="route('layanan-masyarakat')"
         :stats="[
             'Total Aduan' => $stats['total_aduan'],
             'Aduan Selesai' => $stats['aduan_selesai'],
@@ -25,7 +19,7 @@
     />
 
     {{-- What Can Be Reported --}}
-    <section class="mt-12" data-aos="fade-up">
+    <section class="mt-12">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Apa yang Bisa Dilaporkan?</h2>
         <p class="mt-2 text-slate-600">Laporkan segala bentuk kekerasan atau kejahatan terhadap perempuan dan anak.</p>
 

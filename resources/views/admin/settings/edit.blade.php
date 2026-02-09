@@ -62,10 +62,14 @@
                 <input type="url" name="instagram_url" value="{{ old('instagram_url', $settings['instagram_url']) }}" class="input input-bordered w-full">
             </div>
             <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-700">TikTok URL</label>
+                <input type="url" name="tiktok_url" value="{{ old('tiktok_url', $settings['tiktok_url'] ?? '') }}" class="input input-bordered w-full">
+            </div>
+            <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Facebook URL</label>
                 <input type="url" name="facebook_url" value="{{ old('facebook_url', $settings['facebook_url']) }}" class="input input-bordered w-full">
             </div>
-            <div class="md:col-span-2">
+            <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">YouTube URL</label>
                 <input type="url" name="youtube_url" value="{{ old('youtube_url', $settings['youtube_url']) }}" class="input input-bordered w-full">
             </div>
