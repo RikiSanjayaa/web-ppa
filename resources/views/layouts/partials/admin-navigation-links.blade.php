@@ -78,7 +78,7 @@
         <a href="{{ route('admin.leaders.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.leaders.*') ? 'admin-nav-child-link-active' : '' }}">
             <x-admin-icon name="leaders" class="h-4 w-4" />
-            <span>Atasan</span>
+            <span>Pimpinan</span>
         </a>
         <a href="{{ route('admin.testimonials.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.testimonials.*') ? 'admin-nav-child-link-active' : '' }}">

@@ -22,6 +22,7 @@ class ActivityLogController extends Controller
 
         $logs = ActivityLog::query()
             ->with('user:id,name')
+            ->where('action', '!=', 'admin.page_accessed')
             ->when($filters['q'] ?? null, function ($query, string $keyword) {
                 $query->where(function ($inner) use ($keyword) {
                     $inner
@@ -31,10 +32,10 @@ class ActivityLogController extends Controller
                         ->orWhere('ip_address', 'like', '%' . $keyword . '%');
                 });
             })
-            ->when($filters['action'] ?? null, fn ($query, string $action) => $query->where('action', $action))
-            ->when($filters['user_id'] ?? null, fn ($query, int $userId) => $query->where('user_id', $userId))
-            ->when($filters['date_from'] ?? null, fn ($query, string $dateFrom) => $query->whereDate('created_at', '>=', $dateFrom))
-            ->when($filters['date_to'] ?? null, fn ($query, string $dateTo) => $query->whereDate('created_at', '<=', $dateTo))
+            ->when($filters['action'] ?? null, fn($query, string $action) => $query->where('action', $action))
+            ->when($filters['user_id'] ?? null, fn($query, int $userId) => $query->where('user_id', $userId))
+            ->when($filters['date_from'] ?? null, fn($query, string $dateFrom) => $query->whereDate('created_at', '>=', $dateFrom))
+            ->when($filters['date_to'] ?? null, fn($query, string $dateTo) => $query->whereDate('created_at', '<=', $dateTo))
             ->latest()
             ->paginate(30)
             ->withQueryString();

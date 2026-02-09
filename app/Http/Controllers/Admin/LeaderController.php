@@ -43,9 +43,9 @@ class LeaderController extends Controller
 
         $leader = Leader::query()->create($validated);
 
-        ActivityLogger::log('leader.created', $leader, 'Data atasan dibuat.');
+        ActivityLogger::log('leader.created', $leader, 'Data pimpinan dibuat.');
 
-        return redirect()->route('admin.leaders.index')->with('status', 'Data atasan berhasil dibuat.');
+        return redirect()->route('admin.leaders.index')->with('status', 'Data pimpinan berhasil dibuat.');
     }
 
     /**
@@ -84,9 +84,9 @@ class LeaderController extends Controller
 
         $leader->update($validated);
 
-        ActivityLogger::log('leader.updated', $leader, 'Data atasan diperbarui.');
+        ActivityLogger::log('leader.updated', $leader, 'Data pimpinan diperbarui.');
 
-        return redirect()->route('admin.leaders.index')->with('status', 'Data atasan berhasil diperbarui.');
+        return redirect()->route('admin.leaders.index')->with('status', 'Data pimpinan berhasil diperbarui.');
     }
 
     /**
@@ -100,9 +100,9 @@ class LeaderController extends Controller
 
         $leader->delete();
 
-        ActivityLogger::log('leader.deleted', $leader, 'Data atasan dihapus.');
+        ActivityLogger::log('leader.deleted', $leader, 'Data pimpinan dihapus.');
 
-        return redirect()->route('admin.leaders.index')->with('status', 'Data atasan berhasil dihapus.');
+        return redirect()->route('admin.leaders.index')->with('status', 'Data pimpinan berhasil dihapus.');
     }
 
     private function validatedData(Request $request): array

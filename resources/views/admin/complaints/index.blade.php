@@ -5,40 +5,39 @@
 
 @section('content')
     <section class="rounded-2xl bg-white p-5 shadow-sm">
-        <form method="GET" action="{{ route('admin.complaints.index') }}" class="grid gap-3 md:grid-cols-5 md:items-end">
-            <label class="form-control">
-                <span class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Status</span>
-                <select name="status" class="select select-bordered">
-                    <option value="">Semua</option>
-                    @foreach ($statuses as $status)
-                        <option value="{{ $status }}" @selected(($filters['status'] ?? '') === $status)>{{ $status }}</option>
-                    @endforeach
-                </select>
-            </label>
-            <label class="form-control">
-                <span class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Dari</span>
-                <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" class="input input-bordered">
-            </label>
-            <label class="form-control">
-                <span class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Sampai</span>
-                <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}" class="input input-bordered">
-            </label>
-            <label class="form-control md:col-span-2">
-                <span class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Cari</span>
-                <input type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Nama, tempat, kronologis..."
-                    class="input input-bordered">
-            </label>
+        <form method="GET" action="{{ route('admin.complaints.index') }}" class="grid gap-3 lg:grid-cols-5">
+            <input type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Nama, tempat, kronologis..."
+                class="rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none md:col-span-2">
 
-            <div class="md:col-span-5 flex flex-wrap items-center gap-2">
-                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Filter</button>
+            <select name="status"
+                class="rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none">
+                <option value="">Semua Status</option>
+                @foreach ($statuses as $status)
+                    <option value="{{ $status }}" @selected(($filters['status'] ?? '') === $status)>{{ ucfirst($status) }}
+                    </option>
+                @endforeach
+            </select>
+
+            <input type="date" name="date_from" value="{{ $filters['date_from'] ?? '' }}" placeholder="Dari Tanggal"
+                class="rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none">
+
+            <input type="date" name="date_to" value="{{ $filters['date_to'] ?? '' }}" placeholder="Sampai Tanggal"
+                class="rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none">
+
+            <div class="flex flex-wrap gap-2 lg:col-span-5">
+                <button type="submit"
+                    class="btn btn-sm rounded-lg border-0 bg-navy-700 text-white hover:bg-navy-800">Filter</button>
                 <a href="{{ route('admin.complaints.index') }}"
-                    class="btn border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Reset</a>
-                <a href="{{ route('admin.complaints.export.excel', request()->query()) }}"
-                    class="btn border-0 bg-teal-600 text-white hover:bg-teal-700">Export Excel</a>
-                <a href="{{ route('admin.complaints.export.pdf', request()->query()) }}"
-                    class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Export PDF</a>
-                <a href="{{ route('admin.complaints.create') }}"
-                    class="btn border-0 bg-orange-500 text-white hover:bg-orange-600">Buat Manual</a>
+                    class="btn btn-sm rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Reset</a>
+
+                <div class="ml-auto flex gap-2">
+                    <a href="{{ route('admin.complaints.export.excel', request()->query()) }}"
+                        class="btn btn-sm rounded-lg border-0 bg-teal-600 text-white hover:bg-teal-700">Export Excel</a>
+                    <a href="{{ route('admin.complaints.export.pdf', request()->query()) }}"
+                        class="btn btn-sm rounded-lg border-0 bg-coral-500 text-white hover:bg-coral-600">Export PDF</a>
+                    <a href="{{ route('admin.complaints.create') }}"
+                        class="btn btn-sm rounded-lg border-0 bg-orange-500 text-white hover:bg-orange-600">Buat Manual</a>
+                </div>
             </div>
         </form>
     </section>
@@ -64,7 +63,16 @@
                             <td>{{ $complaint->nama_lengkap }}</td>
                             <td>{{ $complaint->masked_no_hp }}</td>
                             <td>{{ $complaint->tempat_kejadian }}</td>
-                            <td><span class="badge badge-outline">{{ $complaint->status }}</span></td>
+                            <td>
+                                <span @class([
+                                    'badge border-0 text-white',
+                                    'bg-red-500' => $complaint->status === \App\Models\Complaint::STATUS_BARU,
+                                    'bg-orange-500' => $complaint->status === \App\Models\Complaint::STATUS_DIPROSES,
+                                    'bg-green-500' => $complaint->status === \App\Models\Complaint::STATUS_SELESAI,
+                                ])>
+                                    {{ ucfirst($complaint->status) }}
+                                </span>
+                            </td>
                             <td>{{ $complaint->created_at->format('d-m-Y H:i') }}</td>
                             <td>
                                 <a href="{{ route('admin.complaints.show', $complaint) }}"

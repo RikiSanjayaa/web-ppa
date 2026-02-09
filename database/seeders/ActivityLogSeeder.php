@@ -52,7 +52,7 @@ class ActivityLogSeeder extends Seeder
             [
                 'action' => 'leader.updated',
                 'subject' => Leader::query()->latest('id')->first(),
-                'description' => 'Data atasan diperbarui.',
+                'description' => 'Data pimpinan diperbarui.',
                 'properties' => ['module' => 'leaders'],
             ],
             [

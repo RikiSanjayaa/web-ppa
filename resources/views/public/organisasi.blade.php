@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Organisasi | ' . $settings['site_name'])
-@section('meta_description', 'Profil organisasi, visi misi, dan struktur atasan PPA/PPO.')
+@section('meta_description', 'Profil organisasi, visi misi, dan struktur pimpinan PPA/PPO.')
 
 @section('content')
     <section class="rounded-3xl bg-white p-6 shadow-sm lg:p-10" data-aos="fade-up">

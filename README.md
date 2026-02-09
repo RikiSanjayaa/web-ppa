@@ -4,7 +4,7 @@ Website landing page + admin CMS untuk layanan PPA/PPO dengan fitur:
 
 - Landing page publik: `home`, `organisasi`, `layanan masyarakat`, `informasi`, `galeri`
 - Form aduan publik -> simpan log DB -> redirect otomatis ke WhatsApp hotline
-- Admin panel lengkap: aduan, berita/event, atasan, dokumen UU (PDF), galeri, testimoni, pengaturan situs
+- Admin panel lengkap: aduan, berita/event, pimpinan, dokumen UU (PDF), galeri, testimoni, pengaturan situs
 - Export log aduan: Excel (`.xlsx`) dan PDF (`.pdf`)
 - Proteksi anti-spam form: Cloudflare Turnstile
 - Audit log aktivitas admin untuk perubahan konten utama

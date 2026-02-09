@@ -18,9 +18,9 @@ class DashboardController extends Controller
     public function index(): View
     {
         $periodStart = now()->subDays(13)->startOfDay();
-        $periodDates = collect(range(0, 13))->map(fn (int $offset) => $periodStart->copy()->addDays($offset));
-        $dateKeys = $periodDates->map(fn ($date) => $date->toDateString())->all();
-        $dateLabels = $periodDates->map(fn ($date) => $date->format('d M'))->all();
+        $periodDates = collect(range(0, 13))->map(fn(int $offset) => $periodStart->copy()->addDays($offset));
+        $dateKeys = $periodDates->map(fn($date) => $date->toDateString())->all();
+        $dateLabels = $periodDates->map(fn($date) => $date->format('d M'))->all();
 
         $statusCounts = [
             Complaint::STATUS_BARU => Complaint::query()->where('status', Complaint::STATUS_BARU)->count(),
@@ -51,9 +51,9 @@ class DashboardController extends Controller
         ];
 
         $complaintTrendDatasets = collect(Complaint::availableStatuses())
-            ->map(fn (string $status) => [
+            ->map(fn(string $status) => [
                 'label' => ucfirst($status),
-                'data' => collect($dateKeys)->map(fn (string $day) => $dailyStatusMap[$status][$day] ?? 0)->values()->all(),
+                'data' => collect($dateKeys)->map(fn(string $day) => $dailyStatusMap[$status][$day] ?? 0)->values()->all(),
                 'borderColor' => $statusColors[$status],
                 'backgroundColor' => $statusColors[$status],
             ])
@@ -86,7 +86,7 @@ class DashboardController extends Controller
                 'berita_event' => NewsPost::query()->count(),
                 'dokumen' => Document::query()->count(),
                 'galeri' => GalleryItem::query()->count(),
-                'atasan' => Leader::query()->count(),
+                'pimpinan' => Leader::query()->count(),
                 'testimoni' => Testimonial::query()->count(),
             ],
             'charts' => [
@@ -104,11 +104,11 @@ class DashboardController extends Controller
                 ],
                 'adminActivity' => [
                     'labels' => $dateLabels,
-                    'data' => collect($dateKeys)->map(fn (string $day) => (int) ($activityByDay[$day] ?? 0))->all(),
+                    'data' => collect($dateKeys)->map(fn(string $day) => (int) ($activityByDay[$day] ?? 0))->all(),
                 ],
                 'topActions' => [
                     'labels' => $topActions->pluck('action')->all(),
-                    'data' => $topActions->pluck('total')->map(fn ($total) => (int) $total)->all(),
+                    'data' => $topActions->pluck('total')->map(fn($total) => (int) $total)->all(),
                 ],
             ],
             'recentComplaints' => Complaint::query()->latest()->take(8)->get(),

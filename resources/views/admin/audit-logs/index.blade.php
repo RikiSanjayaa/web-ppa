@@ -68,7 +68,7 @@
                         <th>Deskripsi</th>
                         <th>Target</th>
                         <th>IP</th>
-                        <th>Detail</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -86,16 +86,7 @@
                                 @endif
                             </td>
                             <td class="text-xs text-slate-600">{{ $log->ip_address ?: '-' }}</td>
-                            <td class="max-w-sm">
-                                @if ($log->properties)
-                                    <details>
-                                        <summary class="cursor-pointer text-xs font-semibold text-navy-700">Lihat</summary>
-                                        <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-900 p-3 text-xs text-slate-100">{{ json_encode($log->properties, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
-                                    </details>
-                                @else
-                                    <span class="text-xs text-slate-400">-</span>
-                                @endif
-                            </td>
+
                         </tr>
                     @empty
                         <tr>

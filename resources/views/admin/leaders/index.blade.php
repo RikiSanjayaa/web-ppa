@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Atasan')
-@section('page_title', 'Data Atasan')
+@section('title', 'Admin Pimpinan')
+@section('page_title', 'Data Pimpinan')
 
 @section('content')
     <div class="mb-4 flex justify-end">
         <a href="{{ route('admin.leaders.create') }}" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Tambah
-            Atasan</a>
+            Pimpinan</a>
     </div>
 
     <section class="rounded-2xl bg-white p-5 shadow-sm">
@@ -51,7 +51,7 @@
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('admin.leaders.edit', $leader) }}" class="btn btn-sm">Edit</a>
                                     <form method="POST" action="{{ route('admin.leaders.destroy', $leader) }}"
-                                        onsubmit="return confirm('Hapus data atasan ini?')">
+                                        onsubmit="return confirm('Hapus data pimpinan ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button
@@ -62,7 +62,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-slate-500">Belum ada data atasan.</td>
+                            <td colspan="6" class="text-center text-slate-500">Belum ada data pimpinan.</td>
                         </tr>
                     @endforelse
                 </tbody>

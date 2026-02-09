@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Atasan')
-@section('page_title', 'Tambah Atasan')
+@section('title', 'Tambah Pimpinan')
+@section('page_title', 'Tambah Pimpinan')
 
 @section('content')
     <section class="rounded-2xl bg-white p-5 shadow-sm">
