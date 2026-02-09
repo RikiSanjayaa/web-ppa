@@ -25,32 +25,15 @@
             <a href="{{ route('admin.dashboard') }}"
                 class="mb-6 flex items-center gap-3 font-heading text-xl font-semibold">
                 <img src="{{ asset('logo.png') }}" alt="Logo Admin PPA/PPO" class="h-10 w-10 rounded-full object-cover">
-                <span>Admin PPA/PPO</span>
+                <div class="flex flex-col">
+                    <span>Admin Panel</span>
+                    <span
+                        class="text-xs font-normal text-slate-400">{{ \App\Models\SiteSetting::getValue('site_name', 'PPA/PPO') }}</span>
+                </div>
             </a>
-            <nav class="space-y-1 text-sm">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="admin-link {{ request()->routeIs('admin.dashboard') ? 'admin-link-active' : '' }}">Dashboard</a>
-                <a href="{{ route('admin.complaints.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.complaints.*') ? 'admin-link-active' : '' }}">Aduan</a>
-                <a href="{{ route('admin.hotline-accesses.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.hotline-accesses.*') ? 'admin-link-active' : '' }}">Akses
-                    Hotline</a>
-                <a href="{{ route('admin.news-posts.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.news-posts.*') ? 'admin-link-active' : '' }}">Berita
-                    & Event</a>
-                <a href="{{ route('admin.faqs.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.faqs.*') ? 'admin-link-active' : '' }}">FAQ</a>
-                <a href="{{ route('admin.leaders.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.leaders.*') ? 'admin-link-active' : '' }}">Atasan</a>
-                <a href="{{ route('admin.documents.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.documents.*') ? 'admin-link-active' : '' }}">Dokumen
-                    UU</a>
-                <a href="{{ route('admin.gallery-items.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.gallery-items.*') ? 'admin-link-active' : '' }}">Galeri</a>
-                <a href="{{ route('admin.testimonials.index') }}"
-                    class="admin-link {{ request()->routeIs('admin.testimonials.*') ? 'admin-link-active' : '' }}">Testimoni</a>
-                <a href="{{ route('admin.settings.edit') }}"
-                    class="admin-link {{ request()->routeIs('admin.settings.*') ? 'admin-link-active' : '' }}">Pengaturan</a>
+            <p class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-widest text-slate-400">Navigation</p>
+            <nav class="space-y-2 text-sm">
+                @include('layouts.partials.admin-navigation-links')
             </nav>
         </aside>
 
@@ -73,23 +56,8 @@
                 </div>
             </header>
 
-            <nav class="flex gap-2 overflow-x-auto border-b border-slate-200 bg-white px-4 py-2 text-xs lg:hidden">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.dashboard') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Dashboard</a>
-                <a href="{{ route('admin.complaints.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.complaints.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Aduan</a>
-                <a href="{{ route('admin.hotline-accesses.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.hotline-accesses.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Hotline</a>
-                <a href="{{ route('admin.news-posts.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.news-posts.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Berita</a>
-                <a href="{{ route('admin.faqs.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.faqs.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">FAQ</a>
-                <a href="{{ route('admin.documents.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.documents.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Dokumen</a>
-                <a href="{{ route('admin.gallery-items.index') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.gallery-items.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Galeri</a>
-                <a href="{{ route('admin.settings.edit') }}"
-                    class="rounded-full px-3 py-1 {{ request()->routeIs('admin.settings.*') ? 'bg-navy-700 text-white' : 'bg-slate-100 text-slate-700' }}">Setting</a>
+            <nav class="space-y-2 border-b border-navy-800 bg-navy-700 px-4 py-3 text-sm text-slate-100 lg:hidden">
+                @include('layouts.partials.admin-navigation-links')
             </nav>
 
             <main class="flex-1 px-4 py-6 lg:px-8">

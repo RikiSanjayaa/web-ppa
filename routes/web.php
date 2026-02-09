@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\FaqController;
@@ -32,10 +33,13 @@ Route::get('/galeri', [PublicPageController::class, 'galeri'])->name('galeri.ind
 
 Route::redirect('/dashboard', '/admin')->middleware('auth')->name('dashboard');
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/audit-logs', [ActivityLogController::class, 'index'])->name('audit-logs.index');
 
     Route::get('/aduan', [AdminComplaintController::class, 'index'])->name('complaints.index');
+    Route::get('/aduan/create', [AdminComplaintController::class, 'create'])->name('complaints.create');
+    Route::post('/aduan', [AdminComplaintController::class, 'store'])->name('complaints.store');
     Route::get('/aduan/export/excel', [AdminComplaintController::class, 'exportExcel'])->name('complaints.export.excel');
     Route::get('/aduan/export/pdf', [AdminComplaintController::class, 'exportPdf'])->name('complaints.export.pdf');
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');

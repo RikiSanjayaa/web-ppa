@@ -25,14 +25,20 @@
             </label>
             <label class="form-control md:col-span-2">
                 <span class="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Cari</span>
-                <input type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Nama, tempat, kronologis..." class="input input-bordered">
+                <input type="text" name="q" value="{{ $filters['q'] ?? '' }}" placeholder="Nama, tempat, kronologis..."
+                    class="input input-bordered">
             </label>
 
             <div class="md:col-span-5 flex flex-wrap items-center gap-2">
                 <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Filter</button>
-                <a href="{{ route('admin.complaints.index') }}" class="btn border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Reset</a>
-                <a href="{{ route('admin.complaints.export.excel', request()->query()) }}" class="btn border-0 bg-teal-600 text-white hover:bg-teal-700">Export Excel</a>
-                <a href="{{ route('admin.complaints.export.pdf', request()->query()) }}" class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Export PDF</a>
+                <a href="{{ route('admin.complaints.index') }}"
+                    class="btn border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Reset</a>
+                <a href="{{ route('admin.complaints.export.excel', request()->query()) }}"
+                    class="btn border-0 bg-teal-600 text-white hover:bg-teal-700">Export Excel</a>
+                <a href="{{ route('admin.complaints.export.pdf', request()->query()) }}"
+                    class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Export PDF</a>
+                <a href="{{ route('admin.complaints.create') }}"
+                    class="btn border-0 bg-orange-500 text-white hover:bg-orange-600">Buat Manual</a>
             </div>
         </form>
     </section>
@@ -61,7 +67,8 @@
                             <td><span class="badge badge-outline">{{ $complaint->status }}</span></td>
                             <td>{{ $complaint->created_at->format('d-m-Y H:i') }}</td>
                             <td>
-                                <a href="{{ route('admin.complaints.show', $complaint) }}" class="btn btn-sm border-0 bg-navy-700 text-white hover:bg-navy-800">Detail</a>
+                                <a href="{{ route('admin.complaints.show', $complaint) }}"
+                                    class="btn btn-sm border-0 bg-navy-700 text-white hover:bg-navy-800">Detail</a>
                             </td>
                         </tr>
                     @empty

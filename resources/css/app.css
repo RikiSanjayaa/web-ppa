@@ -30,10 +30,50 @@
     }
 
     .admin-link {
-        @apply block rounded-lg px-3 py-2 text-slate-200 transition hover:bg-navy-600 hover:text-white;
+        @apply flex items-center gap-2 rounded-lg px-3 py-2 text-slate-200 transition hover:bg-navy-600 hover:text-white;
     }
 
     .admin-link-active {
+        @apply bg-white/15 text-white;
+    }
+
+    .admin-nav-group {
+        @apply rounded-lg border border-white/10 bg-white/5;
+    }
+
+    .admin-nav-group[open] {
+        @apply border-white/20 bg-white/10;
+    }
+
+    .admin-nav-trigger {
+        @apply flex list-none cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/10;
+    }
+
+    .admin-nav-trigger::-webkit-details-marker {
+        display: none;
+    }
+
+    .admin-nav-trigger-label {
+        @apply inline-flex items-center gap-2;
+    }
+
+    .admin-nav-chevron {
+        @apply h-4 w-4 text-slate-300 transition-transform;
+    }
+
+    .admin-nav-group[open] .admin-nav-chevron {
+        @apply rotate-180;
+    }
+
+    .admin-nav-children {
+        @apply space-y-1 px-2 pb-2;
+    }
+
+    .admin-nav-child-link {
+        @apply flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white;
+    }
+
+    .admin-nav-child-link-active {
         @apply bg-white/15 text-white;
     }
 }

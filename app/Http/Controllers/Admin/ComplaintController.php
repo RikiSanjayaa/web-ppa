@@ -32,6 +32,44 @@ class ComplaintController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('admin.complaints.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'nik' => ['nullable', 'string', 'max:16'],
+            'no_hp' => ['required', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'alamat' => ['nullable', 'string'],
+            'tempat_kejadian' => ['required', 'string', 'max:255'],
+            'waktu_kejadian' => ['required', 'date'],
+            'kronologis_singkat' => ['required', 'string'],
+            'korban' => ['nullable', 'string', 'max:255'],
+            'terlapor' => ['nullable', 'string', 'max:255'],
+            'saksi_saksi' => ['nullable', 'string'],
+        ]);
+
+        $complaint = Complaint::create(array_merge($validated, [
+            'status' => Complaint::STATUS_BARU,
+            'channel' => 'dibuat oleh ' . $request->user()->name,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]));
+
+        ActivityLogger::log(
+            'complaint.created_by_admin',
+            $complaint,
+            'Aduan dibuat manual oleh admin.',
+        );
+
+        return redirect()->route('admin.complaints.index')
+            ->with('status', 'Aduan berhasil dibuat.');
+    }
+
     public function show(Complaint $complaint)
     {
         $complaint->load(['statusHistories.changer']);
@@ -45,7 +83,7 @@ class ComplaintController extends Controller
     public function updateStatus(Request $request, Complaint $complaint)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:'.implode(',', Complaint::availableStatuses())],
+            'status' => ['required', 'in:' . implode(',', Complaint::availableStatuses())],
             'note' => ['nullable', 'string'],
         ]);
 
@@ -84,7 +122,7 @@ class ComplaintController extends Controller
     {
         $filters = $request->only(['status', 'date_from', 'date_to', 'q']);
 
-        return Excel::download(new ComplaintsExport($filters), 'aduan-'.now()->format('YmdHis').'.xlsx');
+        return Excel::download(new ComplaintsExport($filters), 'aduan-' . now()->format('YmdHis') . '.xlsx');
     }
 
     public function exportPdf(Request $request): Response
@@ -98,6 +136,6 @@ class ComplaintController extends Controller
             'generatedAt' => now(),
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->download('aduan-'.now()->format('YmdHis').'.pdf');
+        return $pdf->download('aduan-' . now()->format('YmdHis') . '.pdf');
     }
 }

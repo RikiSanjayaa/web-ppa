@@ -14,6 +14,10 @@ class ActivityLogger
         /** @var Request|null $request */
         $request = request();
 
+        if ($request) {
+            $request->attributes->set('activity_logged', true);
+        }
+
         ActivityLog::query()->create([
             'user_id' => Auth::id(),
             'action' => $action,

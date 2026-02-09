@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DocumentSeeder::class,
             GalleryItemSeeder::class,
             TestimonialSeeder::class,
+            FaqSeeder::class,
             ComplaintSeeder::class,
             ActivityLogSeeder::class,
         ]);

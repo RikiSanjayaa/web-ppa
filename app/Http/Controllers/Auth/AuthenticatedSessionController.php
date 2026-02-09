@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        ActivityLogger::log('admin.auth.login', null, 'Admin berhasil masuk ke panel.');
+
         return redirect()->intended(route('admin.dashboard', absolute: false));
     }
 
@@ -45,6 +48,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if ($request->user()?->is_admin) {
+            ActivityLogger::log('admin.auth.logout', null, 'Admin keluar dari panel.');
+        }
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

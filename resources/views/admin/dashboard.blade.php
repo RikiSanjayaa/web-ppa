@@ -6,70 +6,174 @@
 @section('content')
     <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <article class="rounded-2xl bg-white p-5 shadow-sm">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Aduan Baru</p>
-            <p class="mt-2 text-3xl font-bold text-navy-700">{{ $stats['aduan_baru'] }}</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">Total Aduan</p>
+            <p class="mt-2 text-3xl font-bold text-navy-700">{{ number_format($kpis['total_aduan']) }}</p>
         </article>
         <article class="rounded-2xl bg-white p-5 shadow-sm">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Aduan Diproses</p>
-            <p class="mt-2 text-3xl font-bold text-amber-600">{{ $stats['aduan_diproses'] }}</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">Aduan 7 Hari</p>
+            <p class="mt-2 text-3xl font-bold text-coral-600">{{ number_format($kpis['aduan_7_hari']) }}</p>
         </article>
         <article class="rounded-2xl bg-white p-5 shadow-sm">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Aduan Selesai</p>
-            <p class="mt-2 text-3xl font-bold text-teal-600">{{ $stats['aduan_selesai'] }}</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">Rasio Selesai</p>
+            <p class="mt-2 text-3xl font-bold text-teal-600">{{ number_format($kpis['rasio_selesai'], 1) }}%</p>
         </article>
         <article class="rounded-2xl bg-white p-5 shadow-sm">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Berita & Event</p>
-            <p class="mt-2 text-3xl font-bold text-coral-600">{{ $stats['berita_event'] }}</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">Aktivitas Admin 7 Hari</p>
+            <p class="mt-2 text-3xl font-bold text-amber-600">{{ number_format($kpis['aktivitas_admin_7_hari']) }}</p>
         </article>
     </section>
 
-    <section class="mt-6 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-            <h2 class="font-heading text-lg font-semibold text-navy-700">Aduan Terbaru</h2>
-            <div class="mt-4 overflow-x-auto">
-                <table class="table table-zebra">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nama</th>
-                            <th>Status</th>
-                            <th>Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($recentComplaints as $complaint)
-                            <tr>
-                                <td><a href="{{ route('admin.complaints.show', $complaint) }}" class="font-semibold text-navy-700">#{{ $complaint->id }}</a></td>
-                                <td>{{ $complaint->nama_lengkap }}</td>
-                                <td><span class="badge badge-outline">{{ $complaint->status }}</span></td>
-                                <td>{{ $complaint->created_at->format('d-m-Y H:i') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-slate-500">Belum ada aduan.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+    <section class="mt-6 grid gap-6 xl:grid-cols-2">
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="font-heading text-lg font-semibold text-navy-700">Tren Aduan 14 Hari</h2>
+                <span class="text-xs text-slate-500">per status</span>
             </div>
-        </div>
+            <div class="h-80">
+                <canvas id="complaintsTrendChart"></canvas>
+            </div>
+        </article>
 
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-            <h2 class="font-heading text-lg font-semibold text-navy-700">Ringkasan Konten</h2>
-            <div class="mt-4 space-y-3 text-sm">
-                <div class="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
-                    <span>Dokumen</span><strong>{{ $stats['dokumen'] }}</strong>
-                </div>
-                <div class="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
-                    <span>Galeri</span><strong>{{ $stats['galeri'] }}</strong>
-                </div>
-                <div class="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
-                    <span>Atasan</span><strong>{{ $stats['atasan'] }}</strong>
-                </div>
-                <div class="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
-                    <span>Testimoni</span><strong>{{ $stats['testimoni'] }}</strong>
-                </div>
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="font-heading text-lg font-semibold text-navy-700">Distribusi Status Aduan</h2>
+                <span class="text-xs text-slate-500">saat ini</span>
             </div>
-        </div>
+            <div class="h-80">
+                <canvas id="complaintStatusChart"></canvas>
+            </div>
+        </article>
+    </section>
+
+    <section class="mt-6 grid gap-6">
+        <article class="rounded-2xl bg-white p-5 shadow-sm">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="font-heading text-lg font-semibold text-navy-700">Aktivitas Admin 14 Hari</h2>
+                <span class="text-xs text-slate-500">jumlah log harian</span>
+            </div>
+            <div class="h-80">
+                <canvas id="adminActivityChart"></canvas>
+            </div>
+        </article>
     </section>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script>
+        (() => {
+            const charts = @json($charts);
+
+            const commonOptions = {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            boxWidth: 12,
+                            color: '#334155'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#64748b'
+                        },
+                        grid: {
+                            color: '#e2e8f0'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#64748b',
+                            precision: 0
+                        },
+                        grid: {
+                            color: '#e2e8f0'
+                        }
+                    }
+                }
+            };
+
+            const complaintsTrendEl = document.getElementById('complaintsTrendChart');
+            if (complaintsTrendEl) {
+                new Chart(complaintsTrendEl, {
+                    type: 'line',
+                    data: {
+                        labels: charts.complaintsTrend.labels,
+                        datasets: charts.complaintsTrend.datasets.map((dataset) => ({
+                            ...dataset,
+                            tension: 0.3,
+                            borderWidth: 2.5,
+                            pointRadius: 2,
+                            fill: false
+                        }))
+                    },
+                    options: commonOptions
+                });
+            }
+
+            const complaintStatusEl = document.getElementById('complaintStatusChart');
+            if (complaintStatusEl) {
+                new Chart(complaintStatusEl, {
+                    type: 'doughnut',
+                    data: {
+                        labels: charts.complaintStatus.labels,
+                        datasets: [{
+                            data: charts.complaintStatus.data,
+                            backgroundColor: ['#ef4444', '#f59e0b', '#14b8a6']
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 12,
+                                    color: '#334155'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const adminActivityEl = document.getElementById('adminActivityChart');
+            if (adminActivityEl) {
+                new Chart(adminActivityEl, {
+                    type: 'bar',
+                    data: {
+                        labels: charts.adminActivity.labels,
+                        datasets: [{
+                            label: 'Log Aktivitas',
+                            data: charts.adminActivity.data,
+                            backgroundColor: '#334155'
+                        }]
+                    },
+                    options: commonOptions
+                });
+            }
+
+            const topActionsEl = document.getElementById('topActionsChart');
+            if (topActionsEl && charts.topActions.labels.length) {
+                new Chart(topActionsEl, {
+                    type: 'bar',
+                    data: {
+                        labels: charts.topActions.labels,
+                        datasets: [{
+                            label: 'Total',
+                            data: charts.topActions.data,
+                            backgroundColor: '#0f766e'
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        indexAxis: 'y'
+                    }
+                });
+            }
+        })();
+    </script>
+@endpush
