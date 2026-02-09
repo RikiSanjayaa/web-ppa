@@ -76,7 +76,7 @@
                                     <div class="grid grid-rows-[0fr] transition-all duration-300 ease-out group-hover:grid-rows-[1fr]">
                                         <div class="overflow-hidden">
                                             <div class="pt-1.5 opacity-0 transition-opacity duration-500 delay-75 group-hover:opacity-100">
-                                                <div class="h-0.5 w-8 bg-coral-500 mb-1 rounded-full"></div>
+                                                <div class="h-0.5 w-full bg-coral-500 mb-1 rounded-full"></div>
                                                 @if ($leader->bio)
                                                     <p class="text-[11px] sm:text-xs leading-relaxed text-slate-200 line-clamp-3 font-light">
                                                         {{ $leader->bio }}
