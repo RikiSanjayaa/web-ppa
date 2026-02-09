@@ -28,36 +28,40 @@
             <h2 class="font-heading text-xl font-semibold text-navy-700">Kontak Layanan</h2>
             <p class="mt-3 text-sm text-slate-600">{{ $settings['contact_address'] }}</p>
             <p class="mt-2 text-sm text-slate-600">Email: {{ $settings['contact_email'] }}</p>
-            
+
             <div class="mt-5 border-t border-slate-100 pt-4">
                 <p class="mb-3 text-sm font-semibold text-navy-700">Media Sosial</p>
                 <div class="flex gap-4">
                     @if(!empty($settings['instagram_url']))
-                    <a href="{{ $settings['instagram_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-pink-600 transition-colors">
-                        <span class="sr-only">Instagram</span>
-                        <x-social-icon name="instagram" class="h-5 w-5" />
-                    </a>
+                        <a href="{{ $settings['instagram_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-pink-600 transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <x-social-icon name="instagram" class="h-5 w-5" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['tiktok_url']))
-                    <a href="{{ $settings['tiktok_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-black transition-colors">
-                        <span class="sr-only">TikTok</span>
-                        <x-social-icon name="tiktok" class="h-5 w-5" />
-                    </a>
+                        <a href="{{ $settings['tiktok_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-black transition-colors">
+                            <span class="sr-only">TikTok</span>
+                            <x-social-icon name="tiktok" class="h-5 w-5" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['facebook_url']))
-                    <a href="{{ $settings['facebook_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-blue-600 transition-colors">
-                        <span class="sr-only">Facebook</span>
-                        <x-social-icon name="facebook" class="h-5 w-5" />
-                    </a>
+                        <a href="{{ $settings['facebook_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-blue-600 transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <x-social-icon name="facebook" class="h-5 w-5" />
+                        </a>
                     @endif
 
                     @if(!empty($settings['youtube_url']))
-                    <a href="{{ $settings['youtube_url'] }}" target="_blank" rel="noopener" class="text-slate-400 hover:text-red-600 transition-colors">
-                        <span class="sr-only">YouTube</span>
-                        <x-social-icon name="youtube" class="h-5 w-5" />
-                    </a>
+                        <a href="{{ $settings['youtube_url'] }}" target="_blank" rel="noopener"
+                            class="text-slate-400 hover:text-red-600 transition-colors">
+                            <span class="sr-only">YouTube</span>
+                            <x-social-icon name="youtube" class="h-5 w-5" />
+                        </a>
                     @endif
                 </div>
             </div>
@@ -139,8 +143,9 @@
                 </div>
             @endif
 
-            <div class="md:col-span-2">
-                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim Aduan & Lanjut ke
+            <div class="md:col-span-2 flex justify-end">
+                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim Aduan &
+                    Lanjut ke
                     WhatsApp</button>
             </div>
         </form>

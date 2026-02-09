@@ -31,30 +31,37 @@
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Nama Lengkap *</span></label>
-            <input type="text" name="nama_lengkap" class="input input-bordered w-full" value="{{ old('nama_lengkap') }}"
-              required>
+            <input type="text" name="nama_lengkap"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              value="{{ old('nama_lengkap') }}" required>
           </div>
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Nomor HP *</span></label>
-            <input type="text" name="no_hp" class="input input-bordered w-full" value="{{ old('no_hp') }}" required>
+            <input type="text" name="no_hp"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              value="{{ old('no_hp') }}" required>
           </div>
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">NIK *</span></label>
-            <input type="text" name="nik" class="input input-bordered w-full" value="{{ old('nik') }}" maxlength="16"
-              required>
+            <input type="text" name="nik"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              value="{{ old('nik') }}" maxlength="16" required>
           </div>
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Email (Opsional)</span></label>
-            <input type="email" name="email" class="input input-bordered w-full" value="{{ old('email') }}">
+            <input type="email" name="email"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              value="{{ old('email') }}">
           </div>
 
           <div class="form-control md:col-span-2">
             <label class="label"><span class="label-text font-semibold">Alamat *</span></label>
-            <textarea name="alamat" class="textarea textarea-bordered w-full h-24" placeholder="Alamat lengkap pelapor..."
-              required>{{ old('alamat') }}</textarea>
+            <textarea name="alamat"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none h-24"
+              placeholder="Alamat lengkap pelapor..." required>{{ old('alamat') }}</textarea>
           </div>
 
           <!-- Data Kejadian -->
@@ -64,19 +71,22 @@
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Tempat Kejadian *</span></label>
-            <input type="text" name="tempat_kejadian" class="input input-bordered w-full"
+            <input type="text" name="tempat_kejadian"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
               value="{{ old('tempat_kejadian') }}" required>
           </div>
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Waktu Kejadian *</span></label>
-            <input type="date" name="waktu_kejadian" class="input input-bordered w-full"
+            <input type="date" name="waktu_kejadian"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
               value="{{ old('waktu_kejadian') }}" required>
           </div>
 
           <div class="form-control md:col-span-2">
             <label class="label"><span class="label-text font-semibold">Kronologis Singkat *</span></label>
-            <textarea name="kronologis_singkat" class="textarea textarea-bordered w-full h-32"
+            <textarea name="kronologis_singkat"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none h-32"
               placeholder="Ceritakan kronologis kejadian secara singkat..."
               required>{{ old('kronologis_singkat') }}</textarea>
           </div>
@@ -88,19 +98,22 @@
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Identitas Korban *</span></label>
-            <input type="text" name="korban" class="input input-bordered w-full" placeholder="Nama/Inisial Korban"
-              value="{{ old('korban') }}" required>
+            <input type="text" name="korban"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              placeholder="Nama/Inisial Korban" value="{{ old('korban') }}" required>
           </div>
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Identitas Terlapor (Opsional)</span></label>
-            <input type="text" name="terlapor" class="input input-bordered w-full" placeholder="Nama/Inisial Terlapor"
-              value="{{ old('terlapor') }}">
+            <input type="text" name="terlapor"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+              placeholder="Nama/Inisial Terlapor" value="{{ old('terlapor') }}">
           </div>
 
           <div class="form-control md:col-span-2">
             <label class="label"><span class="label-text font-semibold">Saksi-saksi (Opsional)</span></label>
-            <textarea name="saksi_saksi" class="textarea textarea-bordered w-full h-24"
+            <textarea name="saksi_saksi"
+              class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none h-24"
               placeholder="Sebutkan saksi-saksi jika ada...">{{ old('saksi_saksi') }}</textarea>
           </div>
         </div>
