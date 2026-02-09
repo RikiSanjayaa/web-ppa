@@ -105,7 +105,7 @@
     <section class="mt-12" data-aos="fade-up">
         <div class="mb-4 flex items-center justify-between">
             <h2 class="font-heading text-2xl font-semibold text-navy-700">Berita & Event Terbaru</h2>
-            <a href="{{ route('informasi.index') }}" class="text-sm font-semibold text-coral-600 hover:text-coral-700">Lihat semua</a>
+            <a href="{{ route('galeri.index') }}" class="text-sm font-semibold text-coral-600 hover:text-coral-700">Lihat semua</a>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
