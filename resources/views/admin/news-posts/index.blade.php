@@ -28,9 +28,9 @@
                             <td>
                                 @if ($post->featured_image_path)
                                     <div class="avatar">
-                                        <div class="h-12 w-20 rounded-md ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <div class="h-12 w-20 rounded-md overflow-hidden flex justify-center bg-neutral-100">
                                             <img src="{{ Storage::url($post->featured_image_path) }}" alt="{{ $post->title }}"
-                                                class="object-cover" />
+                                                class="h-full w-auto object-contain" />
                                         </div>
                                     </div>
                                 @else

@@ -59,16 +59,17 @@
                 <input type="text" name="no_hp" value="{{ old('no_hp') }}" required class="input input-bordered w-full">
             </div>
             <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">NIK (Opsional)</label>
-                <input type="text" name="nik" value="{{ old('nik') }}" class="input input-bordered w-full">
+                <label class="mb-1 block text-sm font-semibold text-slate-700">NIK *</label>
+                <input type="text" name="nik" value="{{ old('nik') }}" class="input input-bordered w-full" required>
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Email (Opsional)</label>
                 <input type="email" name="email" value="{{ old('email') }}" class="input input-bordered w-full">
             </div>
             <div class="md:col-span-2">
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Alamat (Opsional)</label>
-                <textarea name="alamat" rows="2" class="textarea textarea-bordered w-full">{{ old('alamat') }}</textarea>
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Alamat *</label>
+                <textarea name="alamat" rows="2" class="textarea textarea-bordered w-full"
+                    required>{{ old('alamat') }}</textarea>
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Tempat Kejadian *</label>
@@ -77,12 +78,12 @@
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Waktu Kejadian *</label>
-                <input type="datetime-local" name="waktu_kejadian" value="{{ old('waktu_kejadian') }}" required
+                <input type="date" name="waktu_kejadian" value="{{ old('waktu_kejadian') }}" required
                     class="input input-bordered w-full">
             </div>
             <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Korban (Opsional)</label>
-                <input type="text" name="korban" value="{{ old('korban') }}" class="input input-bordered w-full">
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Korban *</label>
+                <input type="text" name="korban" value="{{ old('korban') }}" class="input input-bordered w-full" required>
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Terlapor (Opsional)</label>

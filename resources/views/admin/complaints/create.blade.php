@@ -41,8 +41,9 @@
           </div>
 
           <div class="form-control">
-            <label class="label"><span class="label-text font-semibold">NIK (Opsional)</span></label>
-            <input type="text" name="nik" class="input input-bordered w-full" value="{{ old('nik') }}" maxlength="16">
+            <label class="label"><span class="label-text font-semibold">NIK *</span></label>
+            <input type="text" name="nik" class="input input-bordered w-full" value="{{ old('nik') }}" maxlength="16"
+              required>
           </div>
 
           <div class="form-control">
@@ -51,9 +52,9 @@
           </div>
 
           <div class="form-control md:col-span-2">
-            <label class="label"><span class="label-text font-semibold">Alamat (Opsional)</span></label>
-            <textarea name="alamat" class="textarea textarea-bordered w-full h-24"
-              placeholder="Alamat lengkap pelapor...">{{ old('alamat') }}</textarea>
+            <label class="label"><span class="label-text font-semibold">Alamat *</span></label>
+            <textarea name="alamat" class="textarea textarea-bordered w-full h-24" placeholder="Alamat lengkap pelapor..."
+              required>{{ old('alamat') }}</textarea>
           </div>
 
           <!-- Data Kejadian -->
@@ -69,7 +70,7 @@
 
           <div class="form-control">
             <label class="label"><span class="label-text font-semibold">Waktu Kejadian *</span></label>
-            <input type="datetime-local" name="waktu_kejadian" class="input input-bordered w-full"
+            <input type="date" name="waktu_kejadian" class="input input-bordered w-full"
               value="{{ old('waktu_kejadian') }}" required>
           </div>
 
@@ -86,9 +87,9 @@
           </div>
 
           <div class="form-control">
-            <label class="label"><span class="label-text font-semibold">Identitas Korban (Opsional)</span></label>
+            <label class="label"><span class="label-text font-semibold">Identitas Korban *</span></label>
             <input type="text" name="korban" class="input input-bordered w-full" placeholder="Nama/Inisial Korban"
-              value="{{ old('korban') }}">
+              value="{{ old('korban') }}" required>
           </div>
 
           <div class="form-control">

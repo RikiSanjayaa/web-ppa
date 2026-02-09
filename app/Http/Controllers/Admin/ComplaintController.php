@@ -41,14 +41,14 @@ class ComplaintController extends Controller
     {
         $validated = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['nullable', 'string', 'max:16'],
+            'nik' => ['required', 'string', 'max:16'],
             'no_hp' => ['required', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
-            'alamat' => ['nullable', 'string'],
+            'alamat' => ['required', 'string'],
             'tempat_kejadian' => ['required', 'string', 'max:255'],
             'waktu_kejadian' => ['required', 'date'],
             'kronologis_singkat' => ['required', 'string'],
-            'korban' => ['nullable', 'string', 'max:255'],
+            'korban' => ['required', 'string', 'max:255'],
             'terlapor' => ['nullable', 'string', 'max:255'],
             'saksi_saksi' => ['nullable', 'string'],
         ]);

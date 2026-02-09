@@ -28,6 +28,7 @@ class SiteSettingSeeder extends Seeder
             'instagram_url' => 'https://instagram.com/ppapolri',
             'facebook_url' => 'https://facebook.com/ppapolri',
             'youtube_url' => 'https://youtube.com/@ppapolri',
+            'tiktok_url' => 'https://tiktok.com/@ppapolri',
         ]);
 
         foreach ($settings as $key => $value) {

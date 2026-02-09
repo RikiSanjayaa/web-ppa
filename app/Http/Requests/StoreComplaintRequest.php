@@ -23,14 +23,14 @@ class StoreComplaintRequest extends FormRequest
     {
         return [
             'nama_lengkap' => ['required', 'string', 'max:255'],
-            'nik' => ['nullable', 'string', 'max:50'],
-            'alamat' => ['nullable', 'string'],
+            'nik' => ['required', 'string', 'max:50'],
+            'alamat' => ['required', 'string'],
             'no_hp' => ['required', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:255'],
             'tempat_kejadian' => ['required', 'string', 'max:255'],
             'waktu_kejadian' => ['required', 'date'],
             'kronologis_singkat' => ['required', 'string'],
-            'korban' => ['nullable', 'string', 'max:255'],
+            'korban' => ['required', 'string', 'max:255'],
             'terlapor' => ['nullable', 'string', 'max:255'],
             'saksi_saksi' => ['nullable', 'string'],
             'cf-turnstile-response' => ['nullable', 'string'],

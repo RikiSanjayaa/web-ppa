@@ -28,8 +28,9 @@
                             <td>
                                 @if ($leader->photo_path)
                                     <div class="avatar">
-                                        <div class="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                            <img src="{{ Storage::url($leader->photo_path) }}" alt="{{ $leader->name }}" />
+                                        <div class="h-12 w-12 rounded-full overflow-hidden flex justify-center bg-neutral-100">
+                                            <img src="{{ Storage::url($leader->photo_path) }}" alt="{{ $leader->name }}"
+                                                class="h-full w-auto object-contain" />
                                         </div>
                                     </div>
                                 @else
