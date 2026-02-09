@@ -33,62 +33,92 @@ class ComplaintSeeder extends Seeder
             Complaint::STATUS_SELESAI,
         ];
 
-        for ($i = 1; $i <= 20; $i++) {
-            $status = $statusPattern[($i - 1) % count($statusPattern)];
-            $baseTime = now()->subDays($i * 2)->subHours($i);
+        $faker = \Faker\Factory::create('id_ID');
+
+        // Generate 100 fake complaints
+        for ($i = 0; $i < 100; $i++) {
+            // Random date within last 30 days, weighted towards recent days
+            $daysAgo = rand(0, 30);
+            if (rand(0, 10) > 7) {
+                $daysAgo = rand(0, 7); // 30% chance of being in the last week
+            }
+
+            $baseTime = now()->subDays($daysAgo)->subHours(rand(0, 23))->subMinutes(rand(0, 59));
+
+            // Random status with some weight
+            $statusRoll = rand(1, 100);
+            if ($statusRoll <= 40) {
+                $status = Complaint::STATUS_BARU;
+            } elseif ($statusRoll <= 75) {
+                $status = Complaint::STATUS_DIPROSES;
+            } else {
+                $status = Complaint::STATUS_SELESAI;
+            }
 
             $complaint = Complaint::query()->create([
-                'nama_lengkap' => 'Pelapor Demo '.$i,
-                'nik' => $i % 2 === 0 ? sprintf('3174%012d', $i) : null,
-                'alamat' => 'Jl. Contoh No. '.$i.', Jakarta',
-                'no_hp' => '0812'.str_pad((string) (100000 + $i), 6, '0', STR_PAD_LEFT),
-                'email' => $i % 3 === 0 ? 'pelapor'.$i.'@contoh.com' : null,
-                'tempat_kejadian' => 'Lokasi Kejadian '.$i,
-                'waktu_kejadian' => $baseTime->copy()->subDays(1),
-                'kronologis_singkat' => 'Kronologis demo aduan ke-'.$i.'. Pelapor menjelaskan kejadian secara singkat untuk kebutuhan seed data.',
-                'korban' => $i % 2 === 0 ? 'Korban '.$i : null,
-                'terlapor' => $i % 4 === 0 ? 'Terlapor '.$i : null,
-                'saksi_saksi' => $i % 5 === 0 ? 'Saksi A, Saksi B' : null,
+                'nama_lengkap' => $faker->name,
+                'nik' => $faker->nik,
+                'alamat' => $faker->address,
+                'no_hp' => $faker->phoneNumber,
+                'email' => rand(0, 1) ? $faker->email : null,
+                'tempat_kejadian' => $faker->streetAddress,
+                'waktu_kejadian' => $baseTime->copy()->subDays(rand(0, 5)), // Kejadian happened before report
+                'kronologis_singkat' => $faker->paragraph,
+                'korban' => $faker->name,
+                'terlapor' => rand(0, 1) ? $faker->name : null,
+                'saksi_saksi' => rand(0, 1) ? $faker->name . ', ' . $faker->name : null,
                 'status' => $status,
-                'channel' => 'web',
-                'wa_redirected_at' => $baseTime,
-                'ip_address' => '127.0.0.'.(($i % 200) + 1),
-                'user_agent' => 'SeederBot/1.0',
+                'channel' => rand(0, 10) > 8 ? 'dibuat oleh admin' : 'web', // Mostly web
+                'wa_redirected_at' => rand(0, 1) ? $baseTime : null,
+                'ip_address' => $faker->ipv4,
+                'user_agent' => $faker->userAgent,
                 'created_at' => $baseTime,
                 'updated_at' => $baseTime,
             ]);
 
+            // Always create initial history
             ComplaintStatusHistory::query()->create([
                 'complaint_id' => $complaint->id,
                 'changed_by' => null,
                 'from_status' => null,
                 'to_status' => Complaint::STATUS_BARU,
-                'note' => 'Aduan dibuat dari form web.',
+                'note' => 'Aduan dibuat.',
                 'created_at' => $baseTime,
                 'updated_at' => $baseTime,
             ]);
 
-            if (in_array($status, [Complaint::STATUS_DIPROSES, Complaint::STATUS_SELESAI], true)) {
+            // Add history for subsequent statuses
+            if ($status === Complaint::STATUS_DIPROSES || $status === Complaint::STATUS_SELESAI) {
+                $processTime = $baseTime->copy()->addHours(rand(1, 24));
+                // Ensure process time doesn't exceed now
+                if ($processTime->gt(now()))
+                    $processTime = now();
+
                 ComplaintStatusHistory::query()->create([
                     'complaint_id' => $complaint->id,
                     'changed_by' => $defaultChangerId,
                     'from_status' => Complaint::STATUS_BARU,
                     'to_status' => Complaint::STATUS_DIPROSES,
-                    'note' => 'Aduan diverifikasi dan masuk tahap proses.',
-                    'created_at' => $baseTime->copy()->addHours(6),
-                    'updated_at' => $baseTime->copy()->addHours(6),
+                    'note' => 'Aduan sedang diproses.',
+                    'created_at' => $processTime,
+                    'updated_at' => $processTime,
                 ]);
             }
 
             if ($status === Complaint::STATUS_SELESAI) {
+                $finishTime = $baseTime->copy()->addHours(rand(25, 120)); // 1-5 days later
+                // Ensure finish time doesn't exceed now
+                if ($finishTime->gt(now()))
+                    $finishTime = now();
+
                 ComplaintStatusHistory::query()->create([
                     'complaint_id' => $complaint->id,
                     'changed_by' => $defaultChangerId,
                     'from_status' => Complaint::STATUS_DIPROSES,
                     'to_status' => Complaint::STATUS_SELESAI,
-                    'note' => 'Tindak lanjut selesai dan laporan ditutup.',
-                    'created_at' => $baseTime->copy()->addHours(18),
-                    'updated_at' => $baseTime->copy()->addHours(18),
+                    'note' => 'Kasus telah diselesaikan.',
+                    'created_at' => $finishTime,
+                    'updated_at' => $finishTime,
                 ]);
             }
         }
