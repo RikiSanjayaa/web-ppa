@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Admin Panel PPA/PPO')</title>
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -20,8 +22,11 @@
     <div class="flex min-h-screen">
         <aside
             class="fixed left-0 top-0 hidden h-screen w-72 overflow-y-auto border-r border-slate-200 bg-navy-700 p-5 text-slate-100 lg:block">
-            <a href="{{ route('admin.dashboard') }}" class="mb-6 block font-heading text-xl font-semibold">Admin
-                PPA/PPO</a>
+            <a href="{{ route('admin.dashboard') }}"
+                class="mb-6 flex items-center gap-3 font-heading text-xl font-semibold">
+                <img src="{{ asset('logo.png') }}" alt="Logo Admin PPA/PPO" class="h-10 w-10 rounded-full object-cover">
+                <span>Admin PPA/PPO</span>
+            </a>
             <nav class="space-y-1 text-sm">
                 <a href="{{ route('admin.dashboard') }}"
                     class="admin-link {{ request()->routeIs('admin.dashboard') ? 'admin-link-active' : '' }}">Dashboard</a>

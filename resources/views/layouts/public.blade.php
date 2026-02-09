@@ -10,6 +10,8 @@
     <meta property="og:description" content="@yield('og_description', $settings['hero_subtitle'])">
     <meta property="og:type" content="website">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -27,16 +29,13 @@
 </head>
 
 <body class="min-h-screen bg-slate-50 font-body text-slate-800">
-    <div class="fixed inset-0 -z-10 overflow-hidden">
-        <div class="absolute -top-24 left-[-4rem] h-80 w-80 rounded-full bg-coral-200/35 blur-3xl"></div>
-        <div class="absolute right-[-6rem] top-20 h-96 w-96 rounded-full bg-teal-200/30 blur-3xl"></div>
-        <div class="absolute bottom-[-8rem] left-1/3 h-96 w-96 rounded-full bg-amber-200/35 blur-3xl"></div>
-    </div>
-
     <header class="sticky top-0 z-50 border-b border-white/70 bg-white/90 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
-            <a href="{{ route('home') }}" class="text-lg font-heading font-bold text-navy-700">
-                {{ $settings['site_name'] }}
+            <a href="{{ route('home') }}"
+                class="inline-flex items-center gap-2 text-lg font-heading font-bold text-navy-700">
+                <img src="{{ asset('logo.png') }}" alt="Logo {{ $settings['site_name'] }}"
+                    class="h-10 w-10 rounded-full object-cover">
+                <span>{{ $settings['site_name'] }}</span>
             </a>
             <nav class="hidden items-center gap-2 lg:flex">
                 <a class="nav-pill {{ request()->routeIs('home') ? 'nav-pill-active' : '' }}"
