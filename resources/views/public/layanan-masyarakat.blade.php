@@ -106,8 +106,8 @@
                     required placeholder="Masukkan 16 digit NIK">
             </div>
             <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Email (Opsional)</label>
-                <input type="email" name="email" value="{{ old('email') }}"
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Email *</label>
+                <input type="email" name="email" value="{{ old('email') }}" required
                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
                     placeholder="alamat@email.com">
             </div>
@@ -135,10 +135,10 @@
                     required placeholder="Nama lengkap korban">
             </div>
             <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Terlapor (Opsional)</label>
-                <input type="text" name="terlapor" value="{{ old('terlapor') }}"
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Terlapor *</label>
+                <input type="text" name="terlapor" value="{{ old('terlapor') }}" required
                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
-                    placeholder="Nama terlapor (jika ada)">
+                    placeholder="Nama terlapor">
             </div>
             <div class="md:col-span-2">
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Saksi-saksi (Opsional)</label>
