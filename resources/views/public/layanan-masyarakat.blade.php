@@ -70,8 +70,8 @@
 
     <section id="form-aduan" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
         data-aos="fade-up">
-        <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Aduan</h2>
-        <p class="mt-2 text-sm text-slate-600">Data aduan akan tersimpan di sistem, lalu Anda diarahkan ke WhatsApp hotline
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Pengaduan</h2>
+        <p class="mt-2 text-sm text-slate-600">Data pengaduan akan tersimpan di sistem, lalu Anda diarahkan ke WhatsApp hotline
             dengan pesan terisi otomatis.</p>
 
         @if ($errors->any())

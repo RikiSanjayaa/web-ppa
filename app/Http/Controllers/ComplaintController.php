@@ -19,7 +19,7 @@ class ComplaintController extends Controller
         StoreComplaintRequest $request,
         TurnstileVerifier $turnstileVerifier,
         WhatsAppComplaintMessage $whatsAppComplaintMessage
-    ): RedirectResponse {
+    ) {
         $token = $request->input('cf-turnstile-response');
 
         if (!$turnstileVerifier->passes($token, $request->ip())) {
