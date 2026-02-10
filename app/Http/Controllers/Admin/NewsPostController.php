@@ -93,13 +93,13 @@ class NewsPostController extends Controller
         if ($request->has('delete_images')) {
             $deletedImages = $request->input('delete_images');
             foreach ($deletedImages as $delPath) {
-                if (in_array($delPath, $currentImages)) {
+                // PERBAIKAN: Gunakan is_string dan strict comparison (true)
+                if (is_string($delPath) && in_array($delPath, $currentImages, true)) {
                     Storage::disk('public')->delete($delPath);
                     $currentImages = array_diff($currentImages, [$delPath]);
                 }
             }
         }
-        
         // Handle New Uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
