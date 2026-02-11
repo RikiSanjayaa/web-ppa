@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\LeaderController;
 use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
@@ -23,6 +25,9 @@ Route::get('/layanan-masyarakat', [PublicPageController::class, 'layananMasyarak
 Route::post('/aduan', [ComplaintController::class, 'store'])
     ->middleware('throttle:complaints')
     ->name('complaints.store');
+Route::post('/konsultasi', [ConsultationController::class, 'store'])
+    ->middleware('throttle:60,1')
+    ->name('consultations.store');
 Route::post('/api/hotline-access', [HotlineAccessController::class, 'store'])
     ->middleware('throttle:60,1')
     ->name('hotline-access.store');
@@ -44,6 +49,8 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::get('/aduan/export/pdf', [AdminComplaintController::class, 'exportPdf'])->name('complaints.export.pdf');
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
     Route::patch('/aduan/{complaint}/status', [AdminComplaintController::class, 'updateStatus'])->name('complaints.update-status');
+
+    Route::resource('consultations', AdminConsultationController::class)->only(['index', 'update', 'show', 'edit']);
 
     Route::get('/hotline-accesses', [AdminHotlineAccessController::class, 'index'])->name('hotline-accesses.index');
     Route::get('/hotline-accesses/{hotlineAccess}', [AdminHotlineAccessController::class, 'show'])->name('hotline-accesses.show');

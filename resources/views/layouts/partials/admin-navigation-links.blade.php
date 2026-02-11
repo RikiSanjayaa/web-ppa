@@ -1,6 +1,7 @@
 @php
     $isDashboardRoute = request()->routeIs('admin.dashboard');
     $isOperationsRoute = request()->routeIs('admin.complaints.*') ||
+        request()->routeIs('admin.consultations.*') ||
         request()->routeIs('admin.hotline-accesses.*') ||
         request()->routeIs('admin.audit-logs.*');
     $isContentRoute = request()->routeIs('admin.news-posts.*') ||
@@ -32,7 +33,12 @@
         <a href="{{ route('admin.complaints.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.complaints.*') ? 'admin-nav-child-link-active' : '' }}">
             <x-admin-icon name="complaints" class="h-4 w-4" />
-            <span>Aduan</span>
+            <span>Pengaduan</span>
+        </a>
+        <a href="{{ route('admin.consultations.index') }}"
+            class="admin-nav-child-link {{ request()->routeIs('admin.consultations.*') ? 'admin-nav-child-link-active' : '' }}">
+            <x-admin-icon name="consultation" class="h-4 w-4" />
+            <span>Konsultasi</span>
         </a>
         <a href="{{ route('admin.hotline-accesses.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.hotline-accesses.*') ? 'admin-nav-child-link-active' : '' }}">
