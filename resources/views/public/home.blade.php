@@ -9,7 +9,9 @@
         :title="$settings['hero_title']"
         :subtitle="$settings['hero_subtitle']"
         cta-text="Buat Laporan Pengaduan"
-        :cta-url="route('layanan-masyarakat')"
+        :cta-url="route('layanan-masyarakat') . '#form-aduan'"
+        secondary-cta-text="Konsultasi"
+        :secondary-cta-url="route('layanan-masyarakat') . '#form-konsultasi'"
         :stats="[
             'Total Aduan' => $stats['total_aduan'],
             'Aduan Selesai' => $stats['aduan_selesai'],

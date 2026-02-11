@@ -3,6 +3,8 @@
     'subtitle' => 'Layanan aduan cepat, aman, dan responsif untuk masyarakat.',
     'ctaText' => 'Laporkan via WhatsApp',
     'ctaUrl' => '#',
+    'secondaryCtaText' => '',
+    'secondaryCtaUrl' => '',
     'hotlineNumber' => '',
     'stats' => [],
 ])
@@ -58,6 +60,17 @@
 
                     {{ $ctaText }}
                 </a>
+
+                @if ($secondaryCtaText && $secondaryCtaUrl)
+                    <a href="{{ $secondaryCtaUrl }}" 
+                        class="btn btn-lg gap-2 border-0 bg-teal-500 text-white shadow-lg shadow-teal-500/30 transition-transform hover:scale-105 hover:bg-teal-600">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        {{ $secondaryCtaText }}
+                    </a>
+                @endif
 
                 @if ($hotlineNumber)
                     <div class="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 backdrop-blur border border-white/20 hover:bg-white/20 transition cursor-pointer" onclick="window.location.href='tel:{{ $hotlineNumber }}'">
