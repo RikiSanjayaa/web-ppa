@@ -115,7 +115,7 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h4 class="font-heading font-semibold text-slate-700 group-hover:text-blue-700">Isi Form Konsultasi</h4>
+                            <h4 class="font-heading font-semibold text-slate-700 group-hover:text-blue-700">Konsultasi</h4>
                             <p class="text-xs text-slate-500">
                                 Sampaikan masalah Anda secara tertulis.
                             </p>
