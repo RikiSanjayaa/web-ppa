@@ -25,12 +25,12 @@
                             <td class="max-w-xs truncate">{{ Str::limit($consultation->permasalahan, 50) }}</td>
                             <td class="max-w-xs truncate">
                                 @if($consultation->rekomendasi)
-                                    <span class="text-green-600">{{ Str::limit($consultation->rekomendasi, 50) }}</span>
+                                    <span class="text-green-600">{{ Str::limit($consultation->rekomendasi, 30) }}</span>
                                 @else
-                                    <span class="text-slate-400 italic">- Belum diisi -</span>
+                                    <span class="badge border-0 bg-red-100 text-red-600">Belum ditanggapi</span>
                                 @endif
                             </td>
-                            <td>{{ $consultation->created_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ $consultation->created_at->format('d-m-Y H:i') }}</td>
                             <td>
                                 <div class="flex gap-2">
                                     <a href="{{ route('admin.consultations.show', $consultation) }}"
@@ -56,6 +56,15 @@
             </table>
         </div>
 
-        <div class="mt-4">{{ $consultations->links() }}</div>
+        <div class="mt-4">
+            {{ $consultations->links() }}
+            @if (!$consultations->hasPages() && $consultations->count() > 0)
+                <div class="text-sm text-slate-500">
+                    Showing <span class="font-semibold text-navy-700">{{ $consultations->firstItem() }}</span>
+                    to <span class="font-semibold text-navy-700">{{ $consultations->lastItem() }}</span>
+                    of <span class="font-semibold text-navy-700">{{ $consultations->total() }}</span> results
+                </div>
+            @endif
+        </div>
     </section>
 @endsection
