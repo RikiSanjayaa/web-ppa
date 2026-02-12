@@ -51,6 +51,8 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
     Route::patch('/aduan/{complaint}/status', [AdminComplaintController::class, 'updateStatus'])->name('complaints.update-status');
 
+    Route::get('/consultations/export/excel', [AdminConsultationController::class, 'exportExcel'])->name('consultations.export.excel');
+    Route::get('/consultations/export/pdf', [AdminConsultationController::class, 'exportPdf'])->name('consultations.export.pdf');
     Route::resource('consultations', AdminConsultationController::class)->only(['index', 'update', 'show', 'edit']);
 
     Route::get('/location-monitoring/summary', [LocationMonitoringController::class, 'summary'])->name('location-monitoring.summary');
