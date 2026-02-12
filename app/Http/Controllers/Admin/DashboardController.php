@@ -23,14 +23,18 @@ class DashboardController extends Controller
         $dateLabels = $periodDates->map(fn($date) => $date->format('d M'))->all();
 
         $statusCounts = [
-            Complaint::STATUS_BARU => Complaint::query()->where('status', Complaint::STATUS_BARU)->count(),
-            Complaint::STATUS_DIPROSES => Complaint::query()->where('status', Complaint::STATUS_DIPROSES)->count(),
-            Complaint::STATUS_SELESAI => Complaint::query()->where('status', Complaint::STATUS_SELESAI)->count(),
+            'baru' => Complaint::query()->where('status', Complaint::STATUS_MASUK)->count(),
+            'diproses' => Complaint::query()->whereIn('status', [
+                Complaint::STATUS_DIPROSES_LP,
+                Complaint::STATUS_DIPROSES_LIDIK,
+                Complaint::STATUS_DIPROSES_SIDIK
+            ])->count(),
+            'selesai' => Complaint::query()->where('status', Complaint::STATUS_TAHAP_1)->count(),
         ];
 
         $totalComplaints = array_sum($statusCounts);
         $resolvedRatio = $totalComplaints > 0
-            ? round(($statusCounts[Complaint::STATUS_SELESAI] / $totalComplaints) * 100, 1)
+            ? round(($statusCounts['selesai'] / $totalComplaints) * 100, 1)
             : 0.0;
 
         $complaintsByDayAndStatus = Complaint::query()
@@ -45,9 +49,11 @@ class DashboardController extends Controller
         }
 
         $statusColors = [
-            Complaint::STATUS_BARU => '#ef4444',
-            Complaint::STATUS_DIPROSES => '#f59e0b',
-            Complaint::STATUS_SELESAI => '#14b8a6',
+            Complaint::STATUS_MASUK => '#ef4444',
+            Complaint::STATUS_DIPROSES_LP => '#f59e0b',
+            Complaint::STATUS_DIPROSES_LIDIK => '#ea580c',
+            Complaint::STATUS_DIPROSES_SIDIK => '#c2410c',
+            Complaint::STATUS_TAHAP_1 => '#14b8a6',
         ];
 
         $complaintTrendDatasets = collect(Complaint::availableStatuses())
@@ -97,9 +103,9 @@ class DashboardController extends Controller
                 'complaintStatus' => [
                     'labels' => ['Baru', 'Diproses', 'Selesai'],
                     'data' => [
-                        $statusCounts[Complaint::STATUS_BARU],
-                        $statusCounts[Complaint::STATUS_DIPROSES],
-                        $statusCounts[Complaint::STATUS_SELESAI],
+                        $statusCounts['baru'],
+                        $statusCounts['diproses'],
+                        $statusCounts['selesai'],
                     ],
                 ],
                 'adminActivity' => [

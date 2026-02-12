@@ -11,11 +11,15 @@ class Complaint extends Model
 {
     use HasFactory;
 
-    public const STATUS_BARU = 'baru';
+    public const STATUS_MASUK = 'masuk';
 
-    public const STATUS_DIPROSES = 'diproses';
+    public const STATUS_DIPROSES_LP = 'diproses: LP';
 
-    public const STATUS_SELESAI = 'selesai';
+    public const STATUS_DIPROSES_LIDIK = 'diproses Lidik';
+
+    public const STATUS_DIPROSES_SIDIK = 'diproses Sidik';
+
+    public const STATUS_TAHAP_1 = 'Selesai Tahap 1';
 
     protected $fillable = [
         'nama_lengkap',
@@ -50,9 +54,11 @@ class Complaint extends Model
     public static function availableStatuses(): array
     {
         return [
-            self::STATUS_BARU,
-            self::STATUS_DIPROSES,
-            self::STATUS_SELESAI,
+            self::STATUS_MASUK,
+            self::STATUS_DIPROSES_LP,
+            self::STATUS_DIPROSES_LIDIK,
+            self::STATUS_DIPROSES_SIDIK,
+            self::STATUS_TAHAP_1,
         ];
     }
 
