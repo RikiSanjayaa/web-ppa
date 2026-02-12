@@ -57,10 +57,21 @@ class PublicPageController extends Controller
     public function informasiIndex(Request $request): View
     {
         $category = $request->query('category');
+        $search = $request->query('q');
 
         $documentsQuery = Document::query()->published()->orderByDesc('year')->orderByDesc('published_at');
+
         if ($category) {
             $documentsQuery->where('category', $category);
+        }
+
+        if ($search) {
+            $documentsQuery->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('summary', 'like', '%' . $search . '%')
+                  ->orWhere('category', 'like', '%' . $search . '%')
+                  ->orWhere('number', 'like', '%' . $search . '%');
+            });
         }
 
         return view('public.informasi-index', [
