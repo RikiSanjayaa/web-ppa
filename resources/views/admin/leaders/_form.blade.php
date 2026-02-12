@@ -12,7 +12,7 @@
         <input type="text" name="position" value="{{ old('position', $leader->position ?? '') }}" required class="input input-bordered w-full">
     </div>
     <div class="md:col-span-2">
-        <label class="mb-1 block text-sm font-semibold text-slate-700">Bio</label>
+        <label class="mb-1 block text-sm font-semibold text-slate-700">Jobsdesk</label>
         <textarea name="bio" rows="4" class="textarea textarea-bordered w-full">{{ old('bio', $leader->bio ?? '') }}</textarea>
     </div>
     <div>
