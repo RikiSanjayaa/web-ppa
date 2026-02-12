@@ -58,13 +58,6 @@
 
         <div class="mt-4">
             {{ $consultations->links() }}
-            @if (!$consultations->hasPages() && $consultations->count() > 0)
-                <div class="text-sm text-slate-500">
-                    Showing <span class="font-semibold text-navy-700">{{ $consultations->firstItem() }}</span>
-                    to <span class="font-semibold text-navy-700">{{ $consultations->lastItem() }}</span>
-                    of <span class="font-semibold text-navy-700">{{ $consultations->total() }}</span> results
-                </div>
-            @endif
         </div>
     </section>
 @endsection

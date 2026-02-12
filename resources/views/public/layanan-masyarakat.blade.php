@@ -167,38 +167,8 @@
         </form>
     </section>
 
-    <section id="form-konsultasi" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
-        data-aos="fade-up">
-        <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Konsultasi</h2>
-        <p class="mt-2 text-sm text-slate-600">Sampaikan konsultasi Anda kepada kami. Privasi Anda terjaga.</p>
-
-        @if (session('success'))
-            <div class="alert mt-4 border border-green-200 bg-green-50 text-green-700">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('consultations.store') }}" class="mt-6 grid gap-4">
-            @csrf
-            <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Nama Klien *</label>
-                <input type="text" name="nama_klien" required
-                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
-                    placeholder="Masukkan nama Anda">
-            </div>
-            <div>
-                <label class="mb-1 block text-sm font-semibold text-slate-700">Permasalahan *</label>
-                <textarea name="permasalahan" rows="4" required
-                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
-                    placeholder="Ceritakan permasalahan Anda..."></textarea>
-            </div>
-            <div class="flex justify-end">
-                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim
-                    Konsultasi</button>
-            </div>
-        </form>
-    </section>
-
+    {{-- Modal has been moved to global layout --}}
+    
     <section class="mt-10" data-aos="fade-up">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Testimoni Layanan</h2>
 

@@ -11,7 +11,8 @@
         cta-text="Buat Laporan Pengaduan"
         :cta-url="route('layanan-masyarakat') . '#form-aduan'"
         secondary-cta-text="Konsultasi"
-        :secondary-cta-url="route('layanan-masyarakat') . '#form-konsultasi'"
+        secondary-cta-url="#"
+        :secondary-cta-action="'showConsultationModal = true'"
         :stats="[
             'Total Aduan' => $stats['total_aduan'],
             'Aduan Selesai' => $stats['aduan_selesai'],

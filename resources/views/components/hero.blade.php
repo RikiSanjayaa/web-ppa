@@ -5,6 +5,7 @@
     'ctaUrl' => '#',
     'secondaryCtaText' => '',
     'secondaryCtaUrl' => '',
+    'secondaryCtaAction' => null,
     'hotlineNumber' => '',
     'stats' => [],
 ])
@@ -61,8 +62,9 @@
                     {{ $ctaText }}
                 </a>
 
-                @if ($secondaryCtaText && $secondaryCtaUrl)
-                    <a href="{{ $secondaryCtaUrl }}" 
+                @if ($secondaryCtaText && ($secondaryCtaUrl || $secondaryCtaAction))
+                    <a href="{{ $secondaryCtaUrl ?: '#' }}" 
+                        @if($secondaryCtaAction) @click.prevent="{{ $secondaryCtaAction }}" @endif
                         class="btn btn-lg gap-2 border-0 bg-teal-500 text-white shadow-lg shadow-teal-500/30 transition-transform hover:scale-105 hover:bg-teal-600">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 

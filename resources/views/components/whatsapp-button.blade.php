@@ -104,8 +104,8 @@
                 </a>
 
                 <a
-                    href="{{ $formUrl ?? route('layanan-masyarakat') }}#form-konsultasi"
-                    @click="open = false"
+                    href="#"
+                    @click="open = false; showConsultationModal = true; return false;"
                     class="group relative overflow-hidden rounded-xl border border-slate-200 p-4 text-left transition hover:border-blue-400 hover:bg-blue-50 hover:shadow-sm"
                 >
                     <div class="flex items-center gap-4">
