@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesPerView: 1.25,
             spaceBetween: 12,
             centeredSlides: false,
+            centerInsufficientSlides: true,
             loop: true,
             grabCursor: true,
             navigation: {
