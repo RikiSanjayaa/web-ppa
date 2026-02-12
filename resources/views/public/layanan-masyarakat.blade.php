@@ -70,6 +70,9 @@
     <section id="form-aduan" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
         data-aos="fade-up">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Pengaduan</h2>
+        <div id="location-status" class="mb-4 hidden text-sm font-medium text-amber-600">
+            Meminta akses lokasi...
+        </div>
         <p class="mt-2 text-sm text-slate-600">Data pengaduan akan tersimpan di sistem, lalu Anda diarahkan ke WhatsApp hotline
             dengan pesan terisi otomatis.</p>
 
@@ -85,6 +88,8 @@
 
         <form method="POST" action="{{ route('complaints.store') }}" class="mt-6 grid gap-4 md:grid-cols-2">
             @csrf
+            <input type="hidden" name="latitude" id="aduan_latitude">
+            <input type="hidden" name="longitude" id="aduan_longitude">
 
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">Nama Lengkap Pelapor *</label>
@@ -166,8 +171,42 @@
         </form>
     </section>
 
-    {{-- Modal has been moved to global layout --}}
-    
+    {{-- Modal konsultasi WA dipindahkan ke global layout --}}
+
+    <section id="form-konsultasi" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
+        data-aos="fade-up">
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Konsultasi</h2>
+        <p class="mt-2 text-sm text-slate-600">Sampaikan konsultasi Anda kepada kami. Privasi Anda terjaga.</p>
+
+        @if (session('success'))
+            <div class="alert mt-4 border border-green-200 bg-green-50 text-green-700">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('consultations.store') }}" class="mt-6 grid gap-4">
+            @csrf
+            <input type="hidden" name="latitude" id="consultation_latitude">
+            <input type="hidden" name="longitude" id="consultation_longitude">
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Nama Klien *</label>
+                <input type="text" name="nama_klien" required
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Masukkan nama Anda">
+            </div>
+            <div>
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Permasalahan *</label>
+                <textarea name="permasalahan" rows="4" required
+                    class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                    placeholder="Ceritakan permasalahan Anda..."></textarea>
+            </div>
+            <div class="flex justify-end">
+                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim
+                    Konsultasi</button>
+            </div>
+        </form>
+    </section>
+
     <section class="mt-10" data-aos="fade-up">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Testimoni Layanan</h2>
 
@@ -196,3 +235,42 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const aduanLat = document.getElementById('aduan_latitude');
+        const aduanLng = document.getElementById('aduan_longitude');
+        const consLat = document.getElementById('consultation_latitude');
+        const consLng = document.getElementById('consultation_longitude');
+        const statusEl = document.getElementById('location-status');
+
+        if (navigator.geolocation) {
+            statusEl.classList.remove('hidden');
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    aduanLat.value = lat;
+                    aduanLng.value = lng;
+                    consLat.value = lat;
+                    consLng.value = lng;
+                    
+                    statusEl.textContent = "Lokasi terdeteksi setujui.";
+                    statusEl.classList.replace('text-amber-600', 'text-green-600');
+                    setTimeout(() => statusEl.classList.add('hidden'), 3000);
+                },
+                (error) => {
+                    console.error("Error getting location: ", error);
+                    statusEl.textContent = "Gagal mendeteksi lokasi atau akses ditolak.";
+                    statusEl.classList.replace('text-amber-600', 'text-red-600');
+                },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    });
+</script>
+@endpush

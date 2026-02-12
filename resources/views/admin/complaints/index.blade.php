@@ -31,6 +31,8 @@
                     class="btn btn-sm rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50">Reset</a>
 
                 <div class="ml-auto flex gap-2">
+                    <a href="{{ route('admin.location-monitoring.index') }}"
+                        class="btn btn-sm rounded-lg border-0 bg-indigo-500 text-white hover:bg-indigo-600">Pantauan Lokasi</a>
                     <a href="{{ route('admin.complaints.export.excel', request()->query()) }}"
                         class="btn btn-sm rounded-lg border-0 bg-teal-600 text-white hover:bg-teal-700">Export Excel</a>
                     <a href="{{ route('admin.complaints.export.pdf', request()->query()) }}"

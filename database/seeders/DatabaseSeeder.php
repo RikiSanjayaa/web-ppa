@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             FaqSeeder::class,
             ComplaintSeeder::class,
+            ConsultationSeeder::class,
             ActivityLogSeeder::class,
         ]);
     }

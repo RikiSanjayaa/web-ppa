@@ -2,7 +2,7 @@
     $isDashboardRoute = request()->routeIs('admin.dashboard');
     $isOperationsRoute = request()->routeIs('admin.complaints.*') ||
         request()->routeIs('admin.consultations.*') ||
-        request()->routeIs('admin.hotline-accesses.*') ||
+        request()->routeIs('admin.location-monitoring.*') ||
         request()->routeIs('admin.audit-logs.*');
     $isContentRoute = request()->routeIs('admin.news-posts.*') ||
         request()->routeIs('admin.documents.*') ||
@@ -40,10 +40,10 @@
             <x-admin-icon name="consultation" class="h-4 w-4" />
             <span>Konsultasi</span>
         </a>
-        <a href="{{ route('admin.hotline-accesses.index') }}"
-            class="admin-nav-child-link {{ request()->routeIs('admin.hotline-accesses.*') ? 'admin-nav-child-link-active' : '' }}">
+        <a href="{{ route('admin.location-monitoring.index') }}"
+            class="admin-nav-child-link {{ request()->routeIs('admin.location-monitoring.*') ? 'admin-nav-child-link-active' : '' }}">
             <x-admin-icon name="hotline" class="h-4 w-4" />
-            <span>Akses Hotline</span>
+            <span>Pantauan Lokasi</span>
         </a>
         <a href="{{ route('admin.audit-logs.index') }}"
             class="admin-nav-child-link {{ request()->routeIs('admin.audit-logs.*') ? 'admin-nav-child-link-active' : '' }}">

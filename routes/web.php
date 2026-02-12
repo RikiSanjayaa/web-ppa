@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
+use App\Http\Controllers\Admin\LocationMonitoringController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
@@ -52,8 +53,8 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
 
     Route::resource('consultations', AdminConsultationController::class)->only(['index', 'update', 'show', 'edit']);
 
-    Route::get('/hotline-accesses', [AdminHotlineAccessController::class, 'index'])->name('hotline-accesses.index');
-    Route::get('/hotline-accesses/{hotlineAccess}', [AdminHotlineAccessController::class, 'show'])->name('hotline-accesses.show');
+    Route::get('/location-monitoring/summary', [LocationMonitoringController::class, 'summary'])->name('location-monitoring.summary');
+    Route::get('/location-monitoring', [LocationMonitoringController::class, 'index'])->name('location-monitoring.index');
 
     Route::resource('news-posts', NewsPostController::class)->except('show');
     Route::resource('leaders', LeaderController::class)->except('show');

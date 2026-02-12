@@ -121,7 +121,17 @@
                     </div>
                 </div>
 
-                <div class="mt-6 pt-6 border-t border-slate-100">
+                <div class="mt-6 pt-6 border-t border-slate-100 space-y-2">
+                    @if($consultation->latitude && $consultation->longitude)
+                        <a href="{{ route('admin.location-monitoring.index', ['lat' => $consultation->latitude, 'lng' => $consultation->longitude]) }}" 
+                           class="btn w-full justify-start bg-indigo-500 text-white hover:bg-indigo-600 border-0 px-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Lihat Lokasi di Peta
+                        </a>
+                    @endif
                     <a href="{{ route('admin.consultations.index') }}" class="btn btn-ghost w-full justify-start text-slate-600 hover:text-navy-700 hover:bg-slate-50 px-0">
                         <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />

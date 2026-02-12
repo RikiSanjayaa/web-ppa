@@ -13,5 +13,9 @@ class Consultation extends Model
         'nama_klien',
         'permasalahan',
         'rekomendasi',
+        'latitude',
+        'longitude',
+        'ip_address',
+        'user_agent',
     ];
 }

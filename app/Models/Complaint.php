@@ -38,6 +38,8 @@ class Complaint extends Model
         'wa_redirected_at',
         'ip_address',
         'user_agent',
+        'latitude',
+        'longitude',
     ];
 
     protected function casts(): array

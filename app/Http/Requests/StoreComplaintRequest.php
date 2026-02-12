@@ -34,6 +34,8 @@ class StoreComplaintRequest extends FormRequest
             'terlapor' => ['nullable', 'string', 'max:255'],
             'saksi_saksi' => ['nullable', 'string'],
             'cf-turnstile-response' => ['nullable', 'string'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
         ];
     }
 
