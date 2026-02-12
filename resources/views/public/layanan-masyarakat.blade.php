@@ -19,8 +19,6 @@
             <div class="mt-6 flex flex-wrap gap-3">
                 <button @click="showConsultationModal = true"
                     class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Konsultasi via WA</button>
-                <a href="tel:{{ preg_replace('/\D+/', '', $settings['contact_phone']) }}"
-                    class="btn border-slate-300 bg-white text-navy-700 hover:bg-slate-50">{{ $settings['contact_phone'] }}</a>
             </div>
         </div>
         <div class="rounded-2xl border border-slate-200 bg-white p-6">

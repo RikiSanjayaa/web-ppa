@@ -20,10 +20,12 @@ class ComplaintsExport implements FromCollection, ShouldAutoSize, WithHeadings, 
             ->get();
     }
 
+    private int $row = 0;
+
     public function headings(): array
     {
         return [
-            'ID',
+            'No',
             'Nama Pelapor',
             'No HP',
             'NIK',
@@ -43,7 +45,7 @@ class ComplaintsExport implements FromCollection, ShouldAutoSize, WithHeadings, 
     public function map($complaint): array
     {
         return [
-            $complaint->id,
+            ++$this->row,
             $complaint->nama_lengkap,
             $complaint->no_hp,
             $complaint->nik,

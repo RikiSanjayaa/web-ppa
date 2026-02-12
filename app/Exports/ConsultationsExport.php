@@ -20,10 +20,12 @@ class ConsultationsExport implements FromCollection, ShouldAutoSize, WithHeading
             ->get();
     }
 
+    private int $row = 0;
+
     public function headings(): array
     {
         return [
-            'ID',
+            'No',
             'Nama Klien',
             'Permasalahan',
             'Rekomendasi',
@@ -35,7 +37,7 @@ class ConsultationsExport implements FromCollection, ShouldAutoSize, WithHeading
     public function map($consultation): array
     {
         return [
-            $consultation->id,
+            ++$this->row,
             $consultation->nama_klien,
             $consultation->permasalahan,
             $consultation->rekomendasi ?? '-',

@@ -22,7 +22,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No</th>
                     <th>Nama Klien</th>
                     <th>Permasalahan</th>
                     <th>Rekomendasi</th>
@@ -33,7 +33,7 @@
             <tbody>
                 @forelse ($consultations as $consultation)
                     <tr>
-                        <td>#{{ $consultation->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $consultation->nama_klien }}</td>
                         <td>{{ $consultation->permasalahan }}</td>
                         <td>{{ $consultation->rekomendasi ?? '-' }}</td>

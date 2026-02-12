@@ -36,18 +36,67 @@ class ComplaintSeeder extends Seeder
             'Korban merasa diikuti dan diteror oleh mantan pacar yang tidak terima diputuskan.',
         ];
 
-        // Daftar wilayah NTB beserta pusat koordinat dan radius
-        $regions = [
-            'Mataram' => ['lat' => -8.5833, 'lng' => 116.1167, 'radius' => 0.05],
-            'Lombok Barat' => ['lat' => -8.6833, 'lng' => 116.1167, 'radius' => 0.1],
-            'Lombok Tengah' => ['lat' => -8.7000, 'lng' => 116.2667, 'radius' => 0.1],
-            'Lombok Timur' => ['lat' => -8.6500, 'lng' => 116.5333, 'radius' => 0.15],
-            'Lombok Utara' => ['lat' => -8.3500, 'lng' => 116.1500, 'radius' => 0.1],
-            'Sumbawa' => ['lat' => -8.5000, 'lng' => 117.4333, 'radius' => 0.2],
-            'Sumbawa Barat' => ['lat' => -8.7500, 'lng' => 116.8500, 'radius' => 0.1],
-            'Dompu' => ['lat' => -8.5333, 'lng' => 118.4667, 'radius' => 0.1],
-            'Bima' => ['lat' => -8.6000, 'lng' => 118.7000, 'radius' => 0.15],
-            'Kota Bima' => ['lat' => -8.4667, 'lng' => 118.7333, 'radius' => 0.05],
+        // Daftar titik jangkar (anchor points) di pemukiman padat penduduk NTB
+        // Format: Nama Kecamatan/Kelurahan => [lat, lng, radius_km]
+        // Radius 0.01 derajat ~ 1.11 km
+        $anchorPoints = [
+            // KOTA MATARAM
+            'Mataram (Pusat)' => ['lat' => -8.5838, 'lng' => 116.1105, 'radius' => 0.015],
+            'Ampenan' => ['lat' => -8.5779, 'lng' => 116.0853, 'radius' => 0.01],
+            'Cakranegara' => ['lat' => -8.5956, 'lng' => 116.1450, 'radius' => 0.012],
+            'Sekarbela' => ['lat' => -8.6022, 'lng' => 116.1005, 'radius' => 0.01],
+            'Selagalas' => ['lat' => -8.5750, 'lng' => 116.1600, 'radius' => 0.01],
+
+            // LOMBOK BARAT
+            'Gerung (Pusat Pemkab)' => ['lat' => -8.6788, 'lng' => 116.1245, 'radius' => 0.015],
+            'Narmada' => ['lat' => -8.5630, 'lng' => 116.2230, 'radius' => 0.012],
+            'Senggigi (Kawasan Wisata)' => ['lat' => -8.4520, 'lng' => 116.0420, 'radius' => 0.01],
+            'Lembar (Pelabuhan)' => ['lat' => -8.7290, 'lng' => 116.0770, 'radius' => 0.01],
+            'Gunung Sari' => ['lat' => -8.5300, 'lng' => 116.1100, 'radius' => 0.01],
+
+            // LOMBOK TENGAH
+            'Praya (Pusat Kota)' => ['lat' => -8.7105, 'lng' => 116.2730, 'radius' => 0.02],
+            'Kopang' => ['lat' => -8.6360, 'lng' => 116.3550, 'radius' => 0.01],
+            'Pujut (Mandalika)' => ['lat' => -8.8950, 'lng' => 116.2900, 'radius' => 0.02],
+            'Janapria' => ['lat' => -8.6800, 'lng' => 116.3900, 'radius' => 0.01],
+            'Pringgarata' => ['lat' => -8.5900, 'lng' => 116.2300, 'radius' => 0.01],
+
+            // LOMBOK TIMUR
+            'Selong (Pusat Kota)' => ['lat' => -8.6505, 'lng' => 116.5350, 'radius' => 0.015],
+            'Masbagik' => ['lat' => -8.6200, 'lng' => 116.4800, 'radius' => 0.012],
+            'Aikmel' => ['lat' => -8.5800, 'lng' => 116.5500, 'radius' => 0.01],
+            'Labuhan Haji' => ['lat' => -8.6900, 'lng' => 116.5800, 'radius' => 0.01],
+            'Pringgabaya' => ['lat' => -8.5200, 'lng' => 116.6300, 'radius' => 0.012],
+
+            // LOMBOK UTARA
+            'Tanjung (Pusat Pemerintahan)' => ['lat' => -8.3530, 'lng' => 116.1550, 'radius' => 0.01],
+            'Pemenang (Bangsal)' => ['lat' => -8.4100, 'lng' => 116.0900, 'radius' => 0.008],
+            'Gangga' => ['lat' => -8.3100, 'lng' => 116.1900, 'radius' => 0.01],
+
+            // SUMBAWA
+            'Sumbawa Besar (Pusat Kota)' => ['lat' => -8.5040, 'lng' => 117.4300, 'radius' => 0.02],
+            'Alas' => ['lat' => -8.5400, 'lng' => 116.9600, 'radius' => 0.01],
+            'Plampang' => ['lat' => -8.7600, 'lng' => 117.7800, 'radius' => 0.01],
+
+            // SUMBAWA BARAT
+            'Taliwang (Pusat Kota)' => ['lat' => -8.7450, 'lng' => 116.8550, 'radius' => 0.015],
+            'Maluk (Kawasan Tambang)' => ['lat' => -8.8900, 'lng' => 116.8300, 'radius' => 0.01],
+            'Seteluk' => ['lat' => -8.6300, 'lng' => 116.8600, 'radius' => 0.01],
+
+            // DOMPU
+            'Dompu (Pusat Kota)' => ['lat' => -8.5360, 'lng' => 118.4630, 'radius' => 0.015],
+            'Woja' => ['lat' => -8.5600, 'lng' => 118.4400, 'radius' => 0.01],
+            'Kilo' => ['lat' => -8.3300, 'lng' => 118.3900, 'radius' => 0.01],
+
+            // BIMA (KABUPATEN)
+            'Woha (Ibukota Kabupaten)' => ['lat' => -8.6200, 'lng' => 118.6800, 'radius' => 0.015],
+            'Bolo' => ['lat' => -8.5100, 'lng' => 118.6300, 'radius' => 0.01],
+            'Sape (Pelabuhan)' => ['lat' => -8.5700, 'lng' => 119.0100, 'radius' => 0.012],
+
+            // KOTA BIMA
+            'Raba (Pusat Kota)' => ['lat' => -8.4550, 'lng' => 118.7500, 'radius' => 0.015],
+            'Mpunda' => ['lat' => -8.4700, 'lng' => 118.7200, 'radius' => 0.01],
+            'Asakota' => ['lat' => -8.4300, 'lng' => 118.7300, 'radius' => 0.01],
         ];
 
         for ($i = 0; $i < 100; $i++) {
@@ -59,16 +108,20 @@ class ComplaintSeeder extends Seeder
 
             $baseTime = now()->subDays($daysAgo)->subHours(rand(0, 23))->subMinutes(rand(0, 59));
 
-            // Pilih wilayah secara acak
-            $regionName = array_rand($regions);
-            $regionData = $regions[$regionName];
+            // Pilih lokasi anchor secara acak
+            $anchorName = array_rand($anchorPoints);
+            $anchorData = $anchorPoints[$anchorName];
 
-            // Koordinat acak di sekitar pusat wilayah
-            $lat = $regionData['lat'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
-            $lng = $regionData['lng'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
+            // Koordinat acak di sekitar anchor point dengan radius kecil (presisi tinggi)
+            // Menggunakan distribusi normal mendekati pusat anchor agar lebih realistis
+            $latOffset = ($faker->randomFloat(6, -1, 1) + $faker->randomFloat(6, -1, 1)) / 2 * $anchorData['radius'];
+            $lngOffset = ($faker->randomFloat(6, -1, 1) + $faker->randomFloat(6, -1, 1)) / 2 * $anchorData['radius'];
+
+            $lat = $anchorData['lat'] + $latOffset;
+            $lng = $anchorData['lng'] + $lngOffset;
 
             // Alamat teks termasuk nama wilayah untuk pengujian hybrid
-            $streetAddress = $faker->streetAddress.', '.$regionName;
+            $streetAddress = $faker->streetAddress.', '.$anchorName;
 
             // Status acak dengan bobot tertentu
             $statusRoll = rand(1, 100);

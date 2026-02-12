@@ -20,7 +20,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No</th>
                     <th>Pelapor</th>
                     <th>Kontak</th>
                     <th>Lokasi/Waktu</th>
@@ -31,7 +31,7 @@
             <tbody>
                 @forelse ($complaints as $complaint)
                     <tr>
-                        <td>#{{ $complaint->id }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
                             {{ $complaint->nama_lengkap }}<br>
                             NIK: {{ $complaint->nik ?: '-' }}

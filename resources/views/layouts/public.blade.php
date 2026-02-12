@@ -99,7 +99,6 @@
                 <div>
                     <p class="font-semibold text-navy-700">Hubungi Kami</p>
                     <p class="mt-2 text-slate-600">{{ $settings['contact_address'] }}</p>
-                    <p class="text-slate-600">{{ $settings['contact_phone'] }}</p>
                     <p class="text-slate-600">{{ $settings['contact_email'] }}</p>
                 </div>
                 <div>

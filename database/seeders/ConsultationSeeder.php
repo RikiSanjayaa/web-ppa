@@ -16,18 +16,47 @@ class ConsultationSeeder extends Seeder
 
         $faker = \Faker\Factory::create('id_ID');
 
-        // Daftar wilayah NTB beserta pusat koordinat dan radius
-        $regions = [
-            'Mataram' => ['lat' => -8.5833, 'lng' => 116.1167, 'radius' => 0.05],
-            'Lombok Barat' => ['lat' => -8.6833, 'lng' => 116.1167, 'radius' => 0.1],
-            'Lombok Tengah' => ['lat' => -8.7000, 'lng' => 116.2667, 'radius' => 0.1],
-            'Lombok Timur' => ['lat' => -8.6500, 'lng' => 116.5333, 'radius' => 0.15],
-            'Lombok Utara' => ['lat' => -8.3500, 'lng' => 116.1500, 'radius' => 0.1],
-            'Sumbawa' => ['lat' => -8.5000, 'lng' => 117.4333, 'radius' => 0.2],
-            'Sumbawa Barat' => ['lat' => -8.7500, 'lng' => 116.8500, 'radius' => 0.1],
-            'Dompu' => ['lat' => -8.5333, 'lng' => 118.4667, 'radius' => 0.1],
-            'Bima' => ['lat' => -8.6000, 'lng' => 118.7000, 'radius' => 0.15],
-            'Kota Bima' => ['lat' => -8.4667, 'lng' => 118.7333, 'radius' => 0.05],
+        // Daftar titik jangkar (anchor points) di pemukiman padat penduduk NTB
+        // Format: Nama Kecamatan/Kelurahan => [lat, lng, radius_km]
+        // Radius 0.01 derajat ~ 1.11 km
+        $anchorPoints = [
+            // KOTA MATARAM
+            'Mataram (Pusat)' => ['lat' => -8.5838, 'lng' => 116.1105, 'radius' => 0.015],
+            'Ampenan' => ['lat' => -8.5779, 'lng' => 116.0853, 'radius' => 0.01],
+            'Cakranegara' => ['lat' => -8.5956, 'lng' => 116.1450, 'radius' => 0.012],
+
+            // LOMBOK BARAT
+            'Gerung (Pusat Pemkab)' => ['lat' => -8.6788, 'lng' => 116.1245, 'radius' => 0.015],
+            'Narmada' => ['lat' => -8.5630, 'lng' => 116.2230, 'radius' => 0.012],
+            'Senggigi' => ['lat' => -8.4520, 'lng' => 116.0420, 'radius' => 0.01],
+
+            // LOMBOK TENGAH
+            'Praya (Pusat Kota)' => ['lat' => -8.7105, 'lng' => 116.2730, 'radius' => 0.02],
+            'Kopang' => ['lat' => -8.6360, 'lng' => 116.3550, 'radius' => 0.01],
+            'Pujut (Mandalika)' => ['lat' => -8.8950, 'lng' => 116.2900, 'radius' => 0.02],
+
+            // LOMBOK TIMUR
+            'Selong' => ['lat' => -8.6505, 'lng' => 116.5350, 'radius' => 0.015],
+            'Masbagik' => ['lat' => -8.6200, 'lng' => 116.4800, 'radius' => 0.012],
+            'Aikmel' => ['lat' => -8.5800, 'lng' => 116.5500, 'radius' => 0.01],
+
+            // LOMBOK UTARA
+            'Tanjung' => ['lat' => -8.3530, 'lng' => 116.1550, 'radius' => 0.01],
+            'Pemenang' => ['lat' => -8.4100, 'lng' => 116.0900, 'radius' => 0.008],
+
+            // SUMBAWA
+            'Sumbawa Besar' => ['lat' => -8.5040, 'lng' => 117.4300, 'radius' => 0.02],
+            'Alas' => ['lat' => -8.5400, 'lng' => 116.9600, 'radius' => 0.01],
+
+            // SUMBAWA BARAT
+            'Taliwang' => ['lat' => -8.7450, 'lng' => 116.8550, 'radius' => 0.015],
+
+            // DOMPU
+            'Dompu' => ['lat' => -8.5360, 'lng' => 118.4630, 'radius' => 0.015],
+
+            // BIMA
+            'Woha' => ['lat' => -8.6200, 'lng' => 118.6800, 'radius' => 0.015],
+            'Raba (Kota Bima)' => ['lat' => -8.4550, 'lng' => 118.7500, 'radius' => 0.015],
         ];
 
         $problems = [
@@ -56,13 +85,16 @@ class ConsultationSeeder extends Seeder
 
         // Buat 50 data konsultasi dummy
         for ($i = 0; $i < 50; $i++) {
-            // Pilih wilayah secara acak
-            $regionName = array_rand($regions);
-            $regionData = $regions[$regionName];
+            // Pilih lokasi anchor secara acak
+            $anchorName = array_rand($anchorPoints);
+            $anchorData = $anchorPoints[$anchorName];
 
-            // Koordinat acak di sekitar pusat wilayah
-            $lat = $regionData['lat'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
-            $lng = $regionData['lng'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
+            // Koordinat acak di sekitar anchor point dengan radius kecil (presisi tinggi)
+            $latOffset = ($faker->randomFloat(6, -1, 1) + $faker->randomFloat(6, -1, 1)) / 2 * $anchorData['radius'];
+            $lngOffset = ($faker->randomFloat(6, -1, 1) + $faker->randomFloat(6, -1, 1)) / 2 * $anchorData['radius'];
+
+            $lat = $anchorData['lat'] + $latOffset;
+            $lng = $anchorData['lng'] + $lngOffset;
 
             Consultation::create([
                 'nama_klien' => $faker->name,
