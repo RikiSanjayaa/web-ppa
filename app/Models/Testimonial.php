@@ -12,12 +12,26 @@ class Testimonial extends Model
 
     protected $fillable = [
         'name',
+        'phone_number',
         'relation',
         'content',
         'rating',
         'display_order',
         'is_published',
+        'is_verified',
+        'consultation_id',
+        'complaint_id',
     ];
+
+    public function consultation()
+    {
+        return $this->belongsTo(Consultation::class);
+    }
+
+    public function complaint()
+    {
+        return $this->belongsTo(Complaint::class);
+    }
 
     protected function casts(): array
     {

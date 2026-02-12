@@ -99,7 +99,7 @@
                 <label class="mb-1 block text-sm font-semibold text-slate-700">No HP / WA *</label>
                 <input type="text" name="no_hp" value="{{ old('no_hp') }}" required
                     class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
-                    placeholder="Contoh: 081234567890">
+                    placeholder="Contoh: 08123456789">
             </div>
             <div>
                 <label class="mb-1 block text-sm font-semibold text-slate-700">NIK *</label>

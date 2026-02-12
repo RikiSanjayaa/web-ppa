@@ -138,4 +138,15 @@ class ComplaintController extends Controller
 
         return $pdf->download('aduan-'.now()->format('YmdHis').'.pdf');
     }
+
+    public function generateTestimonialToken(Complaint $complaint)
+    {
+        if (! $complaint->testimonial_token) {
+            $complaint->update([
+                'testimonial_token' => \Illuminate\Support\Str::random(32),
+            ]);
+        }
+
+        return back()->with('success', 'Link testimoni berhasil dibuat.');
+    }
 }

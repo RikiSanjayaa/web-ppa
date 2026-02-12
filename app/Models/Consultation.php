@@ -12,12 +12,14 @@ class Consultation extends Model
 
     protected $fillable = [
         'nama_klien',
+        'no_hp',
         'permasalahan',
         'rekomendasi',
         'latitude',
         'longitude',
         'ip_address',
         'user_agent',
+        'testimonial_token',
     ];
 
     public function scopeFilter(Builder $query, array $filters): Builder

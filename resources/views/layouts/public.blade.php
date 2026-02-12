@@ -41,6 +41,40 @@
     x-init="init()"
     @keydown.escape.window="showConsultationModal = false"
     >
+        {{-- Flash Messages --}}
+        @if(session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)"
+             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4"
+             class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-full max-w-lg px-4">
+            <div class="flex items-center gap-3 rounded-xl bg-emerald-50 border border-emerald-200 p-4 shadow-lg">
+                <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-emerald-500 text-white">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <p class="text-sm font-semibold text-emerald-800">{{ session('success') }}</p>
+                <button @click="show = false" class="ml-auto text-emerald-400 hover:text-emerald-600">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+        @endif
+        @if(session('error'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 8000)"
+             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4"
+             class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-full max-w-lg px-4">
+            <div class="flex items-center gap-3 rounded-xl bg-amber-50 border border-amber-200 p-4 shadow-lg">
+                <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-amber-500 text-white">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+                </div>
+                <p class="text-sm font-semibold text-amber-800">{{ session('error') }}</p>
+                <button @click="show = false" class="ml-auto text-amber-400 hover:text-amber-600">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+        @endif
+
         {{-- Header Navigation --}}
         <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
             <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
@@ -190,10 +224,15 @@
                             <form method="POST" action="{{ route('consultations.store') }}" class="grid gap-4">
                                 @csrf
                                 <div>
-                                    <label class="mb-1 block text-sm font-semibold text-slate-700">Nama Klien *</label>
                                     <input type="text" name="nama_klien" required
                                         class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
                                         placeholder="Masukkan nama Anda">
+                                </div>
+                                <div>
+                                    <label class="mb-1 block text-sm font-semibold text-slate-700">No HP / WA *</label>
+                                    <input type="text" name="no_hp" required
+                                        class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:border-navy-600 focus:outline-none"
+                                        placeholder="Contoh: 08123456789">
                                 </div>
                                 <div>
                                     <label class="mb-1 block text-sm font-semibold text-slate-700">Permasalahan *</label>

@@ -14,6 +14,7 @@ class ConsultationController extends Controller
     {
         $validated = $request->validate([
             'nama_klien' => ['required', 'string', 'max:255'],
+            'no_hp' => ['required', 'string', 'max:20'],
             'permasalahan' => ['required', 'string'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
@@ -21,6 +22,7 @@ class ConsultationController extends Controller
 
         $consultation = Consultation::create([
             'nama_klien' => $validated['nama_klien'],
+            'no_hp' => $validated['no_hp'],
             'permasalahan' => $validated['permasalahan'],
             'latitude' => $validated['latitude'] ?? null,
             'longitude' => $validated['longitude'] ?? null,

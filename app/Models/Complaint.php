@@ -40,6 +40,7 @@ class Complaint extends Model
         'user_agent',
         'latitude',
         'longitude',
+        'testimonial_token',
     ];
 
     protected function casts(): array
