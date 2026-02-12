@@ -17,9 +17,8 @@
             <p class="mt-3 text-slate-600">Untuk laporan darurat, silakan langsung hubungi hotline WhatsApp. Untuk
                 pencatatan resmi, gunakan form aduan di bawah.</p>
             <div class="mt-6 flex flex-wrap gap-3">
-                <a href="https://wa.me/{{ preg_replace('/\D+/', '', $settings['hotline_wa_number']) }}" target="_blank"
-                    rel="noopener" data-hotline-track
-                    class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Hotline WhatsApp</a>
+                <button @click="showConsultationModal = true"
+                    class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Konsultasi via WA</button>
                 <a href="tel:{{ preg_replace('/\D+/', '', $settings['contact_phone']) }}"
                     class="btn border-slate-300 bg-white text-navy-700 hover:bg-slate-50">{{ $settings['contact_phone'] }}</a>
             </div>
