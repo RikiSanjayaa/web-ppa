@@ -32,6 +32,80 @@ class ComplaintSeeder extends Seeder
             Complaint::STATUS_BARU,
             Complaint::STATUS_SELESAI,
         ];
+        $configs = [
+            ['Budi Santoso', '3201011234567890', 'Jalan Merdeka No. 10', 'Terjadi pencurian motor di depan rumah.'],
+            ['Siti Aminah', '3202022345678901', 'Pasar Raya', 'Penipuan online melalui media sosial.'],
+            ['Joko Susilo', '3203033456789012', 'Kantor Pos', 'Penggelapan dana bantuan sosial.'],
+            ['Dewi Lestari', '3204044567890123', 'Sekolah Dasar Negeri 1', 'Perundungan terhadap siswa.'],
+            ['Ahmad Fauzi', '3205055678901234', 'Terminal Bus', 'Pungutan liar oleh oknum tidak bertanggung jawab.'],
+            ['Kartika Putri', '3206066789012345', 'Bank Swasta', 'Pembobolan rekening bank.'],
+            ['Rizky Pratama', '3207077890123456', 'Toko Emas', 'Perampokan toko emas.'],
+            ['Nurul Hidayah', '3208088901234567', 'Rumah Sakit Umum', 'Malpraktik medis.'],
+            ['Fajar Ramadhan', '3209099012345678', 'Jalan Protokol', 'Kecelakaan lalu lintas tabrak lari.'],
+            ['Linda Wijaya', '3210100123456789', 'Perumahan Elit', 'Penganiayaan dalam rumah tangga.'],
+        ];
+
+        $statusMappings = [
+            0 => Complaint::STATUS_MASUK,
+            1 => Complaint::STATUS_DIPROSES_LP,
+            2 => Complaint::STATUS_DIPROSES_LIDIK,
+            3 => Complaint::STATUS_DIPROSES_LP,
+            4 => Complaint::STATUS_MASUK,
+            5 => Complaint::STATUS_DIPROSES_SIDIK,
+            6 => Complaint::STATUS_MASUK,
+        ];
+
+        $statuses = [];
+
+        foreach ($configs as $index => $config) {
+            $status = Complaint::STATUS_MASUK; // Default
+            if (isset($statusMappings[$index])) {
+                $status = $statusMappings[$index];
+            }
+
+            $statuses[] = $status;
+        }
+
+        foreach ($configs as $index => $config) {
+            $nama = $config[0];
+            $nik = $config[1];
+            $tempat = $config[2];
+            $kronologis = $config[3];
+
+            $complaint = Complaint::query()->create([
+                'nama_lengkap' => $nama,
+                'nik' => $nik,
+                'alamat' => fake()->address(),
+                'no_hp' => '0812' . fake()->numerify('########'),
+                'email' => fake()->safeEmail(),
+                'tempat_kejadian' => $tempat,
+                'waktu_kejadian' => now()->subDays(rand(1, 30)),
+                'kronologis_singkat' => $kronologis,
+                'korban' => fake()->name(),
+                'terlapor' => fake()->name(),
+                'saksi_saksi' => fake()->name() . ', ' . fake()->name(),
+                'status' => $statuses[$index],
+                'channel' => fake()->randomElement(['web', 'whatsapp', 'manual']),
+                'ip_address' => fake()->ipv4(),
+                'user_agent' => fake()->userAgent(),
+            ]);
+
+            ComplaintStatusHistory::query()->create([
+                'complaint_id' => $complaint->id,
+                'to_status' => Complaint::STATUS_MASUK,
+                'note' => 'Aduan masuk melalui sistem.',
+            ]);
+
+            if ($complaint->status !== Complaint::STATUS_MASUK) {
+                ComplaintStatusHistory::query()->create([
+                    'complaint_id' => $complaint->id,
+                    'changed_by' => 1,
+                    'from_status' => Complaint::STATUS_MASUK,
+                    'to_status' => $complaint->status,
+                    'note' => 'Status aduan diperbarui.',
+                ]);
+            }
+        }
 
         $faker = \Faker\Factory::create('id_ID');
 
@@ -48,7 +122,7 @@ class ComplaintSeeder extends Seeder
             // Random status with some weight
             $statusRoll = rand(1, 100);
             if ($statusRoll <= 40) {
-                $status = Complaint::STATUS_BARU;
+                $status = Complaint::STATUS_MASUK;
             } elseif ($statusRoll <= 75) {
                 $status = Complaint::STATUS_DIPROSES;
             } else {
@@ -81,7 +155,7 @@ class ComplaintSeeder extends Seeder
                 'complaint_id' => $complaint->id,
                 'changed_by' => null,
                 'from_status' => null,
-                'to_status' => Complaint::STATUS_BARU,
+                'to_status' => Complaint::STATUS_MASUK,
                 'note' => 'Aduan dibuat.',
                 'created_at' => $baseTime,
                 'updated_at' => $baseTime,

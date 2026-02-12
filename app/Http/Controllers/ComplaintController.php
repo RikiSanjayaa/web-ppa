@@ -32,7 +32,7 @@ class ComplaintController extends Controller
 
         $complaint = Complaint::query()->create([
             ...$validated,
-            'status' => Complaint::STATUS_BARU,
+            'status' => Complaint::STATUS_MASUK,
             'channel' => 'web',
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
@@ -40,7 +40,7 @@ class ComplaintController extends Controller
 
         ComplaintStatusHistory::query()->create([
             'complaint_id' => $complaint->id,
-            'to_status' => Complaint::STATUS_BARU,
+            'to_status' => Complaint::STATUS_MASUK,
             'note' => 'Aduan dibuat dari web publik.',
         ]);
 

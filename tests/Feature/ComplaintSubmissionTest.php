@@ -37,7 +37,7 @@ class ComplaintSubmissionTest extends TestCase
         $this->assertDatabaseCount('complaints', 1);
         $complaint = Complaint::query()->firstOrFail();
 
-        $this->assertSame(Complaint::STATUS_BARU, $complaint->status);
+        $this->assertSame(Complaint::STATUS_MASUK, $complaint->status);
         $this->assertNotNull($complaint->wa_redirected_at);
 
         $raw = DB::table('complaints')->first();
