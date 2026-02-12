@@ -20,7 +20,7 @@ class SiteSettingSeeder extends Seeder
             'hotline_wa_number' => (string) env('HOTLINE_WA_NUMBER', '6281234567890'),
             'contact_phone' => '(021) 721-8000',
             'contact_email' => 'ppa-ppo@contoh.go.id',
-            'contact_address' => 'Jl. Trunojoyo No. 3, Kebayoran Baru, Jakarta Selatan',
+            'contact_address' => 'Jl. Langko No.77, Taman Sari, Kec. Ampenan, Kota Mataram, Nusa Tenggara Barat. 83112',
             'organization_profile' => 'Unit PPA/PPO memberikan layanan aduan, pendampingan, dan koordinasi penanganan kasus perlindungan perempuan serta anak.',
             'organization_vision' => 'Terwujudnya penegakkan hukum yang bersih, transparan dan berkeadilan, untuk terciptanya kepastian hukum dan memberikan rasa aman bagi masyarakat Nusa Tenggara Barat',
             'organization_mission' => "1. Mewujudkan kepastian hukum;\n2. Menciptakan rasa keadilan dengan menjunjung tinggi HAM;\n3. Penyelidikan dan penyidikan berbasis Ilmu Pengetahuan dan Teknologi.",
