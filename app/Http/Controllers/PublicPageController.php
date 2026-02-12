@@ -32,7 +32,7 @@ class PublicPageController extends Controller
 
             'stats' => [
                 'total_aduan' => Complaint::query()->count(),
-                'aduan_selesai' => Complaint::query()->where('status', Complaint::STATUS_SELESAI)->count(),
+                'aduan_selesai' => Complaint::query()->where('status', Complaint::STATUS_TAHAP_1)->count(),
                 'total_dokumen' => Document::query()->published()->count(),
             ],
         ]);

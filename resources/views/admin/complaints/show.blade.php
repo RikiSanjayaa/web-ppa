@@ -31,7 +31,9 @@
         <section class="space-y-6">
             <article class="rounded-2xl bg-white p-5 shadow-sm">
                 <h2 class="font-heading text-lg font-semibold text-navy-700">Status Aduan</h2>
-                <p class="mt-2 text-sm text-slate-600">Status saat ini: <span class="badge badge-outline">{{ $complaint->status }}</span></p>
+                <p class="mt-2 text-sm text-slate-600">Status saat ini:
+                    <x-complaint-status-badge :status="$complaint->status" />
+                </p>
 
                 <form method="POST" action="{{ route('admin.complaints.update-status', $complaint) }}" class="mt-4 space-y-3">
                     @csrf

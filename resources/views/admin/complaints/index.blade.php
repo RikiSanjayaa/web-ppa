@@ -64,14 +64,7 @@
                             <td>{{ $complaint->masked_no_hp }}</td>
                             <td>{{ $complaint->tempat_kejadian }}</td>
                             <td>
-                                <span @class([
-                                    'badge border-0 text-white',
-                                    'bg-red-500' => $complaint->status === \App\Models\Complaint::STATUS_BARU,
-                                    'bg-orange-500' => $complaint->status === \App\Models\Complaint::STATUS_DIPROSES,
-                                    'bg-green-500' => $complaint->status === \App\Models\Complaint::STATUS_SELESAI,
-                                ])>
-                                    {{ ucfirst($complaint->status) }}
-                                </span>
+                                <x-complaint-status-badge :status="$complaint->status" />
                             </td>
                             <td>{{ $complaint->created_at->format('d-m-Y H:i') }}</td>
                             <td>

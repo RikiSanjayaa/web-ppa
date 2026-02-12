@@ -54,7 +54,7 @@ class ComplaintController extends Controller
         ]);
 
         $complaint = Complaint::create(array_merge($validated, [
-            'status' => Complaint::STATUS_BARU,
+            'status' => Complaint::STATUS_MASUK,
             'channel' => 'dibuat oleh ' . $request->user()->name,
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
