@@ -1,7 +1,7 @@
 @props(['status'])
 
 <span @class([
-    'badge border-0 text-white',
+    'inline-flex items-center whitespace-nowrap rounded-lg border-0 px-2.5 py-1 text-xs font-medium text-white',
     'bg-red-500' => $status === \App\Models\Complaint::STATUS_MASUK,
     'bg-orange-500' => $status === \App\Models\Complaint::STATUS_DIPROSES_LP,
     'bg-amber-500' => $status === \App\Models\Complaint::STATUS_DIPROSES_LIDIK,

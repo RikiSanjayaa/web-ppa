@@ -46,16 +46,16 @@
 
     <section class="mt-5 rounded-2xl bg-white p-5 shadow-sm">
         <div class="overflow-x-auto">
-            <table class="table table-zebra">
+            <table class="table table-zebra w-full min-w-[800px]">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th class="w-16">ID</th>
                         <th>Nama</th>
                         <th>No HP (masked)</th>
                         <th>Tempat</th>
-                        <th>Status</th>
-                        <th>Tanggal</th>
-                        <th></th>
+                        <th class="w-36">Status</th>
+                        <th class="w-32">Tanggal</th>
+                        <th class="w-20"></th>
                     </tr>
                 </thead>
                 <tbody>
