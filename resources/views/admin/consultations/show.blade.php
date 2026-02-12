@@ -3,8 +3,30 @@
 @section('title', 'Detail Konsultasi')
 @section('page_title', 'Detail Konsultasi')
 
+@push('head')
+    <script src="//unpkg.com/alpinejs" defer></script>
+@endpush
+
 @section('content')
-    <div class="grid gap-6 lg:grid-cols-3">
+    <div x-data="consultationDetail" class="grid gap-6 lg:grid-cols-3 relative">
+        <!-- Toast Notification -->
+        <div
+            x-show="showToast"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            class="fixed top-20 right-5 z-50 flex items-center gap-2 rounded-lg bg-green-500 px-4 py-3 text-white shadow-lg"
+            style="display: none;"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span x-text="toastMessage" class="font-medium"></span>
+        </div>
+
         <!-- Main Content -->
         <div class="lg:col-span-2 space-y-6">
             <section class="rounded-2xl bg-white p-6 shadow-sm">
@@ -21,34 +43,58 @@
             <section class="rounded-2xl bg-white p-6 shadow-sm">
                 <div class="mb-4 flex items-center justify-between">
                     <h3 class="font-heading text-lg font-bold text-navy-700">Rekomendasi / Tanggapan</h3>
-                    @if($consultation->rekomendasi)
+                    <template x-if="rekomendasi">
                         <span class="badge bg-green-100 text-green-700 border-0">Sudah Ditanggapi</span>
-                    @else
-                        <span class="badge bg-slate-100 text-slate-600 border-0">Belum Ditanggapi</span>
-                    @endif
+                    </template>
+                    <template x-if="!rekomendasi">
+                        <span class="badge bg-red-100 text-red-600 border-0">Belum Ditanggapi</span>
+                    </template>
                 </div>
 
-                @if($consultation->rekomendasi)
+                <!-- View Mode -->
+                <div x-show="!isEditing && rekomendasi">
                     <div class="rounded-xl bg-green-50 p-5 border border-green-100">
-                        <p class="whitespace-pre-wrap text-slate-700">{{ $consultation->rekomendasi }}</p>
-                        <p class="mt-4 text-xs text-green-600 font-medium">Terakhir diperbarui: {{ $consultation->updated_at->format('d F Y, H:i') }}</p>
+                        <p class="whitespace-pre-wrap text-slate-700" x-text="rekomendasi"></p>
+                        <p class="mt-4 text-xs text-green-600 font-medium">Terakhir diperbarui: <span x-text="updatedAt"></span></p>
                     </div>
-                @else
-                    <div class="rounded-xl border border-dashed border-slate-300 p-8 text-center">
-                        <p class="text-slate-500 mb-4">Belum ada rekomendasi yang diberikan untuk konsultasi ini.</p>
-                        <a href="{{ route('admin.consultations.edit', $consultation) }}" class="btn bg-navy-700 text-white hover:bg-navy-800 border-0">
-                            Isi Rekomendasi Sekarang
-                        </a>
-                    </div>
-                @endif
-                
-                @if($consultation->rekomendasi)
                     <div class="mt-6 flex justify-end">
-                        <a href="{{ route('admin.consultations.edit', $consultation) }}" class="btn btn-outline border-slate-300 text-slate-700 hover:bg-slate-50">
+                        <button @click="startEditing" class="btn btn-outline border-slate-300 text-slate-700 hover:bg-slate-50">
                             Edit Rekomendasi
-                        </a>
+                        </button>
                     </div>
-                @endif
+                </div>
+
+                <!-- Empty State -->
+                <div x-show="!isEditing && !rekomendasi" class="rounded-xl border border-dashed border-slate-300 p-8 text-center">
+                    <p class="text-slate-500 mb-4">Belum ada rekomendasi yang diberikan untuk konsultasi ini.</p>
+                    <button @click="startEditing" class="btn bg-navy-700 text-white hover:bg-navy-800 border-0">
+                        Isi Rekomendasi Sekarang
+                    </button>
+                </div>
+
+                <!-- Edit Form -->
+                <div x-show="isEditing" style="display: none;">
+                    <form @submit.prevent="saveRecommendation">
+                        <div class="form-control mb-4">
+                            <label class="label">
+                                <span class="label-text font-semibold text-slate-700">Isi Rekomendasi Anda</span>
+                            </label>
+                            <textarea 
+                                x-model="formRekomendasi" 
+                                class="textarea textarea-bordered h-32 w-full focus:border-navy-600 focus:outline-none" 
+                                placeholder="Tuliskan solusi atau langkah selanjutnya..."></textarea>
+                        </div>
+                        <div class="flex gap-2 justify-end">
+                            <button type="button" @click="cancelEditing" class="btn btn-ghost text-slate-500 hover:bg-slate-100">
+                                Batal
+                            </button>
+                            <button type="submit" class="btn bg-navy-700 text-white hover:bg-navy-800 border-0" :disabled="isSubmitting">
+                                <span x-show="isSubmitting" class="loading loading-spinner loading-xs mr-2"></span>
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
 
@@ -86,4 +132,82 @@
             </section>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('consultationDetail', () => ({
+                isEditing: false,
+                isSubmitting: false,
+                showToast: false,
+                toastMessage: '',
+                rekomendasi: @json($consultation->rekomendasi),
+                formRekomendasi: @json($consultation->rekomendasi),
+                updatedAt: '{{ $consultation->updated_at->translatedFormat('d F Y, H:i') }}',
+
+                startEditing() {
+                    this.formRekomendasi = this.rekomendasi;
+                    this.isEditing = true;
+                },
+
+                cancelEditing() {
+                    this.isEditing = false;
+                    this.formRekomendasi = this.rekomendasi;
+                },
+
+                async saveRecommendation() {
+                    if (!this.formRekomendasi) {
+                        alert('Rekomendasi tidak boleh kosong');
+                        return;
+                    }
+
+                    this.isSubmitting = true;
+
+                    try {
+                        const formData = new FormData();
+                        formData.append('_method', 'PUT');
+                        formData.append('_token', '{{ csrf_token() }}');
+                        formData.append('rekomendasi', this.formRekomendasi);
+
+                        const response = await fetch(`{{ route('admin.consultations.update', $consultation->id) }}`, {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                            },
+                            body: formData
+                        });
+
+                        if (response.ok) {
+                            this.rekomendasi = this.formRekomendasi;
+                            this.isEditing = false;
+                            
+                            // Update timestamp to now
+                            const now = new Date();
+                            const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+                            // Note: locally formatted date might slightly differ from server locale but acceptable for UX responsiveness
+                            // Or we could parse the response if we changed controller to return JSON.
+                            // Currently sticking to simple local update.
+                            this.updatedAt = 'Baru saja'; 
+
+                            this.showToastNotification('Rekomendasi berhasil disimpan');
+                        } else {
+                            alert('Gagal menyimpan. Silakan coba lagi.');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan jaringan.');
+                    } finally {
+                        this.isSubmitting = false;
+                    }
+                },
+
+                showToastNotification(message) {
+                    this.toastMessage = message;
+                    this.showToast = true;
+                    setTimeout(() => {
+                        this.showToast = false;
+                    }, 3000);
+                }
+            }));
+        });
+    </script>
 @endsection
