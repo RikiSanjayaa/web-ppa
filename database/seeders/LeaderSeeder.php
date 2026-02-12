@@ -15,16 +15,20 @@ class LeaderSeeder extends Seeder
     {
         $leaders = [
             [
-                'name' => 'Kombes Pol. Rina Kartika',
-                'position' => 'Direktur Reskrimsus',
-                'bio' => 'Memimpin kebijakan penanganan perkara khusus, termasuk penguatan layanan perlindungan perempuan dan anak.',
+                'name' => 'KOMBES POL Ni MADE PUJEWATI, S.IK., M.M.',
+                'position' => 'Direktur Reskrim PPA dan PPO',
+                'bio' => 'Bertugas melaksanakan penyelidikan dan
+                    penyidikan tindak pidana kekerasan terhadap perempuan, anak,
+                    disabilitas, lanjut usia, buruh dan kelompok rentan lain serta
+                    pemberantasan perdagangan orang dan penyelundupan manusia.',
                 'display_order' => 1,
                 'is_active' => true,
             ],
             [
-                'name' => 'AKBP Sari Wulandari',
-                'position' => 'Kasubdit PPA/PPO',
-                'bio' => 'Mengkoordinasikan tindak lanjut aduan dan kolaborasi lintas unit terkait perlindungan perempuan dan anak.',
+                'name' => 'KOMPOL PRATIWI NORIANI, S.H., S.I.K., M.M.',
+                'position' => 'Kasubdit 2 PPA dan PPO',
+                'bio' => 'Bertugas menangani tindak pidana yang terkait
+                kekerasan terhadap anak',
                 'display_order' => 2,
                 'is_active' => true,
             ],
