@@ -10,7 +10,7 @@
         </svg>
     </div>
     
-    <h1 class="font-heading text-3xl font-bold text-navy-800">Aduan Berhasil Dibuat!</h1>
+    <h1 class="font-heading text-3xl font-bold text-navy-800">Pengaduan Berhasil Dibuat!</h1>
     <p class="mt-4 max-w-lg text-slate-600">
         Data Anda telah tersimpan di sistem kami. Sekarang Anda akan diarahkan ke WhatsApp petugas untuk mengirim pesan secara otomatis.
     </p>

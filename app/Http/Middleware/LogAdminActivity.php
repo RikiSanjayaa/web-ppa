@@ -19,13 +19,13 @@ class LogAdminActivity
     {
         $response = $next($request);
 
-        if (!$request->user()?->is_admin || $request->attributes->get('activity_logged') === true) {
+        if (! $request->user()?->is_admin || $request->attributes->get('activity_logged') === true) {
             return $response;
         }
 
         $route = $request->route();
 
-        if (!$route) {
+        if (! $route) {
             return $response;
         }
 
@@ -82,12 +82,12 @@ class LogAdminActivity
         }
 
         if (is_array($value)) {
-            return array_map(fn(mixed $item) => $this->normalizeValue($item), $value);
+            return array_map(fn (mixed $item) => $this->normalizeValue($item), $value);
         }
 
         if (is_string($value)) {
             return mb_strlen($value) > 500
-                ? mb_substr($value, 0, 500) . '...'
+                ? mb_substr($value, 0, 500).'...'
                 : $value;
         }
 

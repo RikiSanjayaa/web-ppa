@@ -30,7 +30,7 @@ class ConsultationController extends Controller
 
         $hotline = SiteSetting::getValue('hotline_wa_number', env('HOTLINE_WA_NUMBER'));
 
-        if (!$hotline) {
+        if (! $hotline) {
             return redirect()->back()->with('success', 'Konsultasi berhasil dikirim, namun nomor WhatsApp admin belum tersedia.');
         }
 

@@ -77,7 +77,7 @@ class LocationMonitoringController extends Controller
             }
 
             // Strategi 2: Fallback ke pencocokan teks jika GPS tidak tersedia
-            if (!$detectedRegion && $complaint->tempat_kejadian) {
+            if (! $detectedRegion && $complaint->tempat_kejadian) {
                 $place = strtolower($complaint->tempat_kejadian);
                 if (preg_match('/mataram/i', $place)) {
                     $detectedRegion = 'Mataram';
@@ -91,7 +91,7 @@ class LocationMonitoringController extends Controller
                     $detectedRegion = 'Lombok Utara';
                 } elseif (preg_match('/sumbawa barat|ksb/i', $place)) {
                     $detectedRegion = 'Sumbawa Barat';
-                } elseif (preg_match('/sumbawa/i', $place)) { 
+                } elseif (preg_match('/sumbawa/i', $place)) {
                     $detectedRegion = 'Sumbawa';
                 } elseif (preg_match('/dompu/i', $place)) {
                     $detectedRegion = 'Dompu';
@@ -112,11 +112,11 @@ class LocationMonitoringController extends Controller
 
         // Urutkan dari terbesar
         arsort($kabupatenStats);
-        
+
         // Transformasi untuk grafik
         $complaintLocations = collect($kabupatenStats)->map(function ($count, $name) {
             return (object) ['tempat_kejadian' => $name, 'total' => $count];
-        })->filter(fn($item) => $item->total > 0)->values();
+        })->filter(fn ($item) => $item->total > 0)->values();
 
         // Statistik lokasi konsultasi (berdasarkan kedekatan koordinat)
         $consultations = Consultation::query()
@@ -124,7 +124,7 @@ class LocationMonitoringController extends Controller
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get();
-            
+
         $consultationStats = array_fill_keys(array_keys($this->getRegionCenters()), 0);
         $consultationStats['Luar NTB / Lainnya'] = 0;
 
@@ -137,10 +137,10 @@ class LocationMonitoringController extends Controller
             }
         }
         arsort($consultationStats);
-        
+
         $consultationLocations = collect($consultationStats)->map(function ($count, $name) {
-             return (object) ['tempat_kejadian' => $name, 'total' => $count];
-        })->filter(fn($item) => $item->total > 0)->values();
+            return (object) ['tempat_kejadian' => $name, 'total' => $count];
+        })->filter(fn ($item) => $item->total > 0)->values();
 
         // Rasio aduan vs konsultasi
         $totalComplaints = Complaint::count();
@@ -171,9 +171,25 @@ class LocationMonitoringController extends Controller
             ];
         });
 
+        // Warna konsisten per kabupaten (sama dengan dashboard)
+        $regionColors = [
+            'Mataram' => '#ef4444',
+            'Lombok Barat' => '#f97316',
+            'Lombok Tengah' => '#f59e0b',
+            'Lombok Timur' => '#eab308',
+            'Lombok Utara' => '#84cc16',
+            'Sumbawa Barat' => '#22c55e',
+            'Sumbawa' => '#14b8a6',
+            'Dompu' => '#06b6d4',
+            'Bima' => '#3b82f6',
+            'Kota Bima' => '#8b5cf6',
+            'Luar NTB / Lainnya' => '#94a3b8',
+        ];
+
         return view('admin.location-monitoring.summary', [
             'complaintLocations' => $complaintLocations,
             'consultationLocations' => $consultationLocations,
+            'regionColors' => $regionColors,
             'totalComplaints' => $totalComplaints,
             'totalConsultations' => $totalConsultations,
             'chartData' => $chartData,
@@ -187,7 +203,7 @@ class LocationMonitoringController extends Controller
     {
         return [
             'Mataram' => ['lat' => -8.5833, 'lng' => 116.1167],
-            'Lombok Barat' => ['lat' => -8.6833, 'lng' => 116.1167], 
+            'Lombok Barat' => ['lat' => -8.6833, 'lng' => 116.1167],
             'Lombok Tengah' => ['lat' => -8.7000, 'lng' => 116.2667],
             'Lombok Timur' => ['lat' => -8.6500, 'lng' => 116.5333],
             'Lombok Utara' => ['lat' => -8.3500, 'lng' => 116.1500],
@@ -210,13 +226,13 @@ class LocationMonitoringController extends Controller
 
         foreach ($centers as $name => $coords) {
             $dist = sqrt(pow($lat - $coords['lat'], 2) + pow($lng - $coords['lng'], 2));
-            
+
             if ($dist < $minDist) {
                 $minDist = $dist;
                 $closest = $name;
             }
         }
-        
+
         // Threshold ~50km
         if ($minDist < 0.5) {
             return $closest;

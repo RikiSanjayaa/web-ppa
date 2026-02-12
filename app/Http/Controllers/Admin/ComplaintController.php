@@ -55,7 +55,7 @@ class ComplaintController extends Controller
 
         $complaint = Complaint::create(array_merge($validated, [
             'status' => Complaint::STATUS_MASUK,
-            'channel' => 'dibuat oleh ' . $request->user()->name,
+            'channel' => 'dibuat oleh '.$request->user()->name,
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]));
@@ -83,7 +83,7 @@ class ComplaintController extends Controller
     public function updateStatus(Request $request, Complaint $complaint)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:' . implode(',', Complaint::availableStatuses())],
+            'status' => ['required', 'in:'.implode(',', Complaint::availableStatuses())],
             'note' => ['nullable', 'string'],
         ]);
 
@@ -122,7 +122,7 @@ class ComplaintController extends Controller
     {
         $filters = $request->only(['status', 'date_from', 'date_to', 'q']);
 
-        return Excel::download(new ComplaintsExport($filters), 'aduan-' . now()->format('YmdHis') . '.xlsx');
+        return Excel::download(new ComplaintsExport($filters), 'aduan-'.now()->format('YmdHis').'.xlsx');
     }
 
     public function exportPdf(Request $request): Response
@@ -136,6 +136,6 @@ class ComplaintController extends Controller
             'generatedAt' => now(),
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->download('aduan-' . now()->format('YmdHis') . '.pdf');
+        return $pdf->download('aduan-'.now()->format('YmdHis').'.pdf');
     }
 }

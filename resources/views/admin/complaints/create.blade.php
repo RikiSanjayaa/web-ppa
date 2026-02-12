@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('title', 'Buat Aduan Baru')
-@section('page_title', 'Buat Aduan Manual')
+@section('page_title', 'Buat Pengaduan Manual')
 
 @section('content')
   <div class="max-w-4xl mx-auto">
     <div class="bg-white rounded-2xl shadow-sm p-6">
-      <h2 class="text-xl font-heading font-semibold text-navy-700 mb-6">Formulir Aduan Manual</h2>
-      <p class="text-sm text-slate-600 mb-6">Gunakan form ini untuk mencatat aduan yang masuk melalui jalur lain
+      <h2 class="text-xl font-heading font-semibold text-navy-700 mb-6">Formulir Pengaduan Manual</h2>
+      <p class="text-sm text-slate-600 mb-6">Gunakan form ini untuk mencatat pengaduan yang masuk melalui jalur lain
         (telepon/langsung) secara manual.</p>
 
       @if ($errors->any())

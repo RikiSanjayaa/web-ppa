@@ -1,18 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
+use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DocumentController;
 use App\Http\Controllers\Admin\FaqController;
-
-use App\Http\Controllers\Admin\HotlineAccessController as AdminHotlineAccessController;
 use App\Http\Controllers\Admin\LeaderController;
+use App\Http\Controllers\Admin\LocationMonitoringController;
 use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
-use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
-use App\Http\Controllers\Admin\LocationMonitoringController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
@@ -75,4 +73,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

@@ -15,12 +15,12 @@ return new class extends Migration
             ->update(['status' => 'Selesai Tahap 1']);
 
         DB::table('complaint_status_histories')
-             ->where('from_status', 'tahap 1')
-             ->update(['from_status' => 'Selesai Tahap 1']);
-        
+            ->where('from_status', 'tahap 1')
+            ->update(['from_status' => 'Selesai Tahap 1']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'tahap 1')
-             ->update(['to_status' => 'Selesai Tahap 1']);
+            ->where('to_status', 'tahap 1')
+            ->update(['to_status' => 'Selesai Tahap 1']);
     }
 
     /**
@@ -31,13 +31,13 @@ return new class extends Migration
         DB::table('complaints')
             ->where('status', 'Selesai Tahap 1')
             ->update(['status' => 'tahap 1']);
-            
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'Selesai Tahap 1')
-             ->update(['from_status' => 'tahap 1']);
-        
+            ->where('from_status', 'Selesai Tahap 1')
+            ->update(['from_status' => 'tahap 1']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'Selesai Tahap 1')
-             ->update(['to_status' => 'tahap 1']);
+            ->where('to_status', 'Selesai Tahap 1')
+            ->update(['to_status' => 'tahap 1']);
     }
 };

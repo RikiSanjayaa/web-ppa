@@ -23,8 +23,8 @@ class Consultation extends Model
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query
-            ->when($filters['date_from'] ?? null, fn(Builder $q, string $dateFrom) => $q->whereDate('created_at', '>=', $dateFrom))
-            ->when($filters['date_to'] ?? null, fn(Builder $q, string $dateTo) => $q->whereDate('created_at', '<=', $dateTo))
+            ->when($filters['date_from'] ?? null, fn (Builder $q, string $dateFrom) => $q->whereDate('created_at', '>=', $dateFrom))
+            ->when($filters['date_to'] ?? null, fn (Builder $q, string $dateTo) => $q->whereDate('created_at', '<=', $dateTo))
             ->when($filters['status'] ?? null, function (Builder $q, string $status) {
                 if ($status === 'belum') {
                     $q->whereNull('rekomendasi');
@@ -35,11 +35,10 @@ class Consultation extends Model
             ->when($filters['q'] ?? null, function (Builder $q, string $term) {
                 $q->where(function (Builder $inner) use ($term) {
                     $inner
-                        ->where('nama_klien', 'like', '%' . $term . '%')
-                        ->orWhere('permasalahan', 'like', '%' . $term . '%')
-                        ->orWhere('rekomendasi', 'like', '%' . $term . '%');
+                        ->where('nama_klien', 'like', '%'.$term.'%')
+                        ->orWhere('permasalahan', 'like', '%'.$term.'%')
+                        ->orWhere('rekomendasi', 'like', '%'.$term.'%');
                 });
             });
     }
 }
-

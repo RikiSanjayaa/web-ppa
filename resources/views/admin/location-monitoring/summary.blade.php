@@ -33,13 +33,19 @@
         <div class="grid gap-6 md:grid-cols-2">
             <!-- Top Locations Chart (Complaints) -->
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 class="font-heading text-lg font-semibold text-navy-700 mb-4">Lokasi Pelaporan Terbanyak (Aduan)</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-heading text-lg font-semibold text-navy-700">Lokasi Pelaporan Terbanyak (Pengaduan)</h3>
+                    <span class="text-xs text-slate-500">per Kabupaten/Kota NTB</span>
+                </div>
                 <div id="topComplaintLocationsChart" class="chart-container"></div>
             </div>
 
             <!-- Top Locations Chart (Consultations) -->
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h3 class="font-heading text-lg font-semibold text-navy-700 mb-4">Lokasi Konsultasi Terbanyak</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-heading text-lg font-semibold text-navy-700">Lokasi Konsultasi Terbanyak</h3>
+                    <span class="text-xs text-slate-500">per Kabupaten/Kota NTB</span>
+                </div>
                 <div id="topConsultationLocationsChart" class="chart-container"></div>
             </div>
 
@@ -61,40 +67,98 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        const regionColors = @json($regionColors);
+
         // 1. Top Complaint Locations Chart
         const complaintLocations = @json($complaintLocations);
         const complaintNames = complaintLocations.map(item => item.tempat_kejadian);
         const complaintCounts = complaintLocations.map(item => item.total);
+        const complaintColors = complaintNames.map(name => regionColors[name] || '#94a3b8');
 
-        const optionsComplaintLoc = {
-            series: [{
-                name: 'Jumlah Aduan',
-                data: complaintCounts
-            }],
-            chart: {
-                type: 'bar',
-                height: 350,
-                fontFamily: 'inherit',
-                toolbar: { show: false }
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    horizontal: true,
+        function buildLocationChartOptions(names, counts, colors, seriesLabel) {
+            const total = counts.reduce((a, b) => a + b, 0);
+            return {
+                series: [{
+                    name: seriesLabel,
+                    data: counts
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'inherit',
+                    toolbar: { show: false },
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 8,
+                        horizontal: true,
+                        barHeight: '70%',
+                        distributed: true,
+                        dataLabels: {
+                            position: 'top'
+                        }
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    textAnchor: 'start',
+                    offsetX: 5,
+                    style: {
+                        fontSize: '13px',
+                        fontWeight: 700,
+                        colors: ['#334155']
+                    },
+                    formatter: function(val) {
+                        return val;
+                    }
+                },
+                xaxis: {
+                    categories: names,
+                    labels: {
+                        style: { colors: '#94a3b8', fontSize: '11px' }
+                    },
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            colors: '#334155',
+                            fontWeight: 600,
+                            fontSize: '12px'
+                        }
+                    }
+                },
+                colors: colors,
+                legend: { show: false },
+                grid: {
+                    borderColor: '#f1f5f9',
+                    xaxis: { lines: { show: true } },
+                    yaxis: { lines: { show: false } }
+                },
+                tooltip: {
+                    theme: 'dark',
+                    style: { fontSize: '13px' },
+                    y: {
+                        formatter: function(val) {
+                            const pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                            return val + ' (' + pct + '%)';
+                        }
+                    }
                 }
-            },
-            dataLabels: { enabled: false },
-            xaxis: {
-                categories: complaintNames,
-            },
-            colors: ['#ef4444'], // Red for complaints
-            tooltip: {
-                theme: 'light'
-            }
-        };
+            };
+        }
 
         if(complaintNames.length > 0) {
-            new ApexCharts(document.querySelector("#topComplaintLocationsChart"), optionsComplaintLoc).render();
+            new ApexCharts(
+                document.querySelector("#topComplaintLocationsChart"),
+                buildLocationChartOptions(complaintNames, complaintCounts, complaintColors, 'Jumlah Aduan')
+            ).render();
         } else {
             document.querySelector("#topComplaintLocationsChart").innerHTML = '<p class="text-center text-slate-500 py-10">Belum ada data lokasi aduan.</p>';
         }
@@ -103,36 +167,13 @@
         const consultationLocations = @json($consultationLocations);
         const consultationNames = consultationLocations.map(item => item.tempat_kejadian);
         const consultationCounts = consultationLocations.map(item => item.total);
-
-        const optionsConsultationLoc = {
-            series: [{
-                name: 'Jumlah Konsultasi',
-                data: consultationCounts
-            }],
-            chart: {
-                type: 'bar',
-                height: 350,
-                fontFamily: 'inherit',
-                toolbar: { show: false }
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    horizontal: true,
-                }
-            },
-            dataLabels: { enabled: false },
-            xaxis: {
-                categories: consultationNames,
-            },
-            colors: ['#3b82f6'], // Blue for consultations
-            tooltip: {
-                theme: 'light'
-            }
-        };
+        const consultationColors = consultationNames.map(name => regionColors[name] || '#94a3b8');
 
         if(consultationNames.length > 0) {
-            new ApexCharts(document.querySelector("#topConsultationLocationsChart"), optionsConsultationLoc).render();
+            new ApexCharts(
+                document.querySelector("#topConsultationLocationsChart"),
+                buildLocationChartOptions(consultationNames, consultationCounts, consultationColors, 'Jumlah Konsultasi')
+            ).render();
         } else {
             document.querySelector("#topConsultationLocationsChart").innerHTML = '<p class="text-center text-slate-500 py-10">Belum ada data lokasi konsultasi.</p>';
         }

@@ -15,7 +15,7 @@
             <p class="text-xs font-semibold uppercase tracking-wide text-coral-600">Hubungi Kami</p>
             <h1 class="mt-2 font-heading text-3xl font-bold text-navy-700">Layanan Masyarakat</h1>
             <p class="mt-3 text-slate-600">Untuk laporan darurat, silakan langsung hubungi hotline WhatsApp. Untuk
-                pencatatan resmi, gunakan form aduan di bawah.</p>
+                pencatatan resmi, gunakan form pengaduan di bawah.</p>
             <div class="mt-6 flex flex-wrap gap-3">
                 <button @click="showConsultationModal = true"
                     class="btn border-0 bg-coral-500 text-white hover:bg-coral-600">Konsultasi via WA</button>
@@ -164,7 +164,7 @@
             @endif
 
             <div class="md:col-span-2 flex justify-end">
-                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim Aduan &
+                <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Kirim Pengaduan &
                     Lanjut ke
                     WhatsApp</button>
             </div>

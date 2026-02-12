@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
@@ -23,30 +21,30 @@ return new class extends Migration
         DB::table('complaints')
             ->where('status', 'selesai')
             ->update(['status' => 'tahap 1']);
-        
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'baru')
-             ->update(['from_status' => 'masuk']);
-        
+            ->where('from_status', 'baru')
+            ->update(['from_status' => 'masuk']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'baru')
-             ->update(['to_status' => 'masuk']);
-             
+            ->where('to_status', 'baru')
+            ->update(['to_status' => 'masuk']);
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'diproses')
-             ->update(['from_status' => 'diproses: LP']);
-        
+            ->where('from_status', 'diproses')
+            ->update(['from_status' => 'diproses: LP']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'diproses')
-             ->update(['to_status' => 'diproses: LP']);
-             
+            ->where('to_status', 'diproses')
+            ->update(['to_status' => 'diproses: LP']);
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'selesai')
-             ->update(['from_status' => 'tahap 1']);
-        
+            ->where('from_status', 'selesai')
+            ->update(['from_status' => 'tahap 1']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'selesai')
-             ->update(['to_status' => 'tahap 1']);
+            ->where('to_status', 'selesai')
+            ->update(['to_status' => 'tahap 1']);
     }
 
     /**
@@ -65,29 +63,29 @@ return new class extends Migration
         DB::table('complaints')
             ->where('status', 'tahap 1')
             ->update(['status' => 'selesai']);
-            
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'masuk')
-             ->update(['from_status' => 'baru']);
-        
+            ->where('from_status', 'masuk')
+            ->update(['from_status' => 'baru']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'masuk')
-             ->update(['to_status' => 'baru']);
-             
+            ->where('to_status', 'masuk')
+            ->update(['to_status' => 'baru']);
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'diproses: LP')
-             ->update(['from_status' => 'diproses']);
-        
+            ->where('from_status', 'diproses: LP')
+            ->update(['from_status' => 'diproses']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'diproses: LP')
-             ->update(['to_status' => 'diproses']);
-             
+            ->where('to_status', 'diproses: LP')
+            ->update(['to_status' => 'diproses']);
+
         DB::table('complaint_status_histories')
-             ->where('from_status', 'tahap 1')
-             ->update(['from_status' => 'selesai']);
-        
+            ->where('from_status', 'tahap 1')
+            ->update(['from_status' => 'selesai']);
+
         DB::table('complaint_status_histories')
-             ->where('to_status', 'tahap 1')
-             ->update(['to_status' => 'selesai']);
+            ->where('to_status', 'tahap 1')
+            ->update(['to_status' => 'selesai']);
     }
 };

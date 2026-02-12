@@ -8,30 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Faq extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'question',
-    'answer',
-    'order',
-    'is_active',
-  ];
-
-  protected function casts(): array
-  {
-    return [
-      'is_active' => 'boolean',
-      'order' => 'integer',
+    protected $fillable = [
+        'question',
+        'answer',
+        'order',
+        'is_active',
     ];
-  }
 
-  public function scopeActive(Builder $query): Builder
-  {
-    return $query->where('is_active', true);
-  }
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'order' => 'integer',
+        ];
+    }
 
-  public function scopeOrdered(Builder $query): Builder
-  {
-    return $query->orderBy('order')->orderBy('id');
-  }
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeOrdered(Builder $query): Builder
+    {
+        return $query->orderBy('order')->orderBy('id');
+    }
 }

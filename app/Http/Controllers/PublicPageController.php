@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Complaint;
 use App\Models\Document;
 use App\Models\Faq;
-use App\Models\GalleryItem;
 use App\Models\Leader;
 use App\Models\NewsPost;
 use App\Models\SiteSetting;
@@ -67,10 +66,10 @@ class PublicPageController extends Controller
 
         if ($search) {
             $documentsQuery->where(function ($q) use ($search) {
-                $q->where('title', 'like', '%' . $search . '%')
-                  ->orWhere('summary', 'like', '%' . $search . '%')
-                  ->orWhere('category', 'like', '%' . $search . '%')
-                  ->orWhere('number', 'like', '%' . $search . '%');
+                $q->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('summary', 'like', '%'.$search.'%')
+                    ->orWhere('category', 'like', '%'.$search.'%')
+                    ->orWhere('number', 'like', '%'.$search.'%');
             });
         }
 
@@ -126,12 +125,12 @@ class PublicPageController extends Controller
 
         // Get years from NewsPost
         $years = NewsPost::query()
-                ->published()
-                ->whereNotNull('published_at')
-                ->selectRaw("$yearExpression as year")
-                ->distinct()
-                ->orderByDesc('year')
-                ->pluck('year');
+            ->published()
+            ->whereNotNull('published_at')
+            ->selectRaw("$yearExpression as year")
+            ->distinct()
+            ->orderByDesc('year')
+            ->pluck('year');
 
         return view('public.galeri', [
             'settings' => $this->settings(),
@@ -145,10 +144,10 @@ class PublicPageController extends Controller
 
     public function downloadDocument(Document $document): StreamedResponse
     {
-        abort_if(!$document->is_published, 404);
+        abort_if(! $document->is_published, 404);
 
         $extension = pathinfo($document->file_path, PATHINFO_EXTENSION) ?: 'pdf';
-        $filename = Str::slug($document->title) . '.' . $extension;
+        $filename = Str::slug($document->title).'.'.$extension;
 
         return Storage::disk('public')->download($document->file_path, $filename);
     }
@@ -161,6 +160,6 @@ class PublicPageController extends Controller
         $defaults = SiteDefaults::values();
         $stored = SiteSetting::getMap(array_keys($defaults))->all();
 
-        return array_replace($defaults, array_filter($stored, fn(?string $value) => $value !== null));
+        return array_replace($defaults, array_filter($stored, fn (?string $value) => $value !== null));
     }
 }

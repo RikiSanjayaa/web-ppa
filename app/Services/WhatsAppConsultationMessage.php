@@ -10,8 +10,8 @@ class WhatsAppConsultationMessage
     {
         $parts = [
             '*Konsultasi Baru PPA/PPO*',
-            'Nama Klien: ' . $consultation->nama_klien,
-            'Permasalahan: ' . $consultation->permasalahan,
+            'Nama Klien: '.$consultation->nama_klien,
+            'Permasalahan: '.$consultation->permasalahan,
             '---',
             'Konsultasi ini sudah tersimpan di sistem web.',
         ];
@@ -23,6 +23,6 @@ class WhatsAppConsultationMessage
     {
         $phone = preg_replace('/\D+/', '', $phoneNumber) ?: '';
 
-        return 'https://wa.me/' . $phone . '?text=' . rawurlencode($message);
+        return 'https://wa.me/'.$phone.'?text='.rawurlencode($message);
     }
 }

@@ -20,21 +20,20 @@ class ComplaintSeeder extends Seeder
         $adminIds = User::query()->where('is_admin', true)->pluck('id')->all();
         $defaultChangerId = $adminIds[0] ?? null;
 
-
         $faker = \Faker\Factory::create('id_ID');
 
         // Daftar kronologis kejadian yang realistis dalam Bahasa Indonesia
         $chronologies = [
-            "Korban mengalami kekerasan fisik oleh suami setelah bertengkar masalah ekonomi keluarga. Kejadian berlangsung di ruang tamu rumah kami pada malam hari.",
-            "Anak tetangga saya diduga mengalami pelecehan seksual oleh orang tidak dikenal di dekat sekolahnya saat pulang sekolah.",
-            "Terjadi kasus penelantaran anak oleh orang tua kandung yang tidak memberikan nafkah dan tempat tinggal yang layak selama 3 bulan terakhir.",
-            "Korban diancam akan disebarkan foto peribadinya jika tidak menuruti keinginan pelaku. Pelaku menghubungi korban lewat media sosial.",
-            "Ada indikasi perdagangan orang dengan modus penawaran kerja ke luar negeri tanpa dokumen resmi.",
-            "Suami melakukan pemukulan terhadap istri di depan anak-anak karena masalah sepele.",
-            "Anak di bawah umur dipaksa bekerja sebagai pengemis di lampu merah oleh sindikat tertentu.",
-            "Terjadi pertengkaran hebat yang berujung pada kekerasan verbal dan fisik dalam rumah tangga.",
-            "Pelaku melakukan tindakan asusila terhadap korban di tempat umum saat kondisi sepi.",
-            "Korban merasa diikuti dan diteror oleh mantan pacar yang tidak terima diputuskan."
+            'Korban mengalami kekerasan fisik oleh suami setelah bertengkar masalah ekonomi keluarga. Kejadian berlangsung di ruang tamu rumah kami pada malam hari.',
+            'Anak tetangga saya diduga mengalami pelecehan seksual oleh orang tidak dikenal di dekat sekolahnya saat pulang sekolah.',
+            'Terjadi kasus penelantaran anak oleh orang tua kandung yang tidak memberikan nafkah dan tempat tinggal yang layak selama 3 bulan terakhir.',
+            'Korban diancam akan disebarkan foto peribadinya jika tidak menuruti keinginan pelaku. Pelaku menghubungi korban lewat media sosial.',
+            'Ada indikasi perdagangan orang dengan modus penawaran kerja ke luar negeri tanpa dokumen resmi.',
+            'Suami melakukan pemukulan terhadap istri di depan anak-anak karena masalah sepele.',
+            'Anak di bawah umur dipaksa bekerja sebagai pengemis di lampu merah oleh sindikat tertentu.',
+            'Terjadi pertengkaran hebat yang berujung pada kekerasan verbal dan fisik dalam rumah tangga.',
+            'Pelaku melakukan tindakan asusila terhadap korban di tempat umum saat kondisi sepi.',
+            'Korban merasa diikuti dan diteror oleh mantan pacar yang tidak terima diputuskan.',
         ];
 
         // Daftar wilayah NTB beserta pusat koordinat dan radius
@@ -63,13 +62,13 @@ class ComplaintSeeder extends Seeder
             // Pilih wilayah secara acak
             $regionName = array_rand($regions);
             $regionData = $regions[$regionName];
-            
+
             // Koordinat acak di sekitar pusat wilayah
             $lat = $regionData['lat'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
             $lng = $regionData['lng'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
-            
+
             // Alamat teks termasuk nama wilayah untuk pengujian hybrid
-            $streetAddress = $faker->streetAddress . ", " . $regionName;
+            $streetAddress = $faker->streetAddress.', '.$regionName;
 
             // Status acak dengan bobot tertentu
             $statusRoll = rand(1, 100);
@@ -78,9 +77,9 @@ class ComplaintSeeder extends Seeder
             } elseif ($statusRoll <= 75) {
                 // Pilih salah satu status diproses secara acak
                 $processingStatuses = [
-                    Complaint::STATUS_DIPROSES_LP, 
-                    Complaint::STATUS_DIPROSES_LIDIK, 
-                    Complaint::STATUS_DIPROSES_SIDIK
+                    Complaint::STATUS_DIPROSES_LP,
+                    Complaint::STATUS_DIPROSES_LIDIK,
+                    Complaint::STATUS_DIPROSES_SIDIK,
                 ];
                 $status = $processingStatuses[array_rand($processingStatuses)];
             } else {
@@ -97,10 +96,10 @@ class ComplaintSeeder extends Seeder
                 'latitude' => $lat,
                 'longitude' => $lng,
                 'waktu_kejadian' => $baseTime->copy()->subDays(rand(0, 5)),
-                'kronologis_singkat' => $faker->randomElement($chronologies) . " " . $faker->sentence,
+                'kronologis_singkat' => $faker->randomElement($chronologies).' '.$faker->sentence,
                 'korban' => $faker->name,
                 'terlapor' => rand(0, 1) ? $faker->name : null,
-                'saksi_saksi' => rand(0, 1) ? $faker->name . ', ' . $faker->name : null,
+                'saksi_saksi' => rand(0, 1) ? $faker->name.', '.$faker->name : null,
                 'status' => $status,
                 'channel' => rand(0, 10) > 8 ? 'dibuat oleh admin' : 'web',
                 'wa_redirected_at' => rand(0, 1) ? $baseTime : null,
@@ -125,9 +124,10 @@ class ComplaintSeeder extends Seeder
             if ($status !== Complaint::STATUS_MASUK) {
                 $processTime = $baseTime->copy()->addHours(rand(1, 24));
                 // Pastikan waktu proses tidak melebihi sekarang
-                if ($processTime->gt(now()))
+                if ($processTime->gt(now())) {
                     $processTime = now();
- 
+                }
+
                 ComplaintStatusHistory::query()->create([
                     'complaint_id' => $complaint->id,
                     'changed_by' => $defaultChangerId,
@@ -138,13 +138,14 @@ class ComplaintSeeder extends Seeder
                     'updated_at' => $processTime,
                 ]);
             }
- 
+
             if ($status === Complaint::STATUS_TAHAP_1) {
                 $finishTime = $baseTime->copy()->addHours(rand(25, 120));
                 // Pastikan waktu selesai tidak melebihi sekarang
-                if ($finishTime->gt(now()))
+                if ($finishTime->gt(now())) {
                     $finishTime = now();
- 
+                }
+
                 ComplaintStatusHistory::query()->create([
                     'complaint_id' => $complaint->id,
                     'changed_by' => $defaultChangerId,

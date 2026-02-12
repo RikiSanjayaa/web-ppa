@@ -10,7 +10,6 @@ use App\Services\ActivityLogger;
 use App\Services\TurnstileVerifier;
 use App\Services\WhatsAppComplaintMessage;
 use App\Support\SiteDefaults;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 
 class ComplaintController extends Controller
@@ -22,7 +21,7 @@ class ComplaintController extends Controller
     ) {
         $token = $request->input('cf-turnstile-response');
 
-        if (!$turnstileVerifier->passes($token, $request->ip())) {
+        if (! $turnstileVerifier->passes($token, $request->ip())) {
             throw ValidationException::withMessages([
                 'cf-turnstile-response' => 'Verifikasi keamanan gagal. Silakan coba kembali.',
             ]);
@@ -46,7 +45,7 @@ class ComplaintController extends Controller
 
         $hotline = SiteSetting::getValue('hotline_wa_number', env('HOTLINE_WA_NUMBER'));
 
-        if (!$hotline) {
+        if (! $hotline) {
             throw ValidationException::withMessages([
                 'no_hp' => 'Nomor hotline belum dikonfigurasi oleh admin.',
             ]);

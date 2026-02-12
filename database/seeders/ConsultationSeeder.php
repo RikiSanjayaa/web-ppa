@@ -31,27 +31,27 @@ class ConsultationSeeder extends Seeder
         ];
 
         $problems = [
-            "Saya ingin berkonsultasi mengenai hak asuh anak setelah perceraian.",
-            "Bagaimana prosedur melaporkan kdrt yang dialami saudara saya?",
-            "Tetangga saya sering memukul anaknya, apakah saya bisa melaporkannya?",
-            "Saya merasa diikuti orang tidak dikenal, apa yang harus saya lakukan?",
-            "Anak saya menjadi korban bullying di sekolah, mohon sarannya.",
-            "Apakah ada perlindungan hukum untuk saksi kasus kekerasan seksual?",
-            "Saya ingin tahu cara mendapatkan bantuan hukum gratis untuk korban KDRT.",
-            "Suami saya tidak memberi nafkah selama setahun, apakah ini termasuk penelantaran?",
-            "Adakah rumah aman untuk korban kekerasan di daerah Lombok Barat?",
-            "Saya mendapat ancaman penyebaran video pribadi, saya takut melapor ke polisi."
+            'Saya ingin berkonsultasi mengenai hak asuh anak setelah perceraian.',
+            'Bagaimana prosedur melaporkan kdrt yang dialami saudara saya?',
+            'Tetangga saya sering memukul anaknya, apakah saya bisa melaporkannya?',
+            'Saya merasa diikuti orang tidak dikenal, apa yang harus saya lakukan?',
+            'Anak saya menjadi korban bullying di sekolah, mohon sarannya.',
+            'Apakah ada perlindungan hukum untuk saksi kasus kekerasan seksual?',
+            'Saya ingin tahu cara mendapatkan bantuan hukum gratis untuk korban KDRT.',
+            'Suami saya tidak memberi nafkah selama setahun, apakah ini termasuk penelantaran?',
+            'Adakah rumah aman untuk korban kekerasan di daerah Lombok Barat?',
+            'Saya mendapat ancaman penyebaran video pribadi, saya takut melapor ke polisi.',
         ];
 
         $recommendations = [
-            "Disarankan untuk segera melapor ke UPTD PPA terdekat untuk pendampingan.",
-            "Silakan kumpulkan bukti-bukti awal seperti foto atau rekam medis visum.",
-            "Kami sarankan untuk berkonsultasi dengan psikolog klinis terlebih dahulu untuk pemulihan trauma.",
-            "Sebaiknya jangan bepergian sendirian dan catat nomor darurat kepolisian.",
-            "Perlu dilakukan mediasi dengan pihak sekolah dan orang tua pelaku.",
-            "Lembaga Bantuan Hukum (LBH) setempat dapat memberikan advokasi pro bono.",
-            "Anda berhak mendapatkan perlindungan dari LPSK jika merasa terancam.",
-            "Simpan semua bukti percakapan atau ancaman sebagai barang bukti digital."
+            'Disarankan untuk segera melapor ke UPTD PPA terdekat untuk pendampingan.',
+            'Silakan kumpulkan bukti-bukti awal seperti foto atau rekam medis visum.',
+            'Kami sarankan untuk berkonsultasi dengan psikolog klinis terlebih dahulu untuk pemulihan trauma.',
+            'Sebaiknya jangan bepergian sendirian dan catat nomor darurat kepolisian.',
+            'Perlu dilakukan mediasi dengan pihak sekolah dan orang tua pelaku.',
+            'Lembaga Bantuan Hukum (LBH) setempat dapat memberikan advokasi pro bono.',
+            'Anda berhak mendapatkan perlindungan dari LPSK jika merasa terancam.',
+            'Simpan semua bukti percakapan atau ancaman sebagai barang bukti digital.',
         ];
 
         // Buat 50 data konsultasi dummy
@@ -59,14 +59,14 @@ class ConsultationSeeder extends Seeder
             // Pilih wilayah secara acak
             $regionName = array_rand($regions);
             $regionData = $regions[$regionName];
-            
+
             // Koordinat acak di sekitar pusat wilayah
             $lat = $regionData['lat'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
             $lng = $regionData['lng'] + ($faker->randomFloat(6, -1, 1) * $regionData['radius']);
 
             Consultation::create([
                 'nama_klien' => $faker->name,
-                'permasalahan' => $faker->randomElement($problems) . " " . $faker->sentence,
+                'permasalahan' => $faker->randomElement($problems).' '.$faker->sentence,
                 'rekomendasi' => rand(0, 1) ? $faker->randomElement($recommendations) : null,
                 'latitude' => $lat,
                 'longitude' => $lng,

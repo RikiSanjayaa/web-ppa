@@ -2,7 +2,7 @@
 <html lang="id">
     <head>
         <meta charset="utf-8">
-        <title>Laporan Aduan</title>
+        <title>Laporan Pengaduan</title>
         <style>
             body { font-family: DejaVu Sans, sans-serif; font-size: 11px; color: #0f172a; }
             h1 { margin: 0 0 8px; font-size: 18px; }
@@ -14,7 +14,7 @@
         </style>
     </head>
     <body>
-        <h1>Laporan Aduan PPA/PPO</h1>
+        <h1>Laporan Pengaduan PPA/PPO</h1>
         <p class="small">Digenerate: {{ $generatedAt->format('d-m-Y H:i:s') }}</p>
 
         <table>
@@ -49,7 +49,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6">Tidak ada data aduan.</td>
+                        <td colspan="6">Tidak ada data pengaduan.</td>
                     </tr>
                 @endforelse
             </tbody>

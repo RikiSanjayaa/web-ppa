@@ -58,7 +58,7 @@ class ConsultationController extends Controller
     {
         $filters = $request->only(['status', 'date_from', 'date_to', 'q']);
 
-        return Excel::download(new ConsultationsExport($filters), 'konsultasi-' . now()->format('YmdHis') . '.xlsx');
+        return Excel::download(new ConsultationsExport($filters), 'konsultasi-'.now()->format('YmdHis').'.xlsx');
     }
 
     public function exportPdf(Request $request): Response
@@ -72,7 +72,6 @@ class ConsultationController extends Controller
             'generatedAt' => now(),
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->download('konsultasi-' . now()->format('YmdHis') . '.pdf');
+        return $pdf->download('konsultasi-'.now()->format('YmdHis').'.pdf');
     }
 }
-

@@ -86,7 +86,7 @@ class NewsPostController extends Controller
 
         // Handle Image Deletion
         $currentImages = $newsPost->image_paths ?? [];
-        if (!$currentImages && $newsPost->featured_image_path) {
+        if (! $currentImages && $newsPost->featured_image_path) {
             $currentImages = [$newsPost->featured_image_path];
         }
 
@@ -104,7 +104,9 @@ class NewsPostController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 // Limit total to 5
-                if (count($currentImages) >= 5) break;
+                if (count($currentImages) >= 5) {
+                    break;
+                }
                 $currentImages[] = $image->store('news', 'public');
             }
         }

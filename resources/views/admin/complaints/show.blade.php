@@ -41,7 +41,7 @@
 
         <section class="space-y-6">
             <article class="rounded-2xl bg-white p-5 shadow-sm">
-                <h2 class="font-heading text-lg font-semibold text-navy-700">Status Aduan</h2>
+                <h2 class="font-heading text-lg font-semibold text-navy-700">Status Pengaduan</h2>
                 <p class="mt-2 text-sm text-slate-600">Status saat ini:
                     <x-complaint-status-badge :status="$complaint->status" />
                 </p>

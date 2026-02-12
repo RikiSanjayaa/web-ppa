@@ -105,7 +105,7 @@
                 <div>
                     <p class="font-semibold text-navy-700">Akses Cepat</p>
                     <ul class="mt-2 space-y-1 text-slate-600">
-                        <li><a href="{{ route('layanan-masyarakat') }}" class="hover:text-navy-700">Form Aduan</a></li>
+                        <li><a href="{{ route('layanan-masyarakat') }}" class="hover:text-navy-700">Form Pengaduan</a></li>
                         <li><a href="{{ route('informasi.index') }}" class="hover:text-navy-700">Dokumen UU</a></li>
                         <li><a href="{{ route('galeri.index') }}" class="hover:text-navy-700">Galeri Kegiatan</a></li>
                     </ul>

@@ -21,17 +21,14 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="font-heading text-2xl font-bold text-navy-700">Pantauan Lokasi</h1>
-                <p class="text-slate-600">Peta sebaran lokasi dari Aduan dan Konsultasi terbaru.</p>
+                <p class="text-slate-600">Peta sebaran lokasi dari Pengaduan dan Konsultasi terbaru.</p>
             </div>
             <div class="flex gap-2">
-                <a href="{{ route('admin.location-monitoring.summary') }}" class="btn border-slate-300 bg-white text-navy-700 hover:bg-slate-50">
+                <a href="{{ route('admin.dashboard') }}" class="btn border-slate-300 bg-white text-navy-700 hover:bg-slate-50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                     Lihat Ringkasan
-                </a>
-                <a href="{{ route('admin.dashboard') }}" class="btn border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
-                    Kembali ke Dashboard
                 </a>
             </div>
         </div>
