@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div>
-                <h2 class="font-heading text-2xl font-semibold text-navy-700">Tentang Unit PPA/PPO</h2>
+                <h2 class="font-heading text-2xl font-semibold text-navy-700">Tentang ditres PPA & PPO</h2>
                 <p class="mt-3 leading-relaxed text-slate-600">{{ $settings['organization_profile'] }}</p>
 
                 <div class="mt-4 rounded-xl bg-teal-50 border border-teal-100 p-4">
