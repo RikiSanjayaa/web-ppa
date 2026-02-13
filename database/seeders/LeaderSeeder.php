@@ -17,36 +17,20 @@ class LeaderSeeder extends Seeder
             [
                 'name' => 'KOMBES POL Ni MADE PUJEWATI, S.IK., M.M.',
                 'position' => 'Direktur Reskrim PPA dan PPO',
-                'bio' => 'Bertugas melaksanakan penyelidikan dan
-                    penyidikan tindak pidana kekerasan terhadap perempuan, anak,
-                    disabilitas, lanjut usia, buruh dan kelompok rentan lain serta
-                    pemberantasan perdagangan orang dan penyelundupan manusia.',
+                'bio' => 'Bertugas melaksanakan penyelidikan dan penyidikan tindak pidana kekerasan terhadap perempuan, anak, disabilitas, lanjut usia, buruh dan kelompok rentan lain serta pemberantasan perdagangan orang dan penyelundupan manusia.',
                 'display_order' => 1,
                 'is_active' => true,
             ],
             [
                 'name' => 'KOMPOL PRATIWI NORIANI, S.H., S.I.K., M.M.',
                 'position' => 'Kasubdit 2 PPA dan PPO',
-                'bio' => 'Bertugas menangani tindak pidana yang terkait
-                kekerasan terhadap anak',
+                'bio' => 'Bertugas menangani tindak pidana yang terkait kekerasan terhadap anak',
                 'display_order' => 2,
                 'is_active' => true,
             ],
-            [
-                'name' => 'Kompol Dwi Prasetyo',
-                'position' => 'Kanit Penanganan Aduan',
-                'bio' => 'Bertanggung jawab pada alur verifikasi dan pemutakhiran status aduan masyarakat.',
-                'display_order' => 3,
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Kompol Ika Paramitha',
-                'position' => 'Kanit Pendampingan Korban',
-                'bio' => 'Fokus pada layanan pendampingan korban dan koordinasi dengan mitra psikososial.',
-                'display_order' => 4,
-                'is_active' => true,
-            ],
         ];
+
+        $leaderNames = collect($leaders)->pluck('name')->toArray();
 
         foreach ($leaders as $index => $leader) {
             $photoPath = PlaceholderMedia::ensureImage('leaders/leader-'.($index + 1).'.jpg');
@@ -59,5 +43,8 @@ class LeaderSeeder extends Seeder
                 ]
             );
         }
+
+        // Hapus pimpinan yang tidak ada dalam daftar
+        Leader::query()->whereNotIn('name', $leaderNames)->delete();
     }
 }
