@@ -26,6 +26,7 @@ class LocationMonitoringController extends Controller
                     'latitude' => $complaint->latitude,
                     'longitude' => $complaint->longitude,
                     'created_at' => $complaint->created_at->format('d M Y H:i'),
+                    'created_at_raw' => $complaint->created_at->toISOString(),
                     'url' => route('admin.complaints.show', $complaint),
                     'color' => 'red',
                 ];
@@ -46,12 +47,13 @@ class LocationMonitoringController extends Controller
                     'latitude' => $consultation->latitude,
                     'longitude' => $consultation->longitude,
                     'created_at' => $consultation->created_at->format('d M Y H:i'),
+                    'created_at_raw' => $consultation->created_at->toISOString(),
                     'url' => route('admin.consultations.show', $consultation),
                     'color' => 'blue',
                 ];
             });
 
-        $locations = $complaints->merge($consultations)->sortByDesc('created_at')->values();
+        $locations = $complaints->merge($consultations)->sortByDesc('created_at_raw')->values();
 
         return view('admin.location-monitoring.index', [
             'locations' => $locations,

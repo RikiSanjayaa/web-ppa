@@ -69,6 +69,8 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::resource('documents', DocumentController::class)->except('show');
 
     Route::resource('testimonials', TestimonialController::class)->except('show');
+    Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');
+    Route::patch('/testimonials/{testimonial}/toggle-publish', [TestimonialController::class, 'togglePublish'])->name('testimonials.toggle-publish');
     Route::resource('faqs', FaqController::class)->except('show');
 
     Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');

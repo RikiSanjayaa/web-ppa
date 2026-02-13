@@ -51,6 +51,11 @@ php artisan migrate --force
 > - `update_status_enum_in_complaints_table` — update enum status
 > - `rename_tahap_1_to_selesai_tahap_1_in_complaints` — rename status
 > - `add_location_columns_to_complaints_and_consultations_tables` — tambah kolom latitude & longitude
+> - `add_phone_to_consultations_table` — tambah kolom no_hp di konsultasi
+> - `add_verification_to_testimonials_table` — tambah kolom verifikasi & relasi di testimoni
+> - `add_testimonial_token_to_complaints_and_consultations` — tambah kolom token testimoni
+>
+> **Data yang ada TIDAK akan terhapus**, migration hanya menambah kolom baru.
 
 ### 7. (Opsional) Jalankan Seeder untuk Data Dummy
 ```bash

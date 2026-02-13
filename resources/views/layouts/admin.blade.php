@@ -15,6 +15,46 @@
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+    {{-- Global admin UI: prevent text-cursor on non-interactive elements --}}
+    <style>
+        /* Default cursor & no text-select for common non-interactive elements */
+        .table th,
+        .table td,
+        .card, .card-body,
+        .stat, .stat-title, .stat-value, .stat-desc,
+        .badge,
+        .alert span,
+        label:not([for]),
+        h1, h2, h3, h4, h5, h6,
+        p:not(input p):not(textarea p) {
+            cursor: default;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Ensure interactive elements always show correct cursor */
+        a, button, [role="button"],
+        input, select, textarea,
+        .btn, [type="submit"],
+        summary, [tabindex]:not([tabindex="-1"]) {
+            cursor: pointer;
+        }
+        input[type="text"], input[type="email"], input[type="password"],
+        input[type="search"], input[type="number"], input[type="tel"],
+        input[type="url"], input[type="date"], textarea {
+            cursor: text;
+        }
+
+        /* Clickable table rows (detail modal) */
+        tr[data-clickable] td { cursor: pointer; }
+        tr[data-clickable] td:last-child,
+        tr[data-clickable] td:last-child * { cursor: default; }
+        tr[data-clickable] td:last-child a,
+        tr[data-clickable] td:last-child button { cursor: pointer; }
+
+        /* Alpine.js cloak */
+        [x-cloak] { display: none !important; }
+    </style>
     @stack('head')
 </head>
 

@@ -81,7 +81,7 @@ class TestimonialSubmissionController extends Controller
             'content' => $validated['content'],
             'rating' => $validated['rating'],
             'is_verified' => true,
-            'is_published' => true,
+            'is_published' => $validated['rating'] >= 3, // Rating < 3 perlu persetujuan admin
             'consultation_id' => $consultation?->id,
             'complaint_id' => $complaint?->id,
         ]);
