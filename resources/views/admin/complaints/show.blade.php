@@ -4,6 +4,15 @@
 @section('page_title', 'Detail Aduan #'.$complaint->id)
 
 @section('content')
+    <div class="mb-4 flex items-center justify-between">
+        <h2 class="font-heading text-xl font-bold text-navy-700">Detail Aduan #{{ $complaint->id }}</h2>
+        <a href="{{ route('admin.complaints.index') }}" class="btn btn-sm btn-ghost gap-1 text-slate-600 hover:text-navy-700 hover:bg-slate-100">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Kembali
+        </a>
+    </div>
     <div class="grid gap-6 lg:grid-cols-3">
         <section class="rounded-2xl bg-white p-5 shadow-sm lg:col-span-2">
             <h2 class="font-heading text-lg font-semibold text-navy-700">Informasi Pelapor</h2>
@@ -110,13 +119,6 @@
                     @endforelse
                 </div>
             </article>
-
-            <a href="{{ route('admin.complaints.index') }}" class="btn btn-ghost w-full justify-start text-slate-600 hover:text-navy-700 hover:bg-slate-50 px-0">
-                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Kembali ke Daftar
-            </a>
         </section>
     </div>
 @endsection
