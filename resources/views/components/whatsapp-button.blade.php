@@ -12,11 +12,10 @@
     x-data="{ open: false }"
     {{ $attributes }}
 >
-    {{-- Floating Button --}}
     <button
         type="button"
         @click="open = true"
-        class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-green-500/40 transition-all hover:scale-110 hover:shadow-xl hover:shadow-green-500/50 focus:outline-none focus:ring-4 focus:ring-green-300 lg:bottom-8 lg:right-8 lg:h-16 lg:w-16"
+        class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-green-500/40 transition-all hover:scale-110 hover:shadow-xl hover:shadow-green-500/50 focus:outline-none focus:ring-4 focus:ring-green-300 lg:bottom-8 lg:right-8 lg:h-16 lg:w-16 {{ request()->routeIs('layanan-masyarakat') ? 'max-md:hidden' : '' }}"
         aria-label="Hubungi via WhatsApp"
     >
         <svg class="h-7 w-7 lg:h-8 lg:w-8" fill="currentColor" viewBox="0 0 24 24">
@@ -38,8 +37,6 @@
         class="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
         x-cloak
     ></div>
-
-    {{-- Modal Content --}}
     <div
         x-show="open"
         x-transition:enter="transition ease-out duration-200"
@@ -54,7 +51,7 @@
         x-cloak
     >
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
-            {{-- Header --}}
+
             <div class="mb-5 flex items-start justify-between">
                 <div>
                     <h3 class="font-heading text-xl font-bold text-slate-800">Butuh Bantuan?</h3>
@@ -124,7 +121,6 @@
                 </a>
             </div>
 
-        {{-- Privacy Note --}}
         <div class="mt-5 flex items-center justify-center gap-2 rounded-lg bg-slate-50 py-2.5 px-3 text-xs text-slate-500">
             <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />

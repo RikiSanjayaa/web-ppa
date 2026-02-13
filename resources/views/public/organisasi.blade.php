@@ -109,126 +109,155 @@
         </div>
     </section>
 
-    {{-- Struktur Organisasi Section --}}
+
     <section class="mt-16 mb-20" data-aos="fade-up">
-        <div class="mb-10 text-centre sm:text-left">
+        <div class="mb-10 text-center sm:text-left">
             <h2 class="font-heading text-3xl font-bold text-navy-700">Struktur Organisasi</h2>
             <p class="mt-3 max-w-2xl text-lg text-slate-600">Bagan struktur organisasi Ditres PPA PPO Polda NTB.</p>
         </div>
 
-        <div x-data="{ showModal: false }" class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm lg:p-6">
-            {{-- Thumbnail / Clickable Image --}}
-            <div @click="showModal = true"
-                class="group relative cursor-zoom-in overflow-hidden rounded-2xl bg-slate-50 border border-slate-100">
-                <img src="{{ asset('images/struktur_ppa.png') }}" alt="Struktur Organisasi"
-                    class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]">
 
-                {{-- Hover Overlay --}}
-                <div
-                    class="absolute inset-0 flex items-center justify-center bg-navy-900/0 transition-all duration-300 group-hover:bg-navy-900/20">
-                    <span
-                        class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-navy-700 opacity-0 shadow-lg backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 translate-y-4">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                        </svg>
-                        Klik untuk memperbesar
-                    </span>
-                </div>
-            </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm lg:p-8">
+            <div class="overflow-x-auto pb-4">
+                <div class="min-w-[820px] py-6 px-4">
 
-            {{-- Modal / Lightbox with Zoom --}}
-            <div x-show="showModal" style="display: none;"
-                class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
 
-                {{-- Backdrop --}}
-                <div x-show="showModal" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0" @click="showModal = false"
-                    class="absolute inset-0 bg-slate-900/95 backdrop-blur-sm"></div>
+                    <div class="flex flex-col items-center">
 
-                {{-- Modal Content --}}
-                <div x-show="showModal" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 scale-95 translate-y-4" 
-                    class="relative h-full w-full max-w-7xl flex flex-col"
-                    x-data="{ 
-                        scale: 1, 
-                        panning: false, 
-                        pointX: 0, 
-                        pointY: 0, 
-                        startX: 0, 
-                        startY: 0,
-                        zoomIn() { this.scale = Math.min(this.scale + 0.5, 4) },
-                        zoomOut() { this.scale = Math.max(this.scale - 0.5, 1); if(this.scale === 1) { this.reset() } },
-                        reset() { this.scale = 1; this.pointX = 0; this.pointY = 0; }
-                    }">
+                        <div class="relative border-[3px] border-black bg-white text-center shadow-sm">
+                            <p class="px-8 py-2 text-sm font-extrabold tracking-wide">DIRRES PPA DAN PPO</p>
+                            <div class="border-t-[2px] border-black"></div>
+                            <p class="px-8 py-2 text-sm font-extrabold tracking-wide">WADIR</p>
+                        </div>
 
-                    {{-- Close Button --}}
-                    <button @click="showModal = false; reset()"
-                        class="absolute -top-12 right-0 lg:-right-12 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus:outline-none">
-                        <span class="sr-only">Close</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                        <div class="w-[3px] h-10 bg-black"></div>
+                    </div>
 
-                    {{-- Image Container --}}
-                    <div class="relative flex-1 overflow-hidden rounded-xl bg-slate-900 shadow-2xl ring-1 ring-white/10 flex items-center justify-center cursor-move"
-                         @mousedown.prevent="panning = true; startX = $event.clientX - pointX; startY = $event.clientY - pointY"
-                         @mousemove="if(panning) { pointX = $event.clientX - startX; pointY = $event.clientY - startY; }"
-                         @mouseup="panning = false"
-                         @mouseleave="panning = false"
-                         @wheel.prevent="if($event.deltaY < 0) zoomIn(); else zoomOut();">
-                        
-                        <img src="{{ asset('images/struktur_ppa.png') }}" alt="Struktur Organisasi Full"
-                            class="max-w-full max-h-[80vh] object-contain transition-transform duration-200 ease-linear origin-center"
-                            :style="`transform: translate(${pointX}px, ${pointY}px) scale(${scale});`">
-                            
-                        {{-- Controls Overlay --}}
-                        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-slate-800/90 p-2 shadow-lg backdrop-blur mx-auto ring-1 ring-white/10"
-                             @mousedown.stop> {{-- Prevent drag when clicking controls --}}
-                            
-                            <button @click="zoomOut()" 
-                                class="flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white/20 active:bg-white/30 disabled:opacity-50 transition-colors"
-                                :disabled="scale <= 1"
-                                title="Zoom Out">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-                                </svg>
-                            </button>
 
-                            <span class="min-w-[4rem] text-center text-sm font-semibold text-white select-none" x-text="Math.round(scale * 100) + '%'"></span>
+                    <div class="relative">
+                        <div class="border-t-[2px] border-dashed border-black"></div>
+                        <span class="absolute right-0 -top-5 text-[11px] font-bold tracking-wide text-gray-700 italic">UNSUR PIMPINAN</span>
+                    </div>
 
-                            <button @click="zoomIn()" 
-                                class="flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white/20 active:bg-white/30 disabled:opacity-50 transition-colors"
-                                :disabled="scale >= 4"
-                                title="Zoom In">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
-                            </button>
 
-                            <div class="mx-1 h-6 w-px bg-white/20"></div>
+                    <div class="flex justify-center">
 
-                            <button @click="reset()" 
-                                class="flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white/20 active:bg-white/30 transition-colors"
-                                title="Reset View">
-                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                            </button>
+                        <div class="relative flex w-full max-w-[750px]">
+                            <div class="absolute top-0 left-[16.66%] right-[16.66%] h-[3px] bg-black"></div>
+
+
+                            <div class="flex flex-1 flex-col items-center">
+                                <div class="w-[3px] h-8 bg-black"></div>
+                                <div class="border-[3px] border-black bg-white px-4 py-2 text-center shadow-sm">
+                                    <p class="text-xs font-extrabold tracking-wide">BAGWASSIDIK</p>
+                                </div>
+                                <div class="w-[3px] h-6 bg-black"></div>
+                                <div class="border-[3px] border-black bg-white px-5 py-1.5 text-center shadow-sm">
+                                    <p class="text-[11px] font-bold tracking-wide">UNIT</p>
+                                </div>
+                            </div>
+
+
+                            <div class="flex flex-1 flex-col items-center">
+                                <div class="w-[3px] h-8 bg-black"></div>
+                                <div class="border-[3px] border-black bg-white px-4 py-2 text-center shadow-sm">
+                                    <p class="text-xs font-extrabold tracking-wide">BAGBINOPSNAL</p>
+                                </div>
+                                <div class="w-[3px] h-6 bg-black"></div>
+                                <div class="relative flex gap-0">
+                                    <div class="absolute top-0 left-1/4 right-1/4 h-[3px] bg-black"></div>
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="w-[3px] h-4 bg-black"></div>
+                                        <div class="border-[3px] border-black bg-white px-2 py-1.5 text-center shadow-sm">
+                                            <p class="text-[10px] font-bold tracking-wide leading-tight">SUBBAGMIN<br>OPSNAL</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="w-[3px] h-4 bg-black"></div>
+                                        <div class="border-[3px] border-black bg-white px-2 py-1.5 text-center shadow-sm">
+                                            <p class="text-[10px] font-bold tracking-wide">SUBBAGANEV</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="flex flex-1 flex-col items-center">
+                                <div class="w-[3px] h-8 bg-black"></div>
+                                <div class="border-[3px] border-black bg-white px-4 py-2 text-center shadow-sm">
+                                    <p class="text-xs font-extrabold tracking-wide">SUBBAGRENMIN</p>
+                                </div>
+                                <div class="w-[3px] h-6 bg-black"></div>
+                                <div class="relative flex gap-0">
+                                    <div class="absolute top-0 left-[16.66%] right-[16.66%] h-[3px] bg-black"></div>
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="w-[3px] h-4 bg-black"></div>
+                                        <div class="border-[3px] border-black bg-white px-3 py-1.5 text-center shadow-sm">
+                                            <p class="text-[10px] font-bold tracking-wide">URREN</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="w-[3px] h-4 bg-black"></div>
+                                        <div class="border-[3px] border-black bg-white px-3 py-1.5 text-center shadow-sm">
+                                            <p class="text-[10px] font-bold tracking-wide">URMINTU</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col items-center px-1">
+                                        <div class="w-[3px] h-4 bg-black"></div>
+                                        <div class="border-[3px] border-black bg-white px-3 py-1.5 text-center shadow-sm">
+                                            <p class="text-[10px] font-bold tracking-wide">URKEU</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <p class="mt-4 text-center text-sm text-white/50">
-                        Gunakan tombol + / - atau scroll mouse untuk zoom. Klik & geser gambar untuk menggeser.
-                    </p>
+
+
+                    <div class="flex justify-center">
+                        <div class="w-[3px] h-16 bg-black"></div>
+                    </div>
+
+
+                    <div class="relative">
+                        <div class="border-t-[2px] border-dashed border-black"></div>
+                        <span class="absolute right-0 -top-5 text-[11px] font-bold tracking-wide text-gray-700 italic">UNSUR PEMBANTU PIMPINAN/PELAYAN</span>
+                    </div>
+
+
+                    <div class="flex justify-center">
+                        <div class="relative flex w-full max-w-[550px]">
+
+                            <div class="absolute top-0 left-[16.66%] right-[16.66%] h-[3px] bg-black"></div>
+
+                            @php
+                                $subdits = ['SUBDIT I', 'SUBDIT II', 'SUBDIT III'];
+                            @endphp
+
+                            @foreach ($subdits as $subdit)
+                                <div class="flex flex-1 flex-col items-center">
+                                    <div class="w-[3px] h-8 bg-black"></div>
+                                    <div class="border-[3px] border-black bg-white px-4 py-2 text-center shadow-sm">
+                                        <p class="text-xs font-extrabold tracking-wide">{{ $subdit }}</p>
+                                    </div>
+                                    <div class="w-[3px] h-5 bg-black"></div>
+                                    <div class="border-[3px] border-black bg-white px-5 py-1.5 text-center shadow-sm">
+                                        <p class="text-[11px] font-bold tracking-wide">UNIT</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+
+                    <div class="relative mt-6">
+                        <div class="border-t-[2px] border-dashed border-black"></div>
+                        <span class="absolute right-0 -top-5 text-[11px] font-bold tracking-wide text-gray-700 italic">UNSUR PELAKSANA TUGAS POKOK</span>
+                    </div>
+
                 </div>
             </div>
         </div>
