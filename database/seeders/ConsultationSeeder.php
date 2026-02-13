@@ -98,6 +98,7 @@ class ConsultationSeeder extends Seeder
 
             Consultation::create([
                 'nama_klien' => $faker->name,
+                'no_hp' => $faker->phoneNumber,
                 'permasalahan' => $faker->randomElement($problems).' '.$faker->sentence,
                 'rekomendasi' => rand(0, 1) ? $faker->randomElement($recommendations) : null,
                 'latitude' => $lat,

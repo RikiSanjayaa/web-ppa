@@ -35,6 +35,11 @@ Route::get('/informasi/dokumen/{document}/download', [PublicPageController::clas
 Route::get('/informasi/{slug}', [PublicPageController::class, 'informasiShow'])->name('informasi.show');
 Route::get('/galeri', [PublicPageController::class, 'galeri'])->name('galeri.index');
 
+use App\Http\Controllers\TestimonialSubmissionController;
+Route::get('/testimoni/isi/{token}', [TestimonialSubmissionController::class, 'formByToken'])->name('testimonials.form');
+Route::post('/testimoni/isi/{token}', [TestimonialSubmissionController::class, 'storeByToken'])->name('testimonials.store-token');
+Route::get('/testimoni/terima-kasih/{token}', [TestimonialSubmissionController::class, 'thankyou'])->name('testimonials.thankyou');
+
 Route::redirect('/dashboard', '/admin')->middleware('auth')->name('dashboard');
 
 Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('admin.')->group(function () {
@@ -49,8 +54,11 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
     Route::patch('/aduan/{complaint}/status', [AdminComplaintController::class, 'updateStatus'])->name('complaints.update-status');
 
+    Route::patch('/aduan/{complaint}/generate-token', [AdminComplaintController::class, 'generateTestimonialToken'])->name('complaints.generate-token');
+    
     Route::get('/consultations/export/excel', [AdminConsultationController::class, 'exportExcel'])->name('consultations.export.excel');
     Route::get('/consultations/export/pdf', [AdminConsultationController::class, 'exportPdf'])->name('consultations.export.pdf');
+    Route::patch('/consultations/{consultation}/generate-token', [AdminConsultationController::class, 'generateTestimonialToken'])->name('consultations.generate-token');
     Route::resource('consultations', AdminConsultationController::class)->only(['index', 'update', 'show', 'edit']);
 
     Route::get('/location-monitoring/summary', [LocationMonitoringController::class, 'summary'])->name('location-monitoring.summary');
@@ -72,5 +80,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

@@ -63,6 +63,35 @@
                     </div>
                     <button type="submit" class="btn border-0 bg-navy-700 text-white hover:bg-navy-800">Simpan Status</button>
                 </form>
+
+                @if($complaint->status === \App\Models\Complaint::STATUS_TAHAP_1)
+                <div class="mt-6 border-t border-slate-100 pt-4">
+                    <h3 class="font-semibold text-slate-700">Undang Testimoni</h3>
+                    <p class="text-xs text-slate-500 mb-3">Generate link unik untuk pelapor mengisi testimoni.</p>
+                    
+                    @if($complaint->testimonial_token)
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                            <p class="text-xs font-semibold text-slate-500 mb-1">Link Testimoni:</p>
+                            <div class="flex items-center gap-2">
+                                <input type="text" readonly value="{{ route('testimonials.form', $complaint->testimonial_token) }}" 
+                                    class="w-full text-xs p-2 bg-white border border-slate-300 rounded select-all focus:outline-none">
+                                <a href="https://wa.me/{{ preg_replace('/\D/', '', $complaint->no_hp) }}?text={{ urlencode('Halo ' . $complaint->nama_lengkap . ', terima kasih telah menggunakan layanan kami. Kami sangat menghargai privasi Anda. Jika berkenan, mohon berikan ulasan singkat melalui link aman berikut (nama Anda akan disamarkan): ' . route('testimonials.form', $complaint->testimonial_token)) }}" 
+                                   target="_blank" class="btn btn-sm bg-green-500 text-white hover:bg-green-600 border-0">
+                                    WA
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <form action="{{ route('admin.complaints.generate-token', $complaint) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-sm w-full border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+                                Generate Link Testimoni
+                            </button>
+                        </form>
+                    @endif
+                </div>
+                @endif
             </article>
 
             <article class="rounded-2xl bg-white p-5 shadow-sm">

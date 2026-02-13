@@ -74,4 +74,15 @@ class ConsultationController extends Controller
 
         return $pdf->download('konsultasi-'.now()->format('YmdHis').'.pdf');
     }
+
+    public function generateTestimonialToken(Consultation $consultation)
+    {
+        if (! $consultation->testimonial_token) {
+            $consultation->update([
+                'testimonial_token' => \Illuminate\Support\Str::random(32),
+            ]);
+        }
+
+        return back()->with('success', 'Link testimoni berhasil dibuat.');
+    }
 }

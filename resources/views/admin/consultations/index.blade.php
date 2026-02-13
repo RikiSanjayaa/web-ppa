@@ -71,6 +71,22 @@
                                         class="btn btn-sm border-0 bg-navy-700 text-white hover:bg-navy-800">
                                         Detail
                                     </a>
+                                    @if($consultation->rekomendasi)
+                                    <form action="{{ route('admin.consultations.generate-token', $consultation) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        @if($consultation->testimonial_token)
+                                            <a href="https://wa.me/{{ preg_replace('/\D/', '', $consultation->no_hp) }}?text={{ urlencode('Halo ' . $consultation->nama_klien . ', terima kasih atas kepercayaan Anda. Kami menjamin kerahasiaan data Anda. Jika berkenan, mohon berikan ulasan melalui link aman berikut (nama akan disamarkan): ' . route('testimonials.form', $consultation->testimonial_token)) }}" 
+                                               target="_blank" class="btn btn-sm border-0 bg-green-500 text-white hover:bg-green-600" title="Kirim ke WA">
+                                                WA
+                                            </a>
+                                        @else
+                                            <button type="submit" class="btn btn-sm border border-slate-300 bg-white text-slate-600 hover:bg-slate-50" title="Generate Link Testimoni">
+                                                Link
+                                            </button>
+                                        @endif
+                                    </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

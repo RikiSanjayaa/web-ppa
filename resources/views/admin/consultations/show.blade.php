@@ -132,6 +132,36 @@
                             Lihat Lokasi di Peta
                         </a>
                     @endif
+
+                    @if($consultation->rekomendasi)
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+                        <h4 class="font-semibold text-slate-700 text-sm">Undang Testimoni</h4>
+                        <p class="text-xs text-slate-500 mb-3">Generate link unik untuk klien mengisi testimoni.</p>
+                        
+                        @if($consultation->testimonial_token)
+                            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <p class="text-xs font-semibold text-slate-500 mb-1">Link Testimoni:</p>
+                                <div class="flex items-center gap-2">
+                                    <input type="text" readonly value="{{ route('testimonials.form', $consultation->testimonial_token) }}" 
+                                        class="w-full text-xs p-2 bg-white border border-slate-300 rounded select-all focus:outline-none">
+                                    <a href="https://wa.me/{{ preg_replace('/\D/', '', $consultation->no_hp) }}?text={{ urlencode('Halo ' . $consultation->nama_klien . ', terima kasih atas kepercayaan Anda. Kami menjamin kerahasiaan data Anda. Jika berkenan, mohon berikan ulasan melalui link aman berikut (nama akan disamarkan): ' . route('testimonials.form', $consultation->testimonial_token)) }}" 
+                                       target="_blank" class="btn btn-sm bg-green-500 text-white hover:bg-green-600 border-0">
+                                        WA
+                                    </a>
+                                </div>
+                            </div>
+                        @else
+                            <form action="{{ route('admin.consultations.generate-token', $consultation) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-sm w-full border-slate-300 bg-white text-slate-700 hover:bg-slate-50">
+                                    Generate Link Testimoni
+                                </button>
+                            </form>
+                        @endif
+                    </div>
+                    @endif
+
                     <a href="{{ route('admin.consultations.index') }}" class="btn btn-ghost w-full justify-start text-slate-600 hover:text-navy-700 hover:bg-slate-50 px-0">
                         <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
