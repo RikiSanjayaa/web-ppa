@@ -152,6 +152,17 @@ class PublicPageController extends Controller
         return Storage::disk('public')->download($document->file_path, $filename);
     }
 
+    public function previewDocument(Document $document): StreamedResponse
+    {
+        abort_if(! $document->is_published, 404);
+        abort_if(! Storage::disk('public')->exists($document->file_path), 404);
+
+        return Storage::disk('public')->response($document->file_path, null, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline',
+        ]);
+    }
+
     /**
      * @return array<string, string>
      */

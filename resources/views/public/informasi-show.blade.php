@@ -14,7 +14,31 @@
             @if ($item->summary)
                 <p class="mt-4 text-slate-700">{{ $item->summary }}</p>
             @endif
-            <a href="{{ route('informasi.documents.download', $item) }}" class="btn mt-6 border-0 bg-coral-500 text-white hover:bg-coral-600">Unduh PDF</a>
+
+            {{-- PDF Preview Inline --}}
+            <div class="mt-6">
+                <div class="flex items-center justify-between rounded-t-2xl bg-navy-800 px-4 py-3 text-white sm:px-5">
+                    <div class="flex items-center gap-2">
+                        <svg class="h-5 w-5 text-coral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        <span class="text-sm font-semibold">Preview Dokumen</span>
+                    </div>
+                    <a href="{{ route('informasi.documents.download', $item) }}"
+                        class="inline-flex items-center gap-1.5 rounded-lg bg-coral-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-coral-600 sm:text-sm">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Unduh PDF
+                    </a>
+                </div>
+                <div class="overflow-hidden rounded-b-2xl border border-t-0 border-slate-200 bg-slate-100">
+                    <iframe src="{{ route('informasi.documents.preview', $item) }}"
+                        class="h-[70vh] w-full border-0 lg:h-[80vh]"
+                        loading="lazy"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
         @else
             <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-coral-600">{{ $item->type }}</p>
             <h1 class="mt-2 font-heading text-3xl font-bold text-navy-700">{{ $item->title }}</h1>

@@ -32,6 +32,7 @@ Route::post('/api/hotline-access', [HotlineAccessController::class, 'store'])
     ->name('hotline-access.store');
 Route::get('/informasi', [PublicPageController::class, 'informasiIndex'])->name('informasi.index');
 Route::get('/informasi/dokumen/{document}/download', [PublicPageController::class, 'downloadDocument'])->name('informasi.documents.download');
+Route::get('/informasi/dokumen/{document}/preview', [PublicPageController::class, 'previewDocument'])->name('informasi.documents.preview');
 Route::get('/informasi/{slug}', [PublicPageController::class, 'informasiShow'])->name('informasi.show');
 Route::get('/galeri', [PublicPageController::class, 'galeri'])->name('galeri.index');
 

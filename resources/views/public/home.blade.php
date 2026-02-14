@@ -23,7 +23,7 @@
 
     {{-- What Can Be Reported --}}
     <section class="mt-12">
-        <h2 class="font-heading text-2xl font-semibold text-navy-700">Apa yang Bisa Dilaporkan?</h2>
+        <h2 class="font-heading text-2xl font-semibold text-navy-700">Jenis Pelanggaran yang Dapat Dilaporkan</h2>
         <p class="mt-2 text-slate-600">Laporkan segala bentuk kekerasan, eksploitasi, atau kejahatan terhadap perempuan dan anak, termasuk Tindak Pidana Perdagangan Orang (TPPO)</p>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
