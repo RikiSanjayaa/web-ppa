@@ -68,12 +68,35 @@
     <section id="form-aduan" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
         data-aos="fade-up">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Pengaduan</h2>
+        {{-- Banner Permintaan Lokasi (muncul saat pertama kali) --}}
+        <div id="location-prompt" class="mb-4 hidden rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-5 py-4">
+            <div class="flex items-start gap-4">
+                <span class="mt-0.5 text-2xl">📍</span>
+                <div class="flex-1">
+                    <p class="font-semibold text-navy-700">Izinkan Akses Lokasi</p>
+                    <p class="mt-1 text-sm text-slate-600">Kami membutuhkan lokasi Anda untuk mencatat posisi pengaduan. Tekan tombol di bawah, lalu pilih <strong>"Izinkan"</strong> pada dialog browser yang muncul.</p>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <button type="button" onclick="requestGeolocation()"
+                            class="inline-flex items-center gap-2 rounded-xl bg-navy-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-navy-800 transition-all hover:shadow-md">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Izinkan Lokasi
+                        </button>
+                        <button type="button" onclick="skipLocation()"
+                            class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors">
+                            Lewati
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Status Lokasi (loading/sukses/error) --}}
         <div id="location-status" class="mb-4 hidden rounded-xl border px-4 py-3 text-sm font-medium">
             <div class="flex items-center justify-between gap-3 flex-wrap">
-                <span id="location-message">Meminta akses lokasi...</span>
-                <div id="location-actions" class="hidden flex gap-2">
+                <span id="location-message"></span>
+                <div id="location-actions" class="hidden gap-2" style="display:none">
                     <button type="button" onclick="showLocationGuide()" class="rounded-lg border border-navy-300 bg-white px-3 py-1 text-xs font-semibold text-navy-700 hover:bg-navy-50 transition-colors">
-                        📍 Cara Izinkan Lokasi
+                        📖 Panduan Reset Izin
                     </button>
                     <button type="button" onclick="requestGeolocation()" class="rounded-lg bg-navy-700 px-3 py-1 text-xs font-semibold text-white hover:bg-navy-800 transition-colors">
                         ↻ Coba Lagi
@@ -82,17 +105,17 @@
             </div>
         </div>
 
-        {{-- Modal Panduan Lokasi --}}
+        {{-- Modal Panduan Reset Izin --}}
         <div id="location-guide-modal" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4" onclick="if(event.target===this)closeLocationGuide()">
             <div class="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
                 <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                    <h3 class="font-heading text-lg font-semibold text-navy-700">📍 Cara Mengizinkan Lokasi</h3>
+                    <h3 class="font-heading text-lg font-semibold text-navy-700">📍 Reset Izin Lokasi</h3>
                     <button onclick="closeLocationGuide()" class="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
                 <div class="px-6 py-5 max-h-[70vh] overflow-y-auto space-y-5">
-                    <p class="text-sm text-slate-600">Dialog izin lokasi tidak muncul karena sebelumnya pernah ditolak atau diblokir. Ikuti langkah berikut untuk mengaktifkannya kembali:</p>
+                    <p class="text-sm text-slate-600">Izin lokasi pernah ditolak sebelumnya, sehingga dialog izin tidak muncul lagi. Ikuti langkah berikut untuk mereset:</p>
 
                     {{-- Chrome --}}
                     <div id="guide-chrome" class="hidden">
@@ -307,19 +330,24 @@
 <script>
     const aduanLat = document.getElementById('aduan_latitude');
     const aduanLng = document.getElementById('aduan_longitude');
+    const promptEl = document.getElementById('location-prompt');
     const statusEl = document.getElementById('location-status');
     const messageEl = document.getElementById('location-message');
     const actionsEl = document.getElementById('location-actions');
     const guideModal = document.getElementById('location-guide-modal');
 
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    const isMacOS = /Macintosh|Mac OS/i.test(navigator.userAgent);
     const isFirefox = /firefox/i.test(navigator.userAgent);
     const isEdge = /edg\//i.test(navigator.userAgent);
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    // ─── Status UI ───
+    // ─── UI Helpers ───
+    function hidePrompt() {
+        promptEl.classList.add('hidden');
+    }
+
     function setLocationStatus(type, message) {
+        hidePrompt();
         statusEl.classList.remove('hidden', 'border-amber-200', 'bg-amber-50', 'text-amber-700',
             'border-green-200', 'bg-green-50', 'text-green-700',
             'border-red-200', 'bg-red-50', 'text-red-700');
@@ -332,28 +360,16 @@
 
         statusEl.classList.add(...(styles[type] || styles.loading));
         messageEl.textContent = message;
-
-        // Tampilkan actions (panduan + coba lagi) hanya saat error
         actionsEl.classList.toggle('hidden', type !== 'error');
-        if (type !== 'error') actionsEl.style.display = '';
-        else actionsEl.style.display = 'flex';
+        actionsEl.style.display = type === 'error' ? 'flex' : 'none';
 
         if (type === 'success') {
             setTimeout(() => statusEl.classList.add('hidden'), 4000);
         }
     }
 
-    function getErrorMessage(error) {
-        switch (error.code) {
-            case 1: // PERMISSION_DENIED
-                return 'Akses lokasi ditolak. Klik "Cara Izinkan Lokasi" untuk panduan mengaktifkannya.';
-            case 2: // POSITION_UNAVAILABLE
-                return 'Lokasi tidak tersedia. Pastikan GPS/Wi-Fi aktif.';
-            case 3: // TIMEOUT
-                return 'Waktu permintaan habis. Klik "Coba Lagi".';
-            default:
-                return 'Gagal mendapatkan lokasi. Klik "Coba Lagi".';
-        }
+    function skipLocation() {
+        hidePrompt();
     }
 
     // ─── Modal Panduan ───
@@ -362,16 +378,12 @@
         if (isSafari) return 'guide-safari';
         if (isFirefox) return 'guide-firefox';
         if (isEdge) return 'guide-edge';
-        return 'guide-chrome'; // Default to Chrome (termasuk Brave, Opera, dll)
+        return 'guide-chrome';
     }
 
     function showLocationGuide() {
-        // Sembunyikan semua panduan dulu
         document.querySelectorAll('[id^="guide-"]').forEach(el => el.classList.add('hidden'));
-        // Tampilkan panduan sesuai browser
-        const guideId = detectBrowserGuide();
-        document.getElementById(guideId)?.classList.remove('hidden');
-        // Tampilkan modal
+        document.getElementById(detectBrowserGuide())?.classList.remove('hidden');
         guideModal.classList.remove('hidden');
         guideModal.classList.add('flex');
     }
@@ -381,7 +393,7 @@
         guideModal.classList.remove('flex');
     }
 
-    // ─── Geolocation ───
+    // ─── Geolocation Core ───
     function onLocationSuccess(position) {
         aduanLat.value = position.coords.latitude;
         aduanLng.value = position.coords.longitude;
@@ -406,32 +418,16 @@
 
         setLocationStatus('loading', '⟳ Mendeteksi lokasi Anda...');
 
-        // Cek Permissions API & pasang listener
+        // Pasang permission change listener
         if (navigator.permissions && navigator.permissions.query) {
             try {
                 const perm = await navigator.permissions.query({ name: 'geolocation' });
-
-                if (perm.state === 'denied') {
-                    setLocationStatus('error', getErrorMessage({ code: 1 }));
-
-                    // Listener: otomatis re-request saat user ubah izin di browser settings
-                    perm.onchange = () => {
-                        if (perm.state === 'granted' || perm.state === 'prompt') {
-                            requestGeolocation();
-                        }
-                    };
-                    return;
-                }
-
-                // Pasang listener untuk kasus 'prompt' juga
                 perm.onchange = () => {
-                    if (perm.state === 'granted') {
+                    if (perm.state === 'granted' || perm.state === 'prompt') {
                         requestGeolocation();
                     }
                 };
-            } catch (e) {
-                // Safari tidak support permissions.query, lanjut saja
-            }
+            } catch (e) { /* Safari */ }
         }
 
         try {
@@ -440,19 +436,55 @@
         } catch (highAccError) {
             if (highAccError.code === 2 || highAccError.code === 3) {
                 try {
-                    setLocationStatus('loading', '⟳ Mencoba metode lokasi alternatif...');
+                    setLocationStatus('loading', '⟳ Mencoba metode alternatif...');
                     const position = await attemptGeolocation(false);
                     onLocationSuccess(position);
                 } catch (lowAccError) {
-                    setLocationStatus('error', getErrorMessage(lowAccError));
+                    setLocationStatus('error', lowAccError.code === 1
+                        ? 'Akses lokasi ditolak. Klik "Panduan Reset Izin" untuk mengaktifkannya.'
+                        : 'Lokasi gagal terdeteksi. Klik "Coba Lagi".');
                 }
             } else {
-                setLocationStatus('error', getErrorMessage(highAccError));
+                setLocationStatus('error', highAccError.code === 1
+                    ? 'Akses lokasi ditolak. Klik "Panduan Reset Izin" untuk mengaktifkannya.'
+                    : 'Lokasi gagal terdeteksi. Klik "Coba Lagi".');
             }
         }
     }
 
-    // Auto-request on page load
-    document.addEventListener('DOMContentLoaded', () => requestGeolocation());
+    // ─── Init: Cek permission state dan tentukan UI awal ───
+    document.addEventListener('DOMContentLoaded', async () => {
+        if (!navigator.geolocation) return;
+
+        if (navigator.permissions && navigator.permissions.query) {
+            try {
+                const perm = await navigator.permissions.query({ name: 'geolocation' });
+
+                if (perm.state === 'granted') {
+                    // Sudah pernah diizinkan → langsung ambil lokasi tanpa prompt
+                    requestGeolocation();
+                    return;
+                }
+
+                if (perm.state === 'denied') {
+                    // Pernah ditolak → tampilkan error + panduan reset
+                    setLocationStatus('error', 'Akses lokasi ditolak. Klik "Panduan Reset Izin" untuk mengaktifkannya.');
+                    perm.onchange = () => {
+                        if (perm.state === 'granted' || perm.state === 'prompt') {
+                            requestGeolocation();
+                        }
+                    };
+                    return;
+                }
+
+                // state === 'prompt' → Tampilkan banner agar user klik "Izinkan Lokasi"
+                promptEl.classList.remove('hidden');
+                return;
+            } catch (e) { /* Safari */ }
+        }
+
+        // Fallback (Safari dll): tampilkan banner
+        promptEl.classList.remove('hidden');
+    });
 </script>
 @endpush
