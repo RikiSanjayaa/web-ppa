@@ -479,6 +479,15 @@
 
                 // state === 'prompt' → Tampilkan banner agar user klik "Izinkan Lokasi"
                 promptEl.classList.remove('hidden');
+
+                // Listener: otomatis ambil lokasi jika user mengizinkan lewat dialog browser
+                perm.onchange = () => {
+                    if (perm.state === 'granted') {
+                        requestGeolocation();
+                    } else if (perm.state === 'denied') {
+                        setLocationStatus('error', 'Akses lokasi ditolak. Klik "Panduan Reset Izin" untuk mengaktifkannya.');
+                    }
+                };
                 return;
             } catch (e) { /* Safari */ }
         }
