@@ -68,8 +68,11 @@
     <section id="form-aduan" class="mt-10 scroll-mt-48 rounded-3xl border border-slate-200 bg-white p-6 lg:p-8"
         data-aos="fade-up">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Form Pengaduan</h2>
-        <div id="location-status" class="mb-4 hidden text-sm font-medium text-amber-600">
-            Meminta akses lokasi...
+        <div id="location-status" class="mb-4 hidden rounded-xl border px-4 py-3 text-sm font-medium">
+            <span id="location-message">Meminta akses lokasi...</span>
+            <button id="location-retry" type="button" onclick="requestGeolocation()" class="ml-3 hidden rounded-lg bg-navy-700 px-3 py-1 text-xs font-semibold text-white hover:bg-navy-800 transition-colors">
+                ↻ Coba Lagi
+            </button>
         </div>
         <p class="mt-2 text-sm text-slate-600">Data pengaduan akan tersimpan di sistem, lalu Anda diarahkan ke WhatsApp hotline
             dengan pesan terisi otomatis.</p>
@@ -201,35 +204,110 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const aduanLat = document.getElementById('aduan_latitude');
-        const aduanLng = document.getElementById('aduan_longitude');
-        const statusEl = document.getElementById('location-status');
+    const aduanLat = document.getElementById('aduan_latitude');
+    const aduanLng = document.getElementById('aduan_longitude');
+    const statusEl = document.getElementById('location-status');
+    const messageEl = document.getElementById('location-message');
+    const retryBtn = document.getElementById('location-retry');
 
-        if (navigator.geolocation) {
-            statusEl.classList.remove('hidden');
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longitude;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isMacOS = /Macintosh|Mac OS/i.test(navigator.userAgent);
 
-                    aduanLat.value = lat;
-                    aduanLng.value = lng;
-                    
-                    statusEl.textContent = "Lokasi terdeteksi setujui.";
-                    statusEl.classList.replace('text-amber-600', 'text-green-600');
-                    setTimeout(() => statusEl.classList.add('hidden'), 3000);
-                },
-                (error) => {
-                    console.error("Error getting location: ", error);
-                    statusEl.textContent = "Gagal mendeteksi lokasi atau akses ditolak.";
-                    statusEl.classList.replace('text-amber-600', 'text-red-600');
-                },
-                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-            );
-        } else {
-            console.log("Geolocation is not supported by this browser.");
+    function setLocationStatus(type, message) {
+        statusEl.classList.remove('hidden', 'border-amber-200', 'bg-amber-50', 'text-amber-700',
+            'border-green-200', 'bg-green-50', 'text-green-700',
+            'border-red-200', 'bg-red-50', 'text-red-700');
+
+        const styles = {
+            loading: ['border-amber-200', 'bg-amber-50', 'text-amber-700'],
+            success: ['border-green-200', 'bg-green-50', 'text-green-700'],
+            error:   ['border-red-200', 'bg-red-50', 'text-red-700'],
+        };
+
+        statusEl.classList.add(...(styles[type] || styles.loading));
+        messageEl.textContent = message;
+        retryBtn.classList.toggle('hidden', type !== 'error');
+
+        if (type === 'success') {
+            setTimeout(() => statusEl.classList.add('hidden'), 4000);
         }
-    });
+    }
+
+    function getErrorMessage(error) {
+        switch (error.code) {
+            case 1: // PERMISSION_DENIED
+                if (isMacOS) {
+                    return 'Akses lokasi ditolak. Di macOS, pastikan izin lokasi aktif di: System Settings → Privacy & Security → Location Services → '
+                        + (isSafari ? 'Safari' : 'browser Anda') + '.';
+                }
+                return 'Akses lokasi ditolak. Silakan izinkan akses lokasi di pengaturan browser Anda, lalu klik "Coba Lagi".';
+            case 2: // POSITION_UNAVAILABLE
+                return 'Lokasi tidak tersedia. Pastikan GPS/Wi-Fi aktif, atau coba di tempat dengan sinyal lebih baik.';
+            case 3: // TIMEOUT
+                return 'Waktu permintaan lokasi habis. Klik "Coba Lagi" untuk mencoba kembali.';
+            default:
+                return 'Gagal mendapatkan lokasi. Klik "Coba Lagi" untuk mencoba kembali.';
+        }
+    }
+
+    function onLocationSuccess(position) {
+        aduanLat.value = position.coords.latitude;
+        aduanLng.value = position.coords.longitude;
+        setLocationStatus('success', '✓ Lokasi berhasil terdeteksi.');
+    }
+
+    function attemptGeolocation(highAccuracy) {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                enableHighAccuracy: highAccuracy,
+                timeout: 15000,
+                maximumAge: 60000
+            });
+        });
+    }
+
+    async function requestGeolocation() {
+        if (!navigator.geolocation) {
+            setLocationStatus('error', 'Browser Anda tidak mendukung deteksi lokasi. Lokasi akan diisi kosong.');
+            return;
+        }
+
+        setLocationStatus('loading', '⟳ Mendeteksi lokasi Anda...');
+
+        // Cek Permissions API jika tersedia
+        if (navigator.permissions && navigator.permissions.query) {
+            try {
+                const perm = await navigator.permissions.query({ name: 'geolocation' });
+                if (perm.state === 'denied') {
+                    setLocationStatus('error', getErrorMessage({ code: 1 }));
+                    return;
+                }
+            } catch (e) {
+                // Safari tidak support permissions.query untuk geolocation, lanjut saja
+            }
+        }
+
+        try {
+            // Coba high accuracy dulu
+            const position = await attemptGeolocation(true);
+            onLocationSuccess(position);
+        } catch (highAccError) {
+            // Jika timeout atau unavailable, coba low accuracy sebagai fallback
+            if (highAccError.code === 2 || highAccError.code === 3) {
+                try {
+                    setLocationStatus('loading', '⟳ Mencoba metode lokasi alternatif...');
+                    const position = await attemptGeolocation(false);
+                    onLocationSuccess(position);
+                } catch (lowAccError) {
+                    setLocationStatus('error', getErrorMessage(lowAccError));
+                }
+            } else {
+                setLocationStatus('error', getErrorMessage(highAccError));
+            }
+        }
+    }
+
+    // Auto-request on page load
+    document.addEventListener('DOMContentLoaded', () => requestGeolocation());
 </script>
 @endpush
