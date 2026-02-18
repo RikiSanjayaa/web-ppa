@@ -12,6 +12,7 @@ use App\Models\Testimonial;
 use App\Support\SiteDefaults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -149,15 +150,21 @@ class PublicPageController extends Controller
         $extension = pathinfo($document->file_path, PATHINFO_EXTENSION) ?: 'pdf';
         $filename = Str::slug($document->title).'.'.$extension;
 
-        return Storage::disk('public')->download($document->file_path, $filename);
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('public');
+
+        return $disk->download($document->file_path, $filename);
     }
 
     public function previewDocument(Document $document): StreamedResponse
     {
         abort_if(! $document->is_published, 404);
-        abort_if(! Storage::disk('public')->exists($document->file_path), 404);
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('public');
 
-        return Storage::disk('public')->response($document->file_path, null, [
+        abort_if(! $disk->exists($document->file_path), 404);
+
+        return $disk->response($document->file_path, null, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline',
         ]);
