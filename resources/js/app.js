@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const leadersSwiper = document.querySelector('.leaders-swiper');
     if (leadersSwiper) {
         new Swiper(leadersSwiper, {
-            modules: [Navigation, Autoplay],
+            modules: [Navigation],
             slidesPerView: 1.25,
             spaceBetween: 12,
             centeredSlides: false,
@@ -66,10 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navigation: {
                 nextEl: '.leaders-next',
                 prevEl: '.leaders-prev',
-            },
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: true,
             },
             breakpoints: {
                 640: {
