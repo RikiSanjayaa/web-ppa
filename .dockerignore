@@ -1,0 +1,32 @@
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.vscode
+.phpunit.result.cache
+
+node_modules
+npm-debug.log
+
+# Jangan bawa .env lokal ke image (tapi .env.example tetap masuk!)
+.env
+.env.backup
+.env.production
+
+# Jangan bawa file non-produksi
+tests
+phpunit.xml
+
+# File log
+storage/logs/*.log
+
+# Artifact Antigravity / AI
+.gemini
+
+# Symlink yang dibuat saat runtime (bukan saat build)
+public/storage
+public/hot
+
+# OS files
+.DS_Store
+Thumbs.db
