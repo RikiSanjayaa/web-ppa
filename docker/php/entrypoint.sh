@@ -19,11 +19,16 @@ fi
 
 # -------------------------------------------------------
 # 2. Generate APP_KEY jika belum ada atau kosong
+#    (skip jika .env read-only / mounted dari host)
 # -------------------------------------------------------
 APP_KEY_VALUE=$(grep -E '^APP_KEY=' /var/www/html/.env | cut -d '=' -f2)
 if [ -z "$APP_KEY_VALUE" ]; then
-    echo "==> [Entrypoint] Generating APP_KEY..."
-    php artisan key:generate --force
+    if [ -w /var/www/html/.env ]; then
+        echo "==> [Entrypoint] Generating APP_KEY..."
+        php artisan key:generate --force
+    else
+        echo "==> [WARN] APP_KEY kosong tapi .env read-only. Isi APP_KEY di host terlebih dahulu!"
+    fi
 fi
 
 # -------------------------------------------------------
