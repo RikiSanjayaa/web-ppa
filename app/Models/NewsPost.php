@@ -22,6 +22,8 @@ class NewsPost extends Model
         'published_at',
         'meta_title',
         'meta_description',
+        'instagram_url',
+        'source',
     ];
 
     protected function casts(): array
@@ -31,6 +33,11 @@ class NewsPost extends Model
             'published_at' => 'datetime',
             'image_paths' => 'array',
         ];
+    }
+
+    public function isInstagram(): bool
+    {
+        return $this->source === 'instagram';
     }
 
     public function scopePublished(Builder $query): Builder
@@ -43,3 +50,4 @@ class NewsPost extends Model
         return $query->published()->orderByDesc('published_at');
     }
 }
+

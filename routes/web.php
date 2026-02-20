@@ -75,9 +75,11 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     // Konten Publik & Sistem — HANYA Super Admin
     // -------------------------------------------------------
     Route::middleware('super_admin')->group(function () {
+        Route::post('news-posts/import-instagram', [NewsPostController::class, 'importInstagram'])->name('news-posts.import-instagram');
         Route::resource('news-posts', NewsPostController::class)->except('show');
         Route::resource('leaders', LeaderController::class)->except('show');
         Route::resource('documents', DocumentController::class)->except('show');
+
 
         Route::resource('testimonials', TestimonialController::class)->except('show');
         Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');

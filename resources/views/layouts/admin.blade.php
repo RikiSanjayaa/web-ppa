@@ -107,6 +107,12 @@
                     </div>
                 @endif
 
+                @if (session('error'))
+                    <div class="alert mb-6 border border-red-200 bg-red-50 text-red-800">
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
+
                 @yield('content')
             </main>
         </div>
