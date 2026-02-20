@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\LocationMonitoringController;
 use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
@@ -43,10 +44,14 @@ Route::get('/testimoni/terima-kasih/{token}', [TestimonialSubmissionController::
 
 Route::redirect('/dashboard', '/admin')->middleware('auth')->name('dashboard');
 
+// -------------------------------------------------------
+// Route Admin — semua admin (super_admin & admin) bisa akses
+// -------------------------------------------------------
 Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/audit-logs', [ActivityLogController::class, 'index'])->name('audit-logs.index');
 
+    // Operasional: Pengaduan
     Route::get('/aduan', [AdminComplaintController::class, 'index'])->name('complaints.index');
     Route::get('/aduan/create', [AdminComplaintController::class, 'create'])->name('complaints.create');
     Route::post('/aduan', [AdminComplaintController::class, 'store'])->name('complaints.store');
@@ -54,28 +59,41 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::get('/aduan/export/pdf', [AdminComplaintController::class, 'exportPdf'])->name('complaints.export.pdf');
     Route::get('/aduan/{complaint}', [AdminComplaintController::class, 'show'])->name('complaints.show');
     Route::patch('/aduan/{complaint}/status', [AdminComplaintController::class, 'updateStatus'])->name('complaints.update-status');
-
     Route::patch('/aduan/{complaint}/generate-token', [AdminComplaintController::class, 'generateTestimonialToken'])->name('complaints.generate-token');
-    
+
+    // Operasional: Konsultasi
     Route::get('/consultations/export/excel', [AdminConsultationController::class, 'exportExcel'])->name('consultations.export.excel');
     Route::get('/consultations/export/pdf', [AdminConsultationController::class, 'exportPdf'])->name('consultations.export.pdf');
     Route::patch('/consultations/{consultation}/generate-token', [AdminConsultationController::class, 'generateTestimonialToken'])->name('consultations.generate-token');
     Route::resource('consultations', AdminConsultationController::class)->only(['index', 'update', 'show', 'edit']);
 
+    // Operasional: Pantau Lokasi
     Route::get('/location-monitoring/summary', [LocationMonitoringController::class, 'summary'])->name('location-monitoring.summary');
     Route::get('/location-monitoring', [LocationMonitoringController::class, 'index'])->name('location-monitoring.index');
 
-    Route::resource('news-posts', NewsPostController::class)->except('show');
-    Route::resource('leaders', LeaderController::class)->except('show');
-    Route::resource('documents', DocumentController::class)->except('show');
+    // -------------------------------------------------------
+    // Konten Publik & Sistem — HANYA Super Admin
+    // -------------------------------------------------------
+    Route::middleware('super_admin')->group(function () {
+        Route::resource('news-posts', NewsPostController::class)->except('show');
+        Route::resource('leaders', LeaderController::class)->except('show');
+        Route::resource('documents', DocumentController::class)->except('show');
 
-    Route::resource('testimonials', TestimonialController::class)->except('show');
-    Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');
-    Route::patch('/testimonials/{testimonial}/toggle-publish', [TestimonialController::class, 'togglePublish'])->name('testimonials.toggle-publish');
-    Route::resource('faqs', FaqController::class)->except('show');
+        Route::resource('testimonials', TestimonialController::class)->except('show');
+        Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');
+        Route::patch('/testimonials/{testimonial}/toggle-publish', [TestimonialController::class, 'togglePublish'])->name('testimonials.toggle-publish');
+        Route::resource('faqs', FaqController::class)->except('show');
 
-    Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
-    Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
+        Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
+        Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
+
+        // Manajemen Pengguna
+        Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
+        Route::patch('/users/{user}/toggle-active', [UserManagementController::class, 'toggleActive'])->name('users.toggle-active');
+        Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -86,3 +104,4 @@ Route::middleware('auth')->group(function () {
 
 
 require __DIR__.'/auth.php';
+

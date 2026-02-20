@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 class EnsureAdmin
 {
     /**
-     * Handle an incoming request.
+     * Pastikan user memiliki role admin atau super_admin.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user() || ! $request->user()->is_admin) {
+        if (! $request->user() || ! $request->user()->isOperationalAdmin()) {
             abort(403, 'Anda tidak memiliki akses ke halaman admin.');
         }
 

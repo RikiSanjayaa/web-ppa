@@ -52,6 +52,12 @@ echo "==> [Entrypoint] Menjalankan migrasi database..."
 php artisan migrate --force
 
 # -------------------------------------------------------
+# 5a. Jalankan RoleSeeder (idempotent — aman dijalankan berulang)
+# -------------------------------------------------------
+echo "==> [Entrypoint] Menjalankan RoleSeeder..."
+php artisan db:seed --class=RoleSeeder --force
+
+# -------------------------------------------------------
 # 6. Buat symlink storage jika belum ada
 # -------------------------------------------------------
 if [ ! -L /var/www/html/public/storage ]; then

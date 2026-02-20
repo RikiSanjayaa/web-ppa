@@ -10,11 +10,19 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\OtpVerifyController;
+
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])
+        ->middleware('throttle:10,1');
+
+    // Route OTP — tahap 2 login (tanpa 'auth' karena user belum login)
+    Route::get('otp/verify', [OtpVerifyController::class, 'show'])->name('otp.show');
+    Route::post('otp/verify', [OtpVerifyController::class, 'verify'])->name('otp.verify');
+    Route::post('otp/resend', [OtpVerifyController::class, 'resend'])->name('otp.resend');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
