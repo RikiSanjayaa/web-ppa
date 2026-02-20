@@ -19,7 +19,7 @@ services:
       - app-database:/var/www/html/database
       - app-storage:/var/www/html/storage
       # .env dari host langsung di-mount
-      - ./.env:/var/www/html/.env:ro
+      - ./.env:/var/www/html/.env
     restart: unless-stopped
 
   queue:
@@ -33,7 +33,7 @@ services:
       - app-public:/var/www/html/public
       - app-database:/var/www/html/database
       - app-storage:/var/www/html/storage
-      - ./.env:/var/www/html/.env:ro
+      - ./.env:/var/www/html/.env
     depends_on:
       - app
     restart: unless-stopped
