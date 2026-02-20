@@ -6,8 +6,8 @@ echo "==> [Entrypoint] Memulai setup aplikasi..."
 # -------------------------------------------------------
 # 0. Fix permission volume (Docker buat volume dengan root)
 # -------------------------------------------------------
-chown -R www-data:www-data /var/www/html/database /var/www/html/storage
-chmod -R 775 /var/www/html/database /var/www/html/storage
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /var/www/html/storage
 
 # -------------------------------------------------------
 # 1. Setup .env jika belum ada
@@ -43,7 +43,7 @@ fi
 # -------------------------------------------------------
 # 4. Buat file SQLite jika belum ada
 # -------------------------------------------------------
-DB_PATH="${DB_DATABASE:-/var/www/html/database/database.sqlite}"
+DB_PATH="${DB_DATABASE:-/var/www/html/storage/database.sqlite}"
 if [ ! -f "$DB_PATH" ]; then
     echo "==> [Entrypoint] Membuat database SQLite: $DB_PATH"
     touch "$DB_PATH"
@@ -57,14 +57,22 @@ echo "==> [Entrypoint] Menjalankan migrasi database..."
 php artisan migrate --force
 
 # -------------------------------------------------------
-# 5a. Jalankan ProductionSeeder jika belum pernah (cek tabel roles kosong)
+# 5a. Jalankan ProductionSeeder jika belum pernah (cek tabel roles via sqlite)
 # -------------------------------------------------------
-ROLE_COUNT=$(php artisan tinker --execute="echo \Spatie\Permission\Models\Role::count();" 2>/dev/null || echo "0")
+ROLE_COUNT=$(php -r "
+  try {
+    \$db = new PDO('sqlite:$DB_PATH');
+    \$row = \$db->query(\"SELECT COUNT(*) FROM roles\")->fetchColumn();
+    echo \$row;
+  } catch (\Exception \$e) {
+    echo 0;
+  }
+" 2>/dev/null || echo "0")
 if [ "$ROLE_COUNT" = "0" ]; then
     echo "==> [Entrypoint] Menjalankan ProductionSeeder (first-time setup)..."
     php artisan db:seed --class=ProductionSeeder --force || echo "==> [WARN] ProductionSeeder gagal, skip."
 else
-    echo "==> [Entrypoint] Data production sudah ada, skip seeder."
+    echo "==> [Entrypoint] Data production sudah ada ($ROLE_COUNT roles), skip seeder."
 fi
 
 # -------------------------------------------------------

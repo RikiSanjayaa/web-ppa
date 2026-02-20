@@ -11,15 +11,20 @@ services:
     working_dir: /var/www/html
     environment:
       DB_CONNECTION: sqlite
-      DB_DATABASE: /var/www/html/database/database.sqlite
+      DB_DATABASE: /var/www/html/storage/database.sqlite
     volumes:
       # public: shared dengan Nginx agar bisa serve file statis
       - app-public:/var/www/html/public
-      # database & storage: persistent data
-      - app-database:/var/www/html/database
+      # storage & database: persistent data
       - app-storage:/var/www/html/storage
       # .env dari host langsung di-mount
       - ./.env:/var/www/html/.env
+      # --- Kode PHP di-mount dari host agar git pull langsung berpengaruh ---
+      - ./app:/var/www/html/app:ro
+      - ./config:/var/www/html/config:ro
+      - ./database:/var/www/html/database:ro
+      - ./resources/views:/var/www/html/resources/views:ro
+      - ./routes:/var/www/html/routes:ro
     restart: unless-stopped
 
   queue:
@@ -28,12 +33,16 @@ services:
     command: php artisan queue:work --queue=default --sleep=3 --tries=3 --timeout=120
     environment:
       DB_CONNECTION: sqlite
-      DB_DATABASE: /var/www/html/database/database.sqlite
+      DB_DATABASE: /var/www/html/storage/database.sqlite
     volumes:
       - app-public:/var/www/html/public
-      - app-database:/var/www/html/database
       - app-storage:/var/www/html/storage
       - ./.env:/var/www/html/.env
+      - ./app:/var/www/html/app:ro
+      - ./config:/var/www/html/config:ro
+      - ./database:/var/www/html/database:ro
+      - ./resources/views:/var/www/html/resources/views:ro
+      - ./routes:/var/www/html/routes:ro
     depends_on:
       - app
     restart: unless-stopped
@@ -53,5 +62,4 @@ services:
 
 volumes:
   app-public:
-  app-database:
   app-storage:
