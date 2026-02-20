@@ -57,6 +57,17 @@ echo "==> [Entrypoint] Menjalankan migrasi database..."
 php artisan migrate --force
 
 # -------------------------------------------------------
+# 5a. Jalankan ProductionSeeder jika belum pernah (cek tabel roles kosong)
+# -------------------------------------------------------
+ROLE_COUNT=$(php artisan tinker --execute="echo \Spatie\Permission\Models\Role::count();" 2>/dev/null || echo "0")
+if [ "$ROLE_COUNT" = "0" ]; then
+    echo "==> [Entrypoint] Menjalankan ProductionSeeder (first-time setup)..."
+    php artisan db:seed --class=ProductionSeeder --force || echo "==> [WARN] ProductionSeeder gagal, skip."
+else
+    echo "==> [Entrypoint] Data production sudah ada, skip seeder."
+fi
+
+# -------------------------------------------------------
 # 6. Buat symlink storage jika belum ada
 # -------------------------------------------------------
 if [ ! -L /var/www/html/public/storage ]; then
