@@ -18,6 +18,8 @@ services:
       # database & storage: persistent data
       - app-database:/var/www/html/database
       - app-storage:/var/www/html/storage
+      # .env dari host langsung di-mount
+      - ./.env:/var/www/html/.env:ro
     restart: unless-stopped
 
   queue:
