@@ -67,6 +67,43 @@ class PlaceholderMedia
             }
         }
 
-        throw new RuntimeException('Placeholder image tidak ditemukan di resources/image atau resources/images.');
+        // Fallback: buat gambar placeholder sederhana via GD
+        return self::generateFallbackImage();
+    }
+
+    private static function generateFallbackImage(): string
+    {
+        $tmpPath = sys_get_temp_dir().'/placeholder_seed.jpg';
+
+        if (is_file($tmpPath)) {
+            self::$sourceImage = $tmpPath;
+
+            return $tmpPath;
+        }
+
+        // Generate gambar 800x600 abu-abu dengan teks
+        if (function_exists('imagecreatetruecolor')) {
+            $img = imagecreatetruecolor(800, 600);
+            $bg = imagecolorallocate($img, 180, 180, 180);
+            $fg = imagecolorallocate($img, 100, 100, 100);
+            imagefill($img, 0, 0, $bg);
+            imagestring($img, 5, 320, 290, 'Placeholder', $fg);
+            imagejpeg($img, $tmpPath, 85);
+            imagedestroy($img);
+        } else {
+            // Fallback minimal: JPEG 1x1 pixel
+            file_put_contents($tmpPath, base64_decode(
+                '/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8U'.
+                'HRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgN'.
+                'DRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy'.
+                'MjL/wAARCAABAAEDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAA'.
+                'AAAAAAAAAAAAAP/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA'.
+                '/9oADAMBAAIRAxEAPwCwABmX/9k='
+            ));
+        }
+
+        self::$sourceImage = $tmpPath;
+
+        return $tmpPath;
     }
 }
