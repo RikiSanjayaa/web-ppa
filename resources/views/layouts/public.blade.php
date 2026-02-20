@@ -91,7 +91,7 @@
                         href="{{ route('organisasi') }}">Organisasi</a>
                     <a class="nav-pill {{ request()->routeIs('layanan-masyarakat') ? 'nav-pill-active' : '' }}"
                         href="{{ route('layanan-masyarakat') }}">Layanan Masyarakat</a>
-                    <a class="nav-pill {{ request()->routeIs('informasi.*') ? 'nav-pill-active' : '' }}"
+                    <a class="nav-pill {{ request()->routeIs('informasi.index', 'informasi.documents.*') ? 'nav-pill-active' : '' }}"
                         href="{{ route('informasi.index') }}">Informasi</a>
                     <a class="nav-pill {{ request()->routeIs('galeri.*') ? 'nav-pill-active' : '' }}"
                         href="{{ route('galeri.index') }}">Galeri</a>
@@ -108,7 +108,7 @@
                     href="{{ route('organisasi') }}">Organisasi</a>
                 <a class="nav-pill whitespace-nowrap {{ request()->routeIs('layanan-masyarakat') ? 'nav-pill-active' : '' }}"
                     href="{{ route('layanan-masyarakat') }}">Layanan</a>
-                <a class="nav-pill whitespace-nowrap {{ request()->routeIs('informasi.*') ? 'nav-pill-active' : '' }}"
+                <a class="nav-pill whitespace-nowrap {{ request()->routeIs('informasi.index', 'informasi.documents.*') ? 'nav-pill-active' : '' }}"
                     href="{{ route('informasi.index') }}">Informasi</a>
                 <a class="nav-pill whitespace-nowrap {{ request()->routeIs('galeri.*') ? 'nav-pill-active' : '' }}"
                     href="{{ route('galeri.index') }}">Galeri</a>

@@ -5,7 +5,7 @@
 
 @section('content')
     <section class="rounded-3xl border border-slate-200 bg-white p-6 lg:p-8" data-aos="fade-up">
-        <a href="{{ route('informasi.index') }}" class="text-sm font-semibold text-coral-600">← Kembali ke Informasi</a>
+        <a href="{{ route('galeri.index') }}" class="text-sm font-semibold text-coral-600">← Kembali ke Galeri</a>
 
         @if ($type === 'document')
             <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-coral-600">Dokumen Hukum</p>
