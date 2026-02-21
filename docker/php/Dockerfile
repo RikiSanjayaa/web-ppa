@@ -73,6 +73,9 @@ WORKDIR /var/www/html
 # Copy seluruh source aplikasi
 COPY . .
 
+# Copy custom PHP configuration for upload limits
+COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+
 # Copy hasil build frontend dari stage 1
 COPY --from=node-builder /app/public/build ./public/build
 
