@@ -42,6 +42,13 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
+        // Bypass OTP jika sudah diverifikasi dalam 7 hari terakhir
+        if ($user->otp_verified_at && $user->otp_verified_at->diffInDays(now()) < 7) {
+            $request->session()->regenerate();
+            \App\Services\ActivityLogger::log('admin.auth.login', null, 'Admin berhasil masuk ke panel (Bypass OTP 7 hari).');
+            return redirect()->intended(route('admin.dashboard', absolute: false));
+        }
+
         // Logout sementara, simpan user_id di session untuk tahap OTP
         Auth::guard('web')->logout();
         $request->session()->put('otp_pending_user_id', $user->id);

@@ -112,6 +112,8 @@ class OtpVerifyController extends Controller
 
     private function loginUser(Request $request, User $user): void
     {
+        $user->update(['otp_verified_at' => now()]);
+
         Auth::login($user);
         $request->session()->forget('otp_pending_user_id');
         $request->session()->regenerate();

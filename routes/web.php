@@ -72,24 +72,23 @@ Route::middleware(['auth', 'admin', 'admin.activity'])->prefix('admin')->name('a
     Route::get('/location-monitoring', [LocationMonitoringController::class, 'index'])->name('location-monitoring.index');
 
     // -------------------------------------------------------
-    // Konten Publik & Sistem — HANYA Super Admin
+    // Konten Publik & Sistem
     // -------------------------------------------------------
+    Route::post('news-posts/import-instagram', [NewsPostController::class, 'importInstagram'])->name('news-posts.import-instagram');
+    Route::resource('news-posts', NewsPostController::class)->except('show');
+    Route::resource('leaders', LeaderController::class)->except('show');
+    Route::resource('documents', DocumentController::class)->except('show');
+
+    Route::resource('testimonials', TestimonialController::class)->except('show');
+    Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');
+    Route::patch('/testimonials/{testimonial}/toggle-publish', [TestimonialController::class, 'togglePublish'])->name('testimonials.toggle-publish');
+    Route::resource('faqs', FaqController::class)->except('show');
+
+    Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
+
+    // Manajemen Pengguna (HANYA Super Admin)
     Route::middleware('super_admin')->group(function () {
-        Route::post('news-posts/import-instagram', [NewsPostController::class, 'importInstagram'])->name('news-posts.import-instagram');
-        Route::resource('news-posts', NewsPostController::class)->except('show');
-        Route::resource('leaders', LeaderController::class)->except('show');
-        Route::resource('documents', DocumentController::class)->except('show');
-
-
-        Route::resource('testimonials', TestimonialController::class)->except('show');
-        Route::post('/testimonials/auto-approve', [TestimonialController::class, 'autoApprove'])->name('testimonials.auto-approve');
-        Route::patch('/testimonials/{testimonial}/toggle-publish', [TestimonialController::class, 'togglePublish'])->name('testimonials.toggle-publish');
-        Route::resource('faqs', FaqController::class)->except('show');
-
-        Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
-        Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
-
-        // Manajemen Pengguna
         Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
         Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
         Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
