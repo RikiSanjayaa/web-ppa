@@ -21,7 +21,7 @@
                 '{{ asset('images/Profil2.jpeg') }}', 
                 '{{ asset('images/Profil3.jpeg') }}', 
                 '{{ asset('images/Profil4.jpeg') }}', 
-                '{{ asset('images/Profil5.jpeg') }}'
+                '{{ asset('images/Profil5_b.jpeg') }}'
             ] 
          }"
          x-init="setInterval(() => { active = (active + 1) % images.length }, 5000)">
