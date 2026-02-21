@@ -3,11 +3,7 @@ set -e
 
 echo "==> [Entrypoint] Memulai setup aplikasi..."
 
-# -------------------------------------------------------
-# 0. Fix permission volume (Docker buat volume dengan root)
-# -------------------------------------------------------
-chown -R www-data:www-data /var/www/html/storage
-chmod -R 775 /var/www/html/storage
+
 
 # -------------------------------------------------------
 # 1. Setup .env jika belum ada
@@ -84,10 +80,14 @@ if [ ! -L /var/www/html/public/storage ]; then
 fi
 
 # -------------------------------------------------------
-# 7. Optimasi Laravel (config, routes, views cache)
+# 7. Optimasi Laravel & Fix Permission Akhir
 # -------------------------------------------------------
 echo "==> [Entrypoint] Optimasi Laravel..."
 php artisan optimize
+
+echo "==> [Entrypoint] Memastikan hak akses storage milik www-data..."
+chown -R www-data:www-data /var/www/html/storage
+chmod -R 775 /var/www/html/storage
 
 echo "==> [Entrypoint] Setup selesai! Menjalankan: $@"
 exec "$@"
