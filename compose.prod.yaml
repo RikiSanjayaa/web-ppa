@@ -22,7 +22,7 @@ services:
       # --- Kode PHP di-mount dari host agar git pull langsung berpengaruh ---
       - ./app:/var/www/html/app:ro
       - ./config:/var/www/html/config:ro
-      - ./database:/var/www/html/database:ro
+      - ./database:/var/www/html/database
       - ./resources/views:/var/www/html/resources/views:ro
       - ./routes:/var/www/html/routes:ro
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
@@ -41,7 +41,7 @@ services:
       - ./.env:/var/www/html/.env
       - ./app:/var/www/html/app:ro
       - ./config:/var/www/html/config:ro
-      - ./database:/var/www/html/database:ro
+      - ./database:/var/www/html/database
       - ./resources/views:/var/www/html/resources/views:ro
       - ./routes:/var/www/html/routes:ro
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
