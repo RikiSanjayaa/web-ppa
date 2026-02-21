@@ -111,7 +111,7 @@ class LeaderController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'position' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
-            'photo' => ['nullable', 'image', 'max:5120'],
+            'photo' => ['nullable', 'image', 'max:20480'],
             'display_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
         ]);

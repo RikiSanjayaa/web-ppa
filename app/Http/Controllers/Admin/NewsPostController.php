@@ -386,7 +386,7 @@ class NewsPostController extends Controller
             'excerpt' => ['nullable', 'string'],
             'content' => ['required', 'string'],
             'images' => ['nullable', 'array', 'max:5'],
-            'images.*' => ['image', 'max:5120'],
+            'images.*' => ['image', 'max:20480'],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
             'meta_title' => ['nullable', 'string', 'max:255'],

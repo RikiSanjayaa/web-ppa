@@ -129,7 +129,7 @@ class DocumentController extends Controller
             'year' => ['nullable', 'integer', 'digits:4'],
             'category' => ['nullable', 'string', 'max:255'],
             'summary' => ['nullable', 'string'],
-            'file' => [($document ? 'nullable' : 'required'), 'file', 'mimes:pdf', 'max:10240'],
+            'file' => [($document ? 'nullable' : 'required'), 'file', 'mimes:pdf', 'max:20480'],
             'is_published' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
         ]);

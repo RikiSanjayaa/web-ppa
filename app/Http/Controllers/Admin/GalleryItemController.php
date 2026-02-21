@@ -124,7 +124,7 @@ class GalleryItemController extends Controller
             'caption' => ['nullable', 'string'],
             'display_order' => ['nullable', 'integer', 'min:0'],
             'is_published' => ['nullable', 'boolean'],
-            'image' => [($galleryItem ? 'nullable' : 'required'), 'image', 'max:5120'],
+            'image' => [($galleryItem ? 'nullable' : 'required'), 'image', 'max:20480'],
         ]);
     }
 
