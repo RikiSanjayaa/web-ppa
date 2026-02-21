@@ -17,7 +17,11 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\SubAgentController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/', [PublicPageController::class, 'home'])->name('home');
 Route::get('/organisasi', [PublicPageController::class, 'organisasi'])->name('organisasi');

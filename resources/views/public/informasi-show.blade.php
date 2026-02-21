@@ -1,7 +1,41 @@
 @extends('layouts.public')
 
-@section('title', ($type === 'document' ? 'Dokumen' : 'Berita').' | '.$settings['site_name'])
-@section('meta_description', $type === 'document' ? ($item->summary ?: $item->title) : ($item->excerpt ?: Str::limit(strip_tags($item->content), 150)))
+@php
+    $description = $item->meta_description ?? ($type === 'document' ? ($item->summary ?: $item->title) : ($item->excerpt ?: Str::limit(strip_tags($item->content), 150)));
+    $imageUrl = asset('logo.png');
+    if ($type === 'news' && $item->featured_image_path) {
+        $imageUrl = Storage::url($item->featured_image_path);
+    }
+@endphp
+
+@section('title', ($item->meta_title ?? $item->title) . ' | ' . $settings['site_name'])
+@section('meta_description', $description)
+@section('og_title', $item->title)
+@section('og_description', $description)
+@section('og_type', 'article')
+@section('og_image', url($imageUrl))
+
+@push('head')
+@if($type === 'news')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{ $item->title }}",
+  "image": [
+    "{{ url($imageUrl) }}"
+   ],
+  "datePublished": "{{ optional($item->published_at)->tz('UTC')->toAtomString() }}",
+  "dateModified": "{{ optional($item->updated_at)->tz('UTC')->toAtomString() ?? optional($item->published_at)->tz('UTC')->toAtomString() }}",
+  "author": [{
+      "@type": "Organization",
+      "name": "{{ $settings['site_name'] }}",
+      "url": "{{ url('/') }}"
+  }]
+}
+</script>
+@endif
+@endpush
 
 @section('content')
     <section class="rounded-3xl border border-slate-200 bg-white p-6 lg:p-8" data-aos="fade-up">
