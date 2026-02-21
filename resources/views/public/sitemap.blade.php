@@ -36,7 +36,7 @@
     @foreach ($articles as $article)
         <url>
             <loc>{{ route('informasi.show', $article->slug) }}</loc>
-            <lastmod>{{ optional($article->updated_at)->tz('UTC')->toAtomString() ?? $article->published_at->tz('UTC')->toAtomString() }}</lastmod>
+            <lastmod>{{ $article->updated_at?->tz('UTC')->toAtomString() ?? $article->published_at?->tz('UTC')->toAtomString() ?? now()->tz('UTC')->toAtomString() }}</lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>
         </url>
@@ -46,7 +46,7 @@
     @foreach ($documents as $document)
         <url>
             <loc>{{ route('informasi.show', $document->slug) }}</loc>
-            <lastmod>{{ optional($document->updated_at)->tz('UTC')->toAtomString() ?? $document->published_at->tz('UTC')->toAtomString() }}</lastmod>
+            <lastmod>{{ $document->updated_at?->tz('UTC')->toAtomString() ?? $document->published_at?->tz('UTC')->toAtomString() ?? now()->tz('UTC')->toAtomString() }}</lastmod>
             <changefreq>monthly</changefreq>
             <priority>0.6</priority>
         </url>

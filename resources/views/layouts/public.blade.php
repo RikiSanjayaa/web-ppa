@@ -39,14 +39,14 @@
 
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "GovernmentOrganization",
+      "@@context": "https://schema.org",
+      "@@type": "GovernmentOrganization",
       "name": "{{ $settings['site_name'] }}",
       "alternateName": "Ditres PPA & PPO Polda NTB",
       "url": "{{ url('/') }}",
       "logo": "{{ asset('logo.png') }}",
       "contactPoint": {
-        "@type": "ContactPoint",
+        "@@type": "ContactPoint",
         "telephone": "{{ $settings['hotline_wa_number'] }}",
         "contactType": "customer service",
         "email": "{{ $settings['contact_email'] }}",
@@ -57,12 +57,12 @@
     </script>
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
+      "@@context": "https://schema.org",
+      "@@type": "WebSite",
       "name": "{{ $settings['site_name'] }}",
       "url": "{{ url('/') }}",
       "potentialAction": {
-        "@type": "SearchAction",
+        "@@type": "SearchAction",
         "target": "{{ route('informasi.index') }}?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }

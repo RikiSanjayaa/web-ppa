@@ -19,16 +19,16 @@
 @if($type === 'news')
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
+  "@@context": "https://schema.org",
+  "@@type": "NewsArticle",
   "headline": "{{ $item->title }}",
   "image": [
     "{{ url($imageUrl) }}"
    ],
-  "datePublished": "{{ optional($item->published_at)->tz('UTC')->toAtomString() }}",
-  "dateModified": "{{ optional($item->updated_at)->tz('UTC')->toAtomString() ?? optional($item->published_at)->tz('UTC')->toAtomString() }}",
+  "datePublished": "{{ $item->published_at?->tz('UTC')->toAtomString() ?? now()->tz('UTC')->toAtomString() }}",
+  "dateModified": "{{ $item->updated_at?->tz('UTC')->toAtomString() ?? $item->published_at?->tz('UTC')->toAtomString() ?? now()->tz('UTC')->toAtomString() }}",
   "author": [{
-      "@type": "Organization",
+      "@@type": "Organization",
       "name": "{{ $settings['site_name'] }}",
       "url": "{{ url('/') }}"
   }]

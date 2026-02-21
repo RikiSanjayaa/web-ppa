@@ -17,7 +17,6 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HotlineAccessController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicPageController;
-use App\Http\Controllers\SubAgentController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 

@@ -24,38 +24,41 @@
     {{-- What Can Be Reported --}}
     <section class="mt-12">
         <h2 class="font-heading text-2xl font-semibold text-navy-700">Jenis Pelanggaran yang Dapat Dilaporkan</h2>
-        <p class="mt-2 text-slate-600">Laporkan segala bentuk kekerasan, eksploitasi, atau kejahatan terhadap perempuan dan anak, termasuk Tindak Pidana Perdagangan Orang (TPPO)</p>
+        <div class="mt-2 text-slate-600 space-y-2">
+            <p>Berbagai kasus yang menyasar masyarakat rentan dapat langsung dilaporkan ke <strong>Ditreskrimum Polda NTB (Subdit IV Remaja, Anak, dan Wanita)</strong>. Kami menyediakan layanan <strong>Lapor Polisi Online</strong> yang cepat, rahasia, dan gratis.</p>
+            <p>Jangan takut bicara! Segera lapor jika Anda atau kerabat terdekat menjadi korban <strong>KDRT (suami pukul istri/anak), pelecehan seksual, pencabulan, dugaan pemerkosaan, kekerasan pada anak balita, penipuan tenaga kerja (TKI ilegal/prostitusi), hingga ancaman siber (revenge porn)</strong> yang masuk dalam ranah Tinda Pidana.</p>
+        </div>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <x-report-card
                 icon="home"
-                title="Kekerasan Dalam Rumah Tangga"
-                description="Kekerasan fisik, psikis, seksual, atau penelantaran dalam lingkup rumah tangga."
+                title="KDRT (Kekerasan Dalam Rumah Tangga)"
+                description="Suami/istri melakukan kekerasan fisik (memukul, melukai), pengancaman, kekerasan verbal yang parah, hingga penolakan memberikan nafkah dasar."
             />
             <x-report-card
                 icon="heart"
-                title="Pelecehan Seksual"
-                description="Tindakan seksual tanpa persetujuan, pelecehan verbal, atau eksploitasi seksual."
+                title="Pelecehan Seksual & Pencabulan"
+                description="Tindakan asusila, pencabulan di bawah umur, percobaan pemerkosaan, pelecehan sentuhan fisik, atau eksploitasi seksual."
             />
             <x-report-card
                 icon="users"
-                title="Perdagangan Orang"
-                description="Trafficking, eksploitasi tenaga kerja, atau penjeratan utang."
+                title="Perdagangan Orang (TPPO)"
+                description="Modus penipuan kerja ke luar negeri (TKI Ilegal), jebakan prostitusi, eksploitasi buruh anak, penyekapan, atau penjeratan hutang."
             />
             <x-report-card
                 icon="hand"
                 title="Kekerasan terhadap Anak"
-                description="Penganiayaan, penelantaran, atau eksploitasi anak di bawah umur."
+                description="Penganiayaan, pemukulan anak kandung/tiri, penyiksaan fisik balita, penculikan, atau eksploitasi anak jalanan."
             />
             <x-report-card
                 icon="briefcase"
-                title="Penelantaran"
-                description="Tidak dipenuhinya kebutuhan dasar secara sengaja oleh pihak yang bertanggung jawab."
+                title="Penelantaran Keluarga"
+                description="Mengusir istri/anak tanpa jalan keluar, menelantarkan bayi secara paksa, atau kepala keluarga lari dari tanggung jawab kehidupan dasar."
             />
             <x-report-card
                 icon="exclamation"
-                title="Bentuk Kekerasan Lain"
-                description="Ancaman, intimidasi, penguntitan, atau bentuk kekerasan lainnya."
+                title="Ancaman & Perundungan Siber"
+                description="Menerima teror ancaman pembunuhan, pemerasan foto pribadi (revenge-porn), penguntitan (stalking), atau kasus perundungan (bullying)."
             />
         </div>
     </section>
