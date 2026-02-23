@@ -87,6 +87,8 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="hidden text-sm text-slate-600 sm:inline">{{ auth()->user()->name }}</span>
+                        <a href="{{ route('profile.edit') }}"
+                            class="btn btn-sm bg-slate-100 text-slate-600 hover:bg-slate-200 border-0">Profil</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit"
