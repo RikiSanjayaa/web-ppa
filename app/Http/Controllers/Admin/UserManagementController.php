@@ -73,16 +73,18 @@ class UserManagementController extends Controller
         return back()->with('success', "Pengguna \"{$user->name}\" berhasil {$status}.");
     }
 
-    public function destroy(User $user)
+    public function resetPassword(User $user)
     {
+        // Cegah Super Admin mereset password dirinya sendiri (gunakan profil saja)
         if ($user->id === auth()->id()) {
-            return back()->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+            return back()->with('error', 'Anda tidak dapat mereset kata sandi Anda sendiri dari sini.');
         }
 
-        $name = $user->name;
-        $user->delete();
+        // Reset password ke nilai default: "password"
+        $user->update([
+            'password' => Hash::make('password')
+        ]);
 
-        return redirect()->route('admin.users.index')
-            ->with('success', "Pengguna \"{$name}\" berhasil dihapus.");
+        return back()->with('success', "Kata sandi pengguna \"{$user->name}\" berhasil di-reset menjadi 'password'.");
     }
 }

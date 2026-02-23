@@ -95,14 +95,14 @@
                                         {{ ($user->is_active ?? true) ? 'Nonaktifkan' : 'Aktifkan' }}
                                     </button>
                                 </form>
-                                {{-- Hapus --}}
-                                <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                                    onsubmit="return confirm('Yakin ingin menghapus pengguna ini? Aksi ini tidak dapat dibatalkan.')">
+                                {{-- Reset Password --}}
+                                <form method="POST" action="{{ route('admin.users.reset-password', $user) }}"
+                                    onsubmit="return confirm('Yakin ingin mereset kata sandi pengguna ini? Kata sandi akan di-reset menjadi \'password\'.')">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('PATCH')
                                     <button type="submit"
-                                        class="rounded-lg bg-red-50 px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-100 transition-colors">
-                                        Hapus
+                                        class="rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-100 transition-colors">
+                                        Reset Password
                                     </button>
                                 </form>
                             </div>
