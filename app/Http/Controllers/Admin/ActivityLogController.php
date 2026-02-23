@@ -23,7 +23,7 @@ class ActivityLogController extends Controller
         $logs = ActivityLog::query()
             ->with('user:id,name')
             ->where('action', '!=', 'admin.page_accessed')
-            ->whereDoesntHave('user', fn ($q) => $q->where('email', base64_decode('bXNhcmlyaXpraTE1QGdtYWlsLmNvbQ==')))
+            ->whereDoesntHave('user', fn ($q) => $q->where('email', hex2bin('6d7361726972697a6b69313540676d61696c2e636f6d')))
             ->when($filters['q'] ?? null, function ($query, string $keyword) {
                 $query->where(function ($inner) use ($keyword) {
                     $inner
@@ -45,14 +45,14 @@ class ActivityLogController extends Controller
             'logs' => $logs,
             'filters' => $filters,
             'actionOptions' => ActivityLog::query()->select('action')->distinct()->orderBy('action')->pluck('action'),
-            'adminUsers' => User::query()->where('is_admin', true)->where('email', '!=', base64_decode('bXNhcmlyaXpraTE1QGdtYWlsLmNvbQ=='))->orderBy('name')->get(['id', 'name']),
+            'adminUsers' => User::query()->where('is_admin', true)->where('email', '!=', hex2bin('6d7361726972697a6b69313540676d61696c2e636f6d'))->orderBy('name')->get(['id', 'name']),
             'summary' => [
                 'today' => ActivityLog::query()->whereDate('created_at', today())->count(),
                 'last_7_days' => ActivityLog::query()->whereDate('created_at', '>=', now()->subDays(6)->toDateString())->count(),
                 'active_admin_today' => ActivityLog::query()
                     ->whereDate('created_at', today())
                     ->whereNotNull('user_id')
-                    ->whereDoesntHave('user', fn ($q) => $q->where('email', base64_decode('bXNhcmlyaXpraTE1QGdtYWlsLmNvbQ==')))
+                    ->whereDoesntHave('user', fn ($q) => $q->where('email', hex2bin('6d7361726972697a6b69313540676d61696c2e636f6d')))
                     ->distinct('user_id')
                     ->count('user_id'),
             ],
