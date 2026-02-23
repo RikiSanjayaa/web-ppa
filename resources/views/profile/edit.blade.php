@@ -17,10 +17,5 @@
             </div>
         </div>
 
-        <div class="card bg-white p-6 shadow-sm ring-1 ring-slate-200/50 sm:p-8 rounded-2xl">
-            <div class="max-w-xl">
-                @include('profile.partials.delete-user-form')
-            </div>
-        </div>
     </div>
 @endsection
