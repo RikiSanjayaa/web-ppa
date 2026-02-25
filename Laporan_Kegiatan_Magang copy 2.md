@@ -2,10 +2,39 @@
 
 ## Minggu 1: Perancangan & Pengembangan Inti
 
-*   **Jumat, 6 Februari 2026**
-    Melaksanakan rapat inisiasi proyek, analisis kebutuhan sistem aplikasi laporan masyarakat, dan Monitoring PPA Polda NTB. Serta melakukan perancangan *starter project* untuk membedakan struktur *landing page* dan *admin panel*.
+*   **Senin, 26 Januari 2026**
+    Melakukan orientasi satuan kerja biro logistik dan rapat perancangan arsitektur sistem informasi E-Cuti Polda.
 
-## Minggu 2: Implementasi, Stabilisasi Sistem & Keamanan
+*   **Selasa, 27 Januari 2026**
+    Mengembangkan modul autentikasi terpusat dan *dashboard* eksekutif untuk pengawasan data personel secara *real-time*.
+
+*   **Rabu, 28 Januari 2026**
+    Mengimplementasikan algoritma validasi cuti otomatis sesuai regulasi internal instansi kepolisian.
+
+*   **Kamis, 29 Januari 2026**
+    Membangun manajemen basis data personel serta fitur pelaporan digital (*Digital Export*) guna mendukung kebutuhan audit administrasi.
+
+*   **Jumat, 30 Januari 2026**
+    Melakukan finalisasi antarmuka pengguna (*User Interface*) standar layanan publik dan pengujian stabilitas sistem pra-rilis.
+
+## Minggu 2: Implementasi & Stabilisasi Sistem
+
+*   **Senin, 2 Februari 2026**
+    Melakukan konfigurasi keamanan server produksi dan optimalisasi performa aplikasi menggunakan teknologi berbasis TypeScript.
+
+*   **Selasa, 3 Februari 2026**
+    Rapat dan perilisan sistem E-Cuti dan pelatihan teknis penggunaan aplikasi kepada ketua dan jajaran staf biro logistik.
+
+*   **Rabu, 4 Februari 2026**
+    Mengembangkan *dashboard* analitik statistik personel untuk mendukung pengambilan keputusan pimpinan berbasis data.
+
+*   **Kamis, 5 Februari 2026**
+    Mengimplementasikan protokol keamanan data sensitif dan penyediaan perangkat lunak pemeliharaan sistem terpadu.
+
+*   **Jumat, 6 Februari 2026**
+    Melaksanakan rapat analisis kebutuhan sistem aplikasi laporan masyarakat, dan Monitoring PPA Polda NTB. Serta melakukan perancangan *starter project* untuk membedakan struktur *landing page* dan *admin panel*.
+
+## Minggu 3: Implementasi, Stabilisasi Sistem & Keamanan
 
 *   **Senin, 9 Februari 2026**
     Mengembangkan antarmuka *dashboard* layanan publik dengan penambahan elemen visual, dan merancang modul pencatatan kedaruratan (*log hotline access*) untuk rekam data masyarakat.
@@ -22,7 +51,7 @@
 *   **Jumat, 13 Februari 2026**
     Memfinalisasi perancangan alur form pengaduan interaktif dan pengaturan resolusi responsif layar.
 
-## Minggu 3: Optimalisasi & Penyiapan Infrastruktur Server
+## Minggu 4: Optimalisasi & Penyiapan Infrastruktur Server
 
 *   **Rabu, 18 Februari 2026**
     Mengembangkan sinkronisasi sistem fitur *import* cerdas pada modul berita. Mengotomatisasi tarikan berita langsung dari Instagram
@@ -33,7 +62,7 @@
 *   **Jumat, 20 Februari 2026**
     Melakukan optimalisasi kapasitas *upload* dan menyempurnakan struktur navigasi kata (*SEO Tuning*) untuk peningkatan akurasi indeks Google.
 
-## Minggu 4: Peluncuran, Integrasi Eksternal & Penutupan
+## Minggu 5: Peluncuran, Integrasi Eksternal & Penutupan
 
 *   **Senin, 23 Februari 2026**
     perilisan sistem dan **Deployment Server Aplikasi** PPA PPO secara menyeluruh ke dalam infrastruktur *production server*. Melaksanakan pelatihan teknis pengoperasian aplikasi kepada staf, dilanjutkan pengisian data riil web untuk *monitoring* rekapitulasi kasus PPA/PPO.
